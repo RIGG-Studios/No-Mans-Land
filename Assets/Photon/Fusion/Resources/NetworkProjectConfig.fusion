@@ -3,7 +3,7 @@
     "TypeId": "NetworkProjectConfig",
     "PeerMode": 0,
     "PhysicsEngine": 0,
-    "ServerPhysicsMode": 0,
+    "ServerPhysicsMode": 1,
     "UseLagCompensation": true,
     "LagCompensation": {
         "HitboxBufferSize": 12,
@@ -155,7 +155,8 @@
     },
     "AssembliesToWeave": [
         "Assembly-CSharp",
-        "Assembly-CSharp-firstpass"
+        "Assembly-CSharp-firstpass",
+        "Assembly-CSharp-Editor"
     ],
     "UseSerializableDictionary": true,
     "NullChecksForNetworkedProperties": true,

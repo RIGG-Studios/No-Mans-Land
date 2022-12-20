@@ -22,4 +22,21 @@ public class SceneHandler : MonoBehaviour
    {
       sceneCamera.gameObject.SetActive(state);
    }
+
+   public GameObject Spawn(GameObject prefab, Transform parent, bool asChild = true)
+   {
+      GameObject spawnedPrefab = Instantiate(prefab, parent);
+
+      if (!asChild)
+      {
+         spawnedPrefab.transform.SetParent(null);
+      }
+
+      return spawnedPrefab;
+   }
+
+   public void Spawn(GameObject prefab, Vector3 spawnPos, Quaternion spawnRot)
+   {
+      
+   }
 }

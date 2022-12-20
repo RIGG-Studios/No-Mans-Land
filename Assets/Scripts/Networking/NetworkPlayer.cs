@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
@@ -15,6 +16,17 @@ public class NetworkPlayer : NetworkBehaviour
     [Space]
     
     [SerializeField] private UnityEvent onLocalPlayerInit;
+    
+     public PlayerInteractionHandler Interaction { get; private set; } 
+     public PlayerMovementHandler Movement { get; private set; }
+     public CameraLook Camera { get; private set; }
+
+     private void Awake()
+    {
+        Interaction = GetComponent<PlayerInteractionHandler>();
+        Movement = GetComponent<PlayerMovementHandler>();
+        Camera = GetComponentInChildren<CameraLook>();
+    }
 
     public override void Spawned()
     {

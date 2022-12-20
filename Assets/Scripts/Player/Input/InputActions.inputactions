@@ -42,33 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Reload",
-                    "type": "Button",
-                    "id": "66847f2f-d20c-44c9-9d6e-c5d32b249944",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Crouch",
-                    "type": "Button",
-                    "id": "8af3d968-cab7-4346-b3c1-bfaded9be333",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Slide",
-                    "type": "Button",
-                    "id": "ad7295bd-6f61-42e2-9a46-723c6eff4608",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "c261d510-843c-494e-af1a-736f9754ad51",
@@ -78,45 +51,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Inspect",
-                    "type": "Button",
-                    "id": "e70ddacc-35ed-42de-8e1f-2a902012004f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Run",
                     "type": "Button",
                     "id": "eaae8f8f-e3e4-41fd-bf8e-250c76f655c9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "LeanLeft",
-                    "type": "Button",
-                    "id": "7ee3ec39-2747-4d24-81d6-c4c5e8d956d9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "LeanRight",
-                    "type": "Button",
-                    "id": "9f4d77dc-00d3-4c72-b683-cdc502746d35",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SwitchFiremode",
-                    "type": "Button",
-                    "id": "cca9dd3a-a75c-4702-b533-68e7ff0ecd6a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -177,42 +114,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CheckAmmo",
-                    "type": "Button",
-                    "id": "cd970e77-bede-43f3-a5d4-8ff244aff5bf",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ToggleSecondaryAim",
-                    "type": "Button",
-                    "id": "ac4f4d90-f19d-4da1-b94f-6cef311bcd36",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "BarrelAttachmentToggle",
-                    "type": "Button",
-                    "id": "1e157f7b-95a7-4663-888d-c81e0c19843b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "CycleAimFOV",
-                    "type": "Button",
-                    "id": "1ba15677-c24e-4cfc-88ea-67f1a384be72",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Scrollwheel",
                     "type": "Value",
                     "id": "faecf420-238d-4238-a0fa-bfd520484ad6",
@@ -220,24 +121,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Grenade",
-                    "type": "Button",
-                    "id": "147ebac8-8960-4cb8-bb95-c001f14a962f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GenerateRandomAttachments",
-                    "type": "Button",
-                    "id": "5487147f-0e3c-4e5b-976a-8922148f9523",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "DropItem",
@@ -267,9 +150,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NightVision",
+                    "name": "ToggleInventory",
                     "type": "Button",
-                    "id": "a08e811b-33af-4db5-b591-8f9dcd54ac3d",
+                    "id": "0495378d-faf5-4f2f-8f4e-d8f2b0a4b701",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -510,78 +393,12 @@
                 },
                 {
                     "name": "",
-                    "id": "86b13c0d-0f1c-4218-8088-8b48958a4554",
-                    "path": "<Keyboard>/r",
-                    "interactions": "Tap",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Reload",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ddc3a799-6b6e-4964-ac46-51dcf422569e",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Crouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "200bef25-7d5e-430d-be63-b5ea96b3dd08",
-                    "path": "<Keyboard>/leftCtrl",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Crouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "987f4f4d-6f3b-4e0c-a1a6-21f3fad5c716",
-                    "path": "<Keyboard>/leftCtrl",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slide",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "87f2c298-5085-4a40-b695-edc39325e67c",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slide",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "093ba170-a841-4923-8ade-6ef45a2a322f",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b2f84705-152b-4767-8928-1c81172d749c",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inspect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -604,39 +421,6 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0f47c28b-a767-4ac7-901a-e40b5ade9027",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "LeanLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d8e479fa-5259-48c9-b9d9-68d2aecc033a",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "LeanRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2506d60f-e7a2-4b9c-b1a8-6481361f7d58",
-                    "path": "<Keyboard>/b",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "SwitchFiremode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -708,78 +492,12 @@
                 },
                 {
                     "name": "",
-                    "id": "13b5264e-2862-40db-b497-c178cac73d90",
-                    "path": "<Keyboard>/v",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "CheckAmmo",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1b47af20-6f56-435a-b220-329b3b2a9d37",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "ToggleSecondaryAim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "22c871e6-c913-44a4-a108-4428adbb8adb",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "BarrelAttachmentToggle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a57c6988-5ab4-4c5d-8d74-4e688c903836",
-                    "path": "<Keyboard>/leftAlt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "CycleAimFOV",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2d001ec5-eb71-41d3-94f0-dc44425678c4",
                     "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Scrollwheel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "884b51b3-6e97-49a3-acae-bae0a698376b",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Grenade",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f0163bef-4306-4808-bce5-ace101f08f83",
-                    "path": "<Keyboard>/l",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "GenerateRandomAttachments",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -818,12 +536,12 @@
                 },
                 {
                     "name": "",
-                    "id": "75ccaa00-1b16-430d-9caa-510cf61bff15",
-                    "path": "<Keyboard>/n",
+                    "id": "f9ff260f-65b9-4778-99d2-523d3822fb41",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "NightVision",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ToggleInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

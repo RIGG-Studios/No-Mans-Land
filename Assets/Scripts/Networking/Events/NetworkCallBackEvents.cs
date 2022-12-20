@@ -23,7 +23,7 @@ public class NetworkCallBackEvents : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        onPlayerJoined?.Invoke(runner, player);
+       onPlayerJoined?.Invoke(runner, player);
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)

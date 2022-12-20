@@ -7,39 +7,44 @@ using Cursor = UnityEngine.Cursor;
 
 public class CameraLook : MonoBehaviour
 {
-    public bool CanLook { get; set; }
+ public bool CanLook { get; set; }
     
-    [SerializeField] private Transform camAnchor;
+    [SerializeField] private Transform camTransform;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Vector3 cameraBaseOffset;
     [SerializeField] private float mouseSensitivity;
+    [SerializeField] private float lookSmooth;
+    [SerializeField] private float maxLookAngleY;
+
     
+    private Vector2 _lookRotation;
+    private Quaternion _nativeRotation;
+
     private float _lookX;
     private float _lookY;
-    
-    float cameraRotationX = 0;
-    float cameraRotationY = 0;
     
     private float _fov;
     private float _defaultFOV;
 
     private Camera _camera;
-    
+
+    public Quaternion PlayerRotation { get; private set; }
+    public Quaternion CameraRotation { get; private set; }
+
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        
+
+        _lookRotation.x = playerTransform.eulerAngles.y;
+        _lookRotation.y = camTransform.eulerAngles.y;
+
+        _nativeRotation.eulerAngles = new Vector3(0f, _lookRotation.y, 0f);
+
         _camera = GetComponentInChildren<Camera>();
         _defaultFOV = _camera.fieldOfView;
         _fov = _defaultFOV;
         CanLook = true;
-    }
-
-    private void Start()
-    {
-        if (_camera.enabled)
-        {
-            transform.parent = null;
-        }
     }
 
     private void LateUpdate()
@@ -54,13 +59,21 @@ public class CameraLook : MonoBehaviour
 
     private void UpdateCameraLook()
     {
-        transform.position = camAnchor.position;
-        
-        cameraRotationX += _lookY * Time.deltaTime * mouseSensitivity;
-        cameraRotationX = Mathf.Clamp(cameraRotationX, -90, 90);
+        float nextHorizontal = _lookX * Time.deltaTime * mouseSensitivity;
+        float nextVertical = _lookY * Time.deltaTime * mouseSensitivity;
 
-        cameraRotationY += _lookX * Time.deltaTime * mouseSensitivity;
-        transform.rotation = Quaternion.Euler(-cameraRotationX, cameraRotationY, 0);
+        _lookRotation.x += nextHorizontal;
+        _lookRotation.y += nextVertical;
+
+        _lookRotation.y = Mathf.Clamp(_lookRotation.y, -maxLookAngleY, maxLookAngleY);
+        
+        Quaternion camTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.y + (0), Vector3.left);
+        Quaternion bodyTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.x + (0), Vector3.up);
+        CameraRotation =  Quaternion.Slerp(camTransform.localRotation, camTargetRotation, lookSmooth);
+
+        camTransform.localRotation = CameraRotation;
+        PlayerRotation = Quaternion.Slerp(playerTransform.localRotation, bodyTargetRotation, lookSmooth);
+        _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _fov, Time.deltaTime * 5f);
     }
     
     

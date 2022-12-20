@@ -9,9 +9,22 @@ public class PlayerMovementInputHandler : InputBase
     private Vector2 _movementDirection;
     private CameraLook _cameraLook;
 
+    private bool _isSprintPressed;
+    private bool _isJumpPressed;
+    
     private void Start()
     {
         _cameraLook = GetComponentInChildren<CameraLook>();
+
+        InputActions.Player.Run.performed += ctx =>
+        {
+            _isSprintPressed = !_isSprintPressed;
+        };
+
+        InputActions.Player.Jump.performed += ctx =>
+        {
+            _isJumpPressed = true;
+        };
     }
     
     public override void OnEnable()
@@ -36,9 +49,14 @@ public class PlayerMovementInputHandler : InputBase
     {
         _movementDirection = InputActions.Player.Move.ReadValue<Vector2>();
     }
-
+    
     private void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        if (_cameraLook == null)
+        {
+            return;
+        }
+        
         input.Set(GetNetworkInput());
     }
     
@@ -47,9 +65,18 @@ public class PlayerMovementInputHandler : InputBase
         var networkInputData = new NetworkInputData()
         {
             MovementInput = _movementDirection,
-            LookForward = _cameraLook.transform.forward
+            LookForward = _cameraLook.PlayerRotation,
+            IsJumpPressed = _isJumpPressed,
+            IsSprintPressed = _isSprintPressed
         };
 
+        _isJumpPressed = false;
+
         return networkInputData;
+    }
+
+    public void DisableSprint()
+    {
+        _isSprintPressed = false;
     }
 }
