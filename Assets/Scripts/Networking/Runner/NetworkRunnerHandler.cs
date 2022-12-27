@@ -26,7 +26,6 @@ public class NetworkRunnerHandler : MonoBehaviour
         var clientTask =
             InitializeRunner(_networkRunner, GameMode.AutoHostOrClient, NetAddress.Any(), sceneIndex, null);
         
-        Debug.Log(clientTask);
         Debug.Log("Server has been started");
     }
 
@@ -47,6 +46,7 @@ public class NetworkRunnerHandler : MonoBehaviour
         {
             GameMode = gameMode,
             Address =  netAddress,
+            PlayerCount = 16,
             Scene = scene,
             SessionName = "TestRoom",
             Initialized = initialized,

@@ -9,6 +9,8 @@ public class SceneHandler : MonoBehaviour
    
    [SerializeField] private Camera sceneCamera;
 
+   public ItemDatabase ItemDatabase;
+
 
    private void Awake()
    {

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerModel : MonoBehaviour
 {
-    [SerializeField] private Renderer modelRenderer;
+    [SerializeField] private Renderer[] modelRenderers;
     
     public void DisableModel()
     {
-        modelRenderer.enabled = false;
+
+        for (int i = 0; i < modelRenderers.Length; i++)
+        {
+            modelRenderers[i].enabled = false;
+        }
     }
 }

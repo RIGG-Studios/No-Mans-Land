@@ -15,6 +15,9 @@ public class NetworkCallBackEvents : MonoBehaviour, INetworkRunnerCallbacks
 
     public delegate void Input(NetworkRunner runner, NetworkInput input);
     public static Input onInput;
+
+    public delegate void SessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList);
+    public static SessionListUpdated ListUpdated;
     
     public void OnConnectedToServer(NetworkRunner runner)
     {
@@ -36,6 +39,12 @@ public class NetworkCallBackEvents : MonoBehaviour, INetworkRunnerCallbacks
         onInput?.Invoke(runner, input);
     }
 
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+    {
+        ListUpdated?.Invoke(runner, sessionList);
+    }
+
+
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
@@ -43,7 +52,6 @@ public class NetworkCallBackEvents : MonoBehaviour, INetworkRunnerCallbacks
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }

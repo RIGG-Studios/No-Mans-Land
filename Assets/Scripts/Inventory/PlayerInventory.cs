@@ -1,36 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerInventory : MonoBehaviour, IRuntimeInventory
+public class PlayerInventory : LocalInventory
 {
-    [SerializeField] private int size;
+    public bool IsOpen { get; private set; } = false;
+    
+    [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private Transform itemHolder;
 
-    public UnityEvent<InventoryItem> onItemAdded;
-    public UnityEvent<InventoryItem> onItemRemoved;
     public UnityEvent<bool> onInventoryToggled;
     
-    private IInventory _inventory;
-
-    private void Start()
+    public void ToggleInventory()
     {
-        IInventory inventory = InventoryHandler.InitInventory(size, false);
-
-        if (inventory != null)
-        {
-            _inventory = inventory;
-        }
+        IsOpen = !IsOpen;
+        inventoryUI.SetActive(IsOpen);
+        onInventoryToggled?.Invoke(IsOpen);
     }
 
-    public void AddItem(int itemID, int amount = 1)
+    private void InitFPItems()
     {
-        _inventory.AddItem(itemID, amount);
+        
     }
 
-    public void RemoveItem(int itemID, int amount = 1)
+    public void SelectSlot(int i)
     {
-        _inventory.RemoveItem(itemID, amount);
+        
     }
 }

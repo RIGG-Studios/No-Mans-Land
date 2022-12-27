@@ -50,7 +50,6 @@ public class PlayerInteractionHandler : MonoBehaviour
             return;
         }
         
-        
         if (hit.transform.TryGetComponent(out IInteractable interactable))
         {
             _currentInteractable = interactable;
@@ -81,9 +80,13 @@ public class PlayerInteractionHandler : MonoBehaviour
             return;
         }
         
-        _currentInteractable.ButtonInteract();
-        interactUI.SetActive(false);
-        onButtonInteract?.Invoke(_currentInteractable);
+        bool success = _currentInteractable.ButtonInteract();
+
+        if (success)
+        {
+            interactUI.SetActive(false);
+            onButtonInteract?.Invoke(_currentInteractable);
+        }
     }
 
     public void TryExitInteract()
@@ -94,6 +97,7 @@ public class PlayerInteractionHandler : MonoBehaviour
         }
         
         _currentInteractable.StopLookAtInteract();
+        _currentInteractable.StopButtonInteract();
         onButtonInteractStop?.Invoke(_currentInteractable);
     }
 }

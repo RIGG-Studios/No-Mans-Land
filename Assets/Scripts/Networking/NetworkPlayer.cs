@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Behaviour = UnityEngine.Behaviour;
 
-public class NetworkPlayer : NetworkBehaviour
+public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 {
     public static NetworkPlayer Local { get; set; }
 
@@ -21,11 +21,15 @@ public class NetworkPlayer : NetworkBehaviour
      public PlayerMovementHandler Movement { get; private set; }
      public CameraLook Camera { get; private set; }
 
+     public PlayerInventory Inventory { get; private set; }
+     
+     
      private void Awake()
     {
         Interaction = GetComponent<PlayerInteractionHandler>();
         Movement = GetComponent<PlayerMovementHandler>();
         Camera = GetComponentInChildren<CameraLook>();
+        Inventory = GetComponent<PlayerInventory>();
     }
 
     public override void Spawned()
@@ -39,7 +43,7 @@ public class NetworkPlayer : NetworkBehaviour
         
         SetupPlayer();
     }
-
+    
     private void SetupPlayer()
     {
         //is this player local
@@ -59,5 +63,15 @@ public class NetworkPlayer : NetworkBehaviour
         {
             onLocalPlayerInit?.Invoke();
         }
+    }
+
+    public void PlayerLeft(PlayerRef player)
+    {
+        if (player != Object.InputAuthority)
+        {
+            return;
+        }
+        
+        Runner.Despawn(Object);
     }
 }

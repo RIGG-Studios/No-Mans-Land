@@ -1,5 +1,6 @@
 using System;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerMovementStates
@@ -18,6 +19,7 @@ public class PlayerMovementHandler : NetworkBehaviour
 
     public PlayerMovementStates MovementState { get; private set; }
 
+    
     public float movementSpeed = 7;
     public float defaultFOV = 90f;
     public float jumpSpeed = 10f;
@@ -56,7 +58,10 @@ public class PlayerMovementHandler : NetworkBehaviour
 
     private void Update()
     {
-        _rigidbody.AddForce(Physics.gravity * gravity, ForceMode.Force);
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
         
         IsMovingForward = _vertical >= 0.5f;
         
@@ -73,7 +78,7 @@ public class PlayerMovementHandler : NetworkBehaviour
         
         CheckForGround();
     }
-
+    
     public override void FixedUpdateNetwork()
     {
         if (!GetInput(out NetworkInputData networkInputData))
@@ -104,8 +109,6 @@ public class PlayerMovementHandler : NetworkBehaviour
 
     private void UpdatePosition(NetworkInputData networkInputData)
     {
-        _rigidbody.AddForce(Physics.gravity * gravity, ForceMode.Force);
-        
         Vector2 movementInput = networkInputData.MovementInput.normalized;
 
         _horizontal = movementInput.x;
@@ -115,7 +118,7 @@ public class PlayerMovementHandler : NetworkBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.useGravity = false;
-            Vector3 forward = _cameraLook.transform.forward;
+            Vector3 forward = Vector3.up;
 
             Vector3 nextPos = transform.position +
                               (forward * _vertical + transform.right * _horizontal) * CalculateSpeed() *
@@ -125,6 +128,8 @@ public class PlayerMovementHandler : NetworkBehaviour
         }
         else
         {
+            _rigidbody.AddForce(Physics.gravity * gravity, ForceMode.Force);
+
             _rigidbody.useGravity = true;
 
             Vector3 forward = transform.forward;
@@ -235,6 +240,40 @@ public class PlayerMovementHandler : NetworkBehaviour
         _ladder = null;
         _onLadder = false;
     }
+
+    public void OnButtonInteract(IInteractable interactable)
+    {
+        if (interactable.ID != "Chest")
+        {
+            return;
+        }
+
+        NetworkPlayer.Local.Inventory.ToggleInventory();
+        _cameraLook.CanLook = false;
+        CanMove = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
     
-    
+    public void OnStopButtonInteract(IInteractable interactable)
+    {
+        if (interactable.ID != "Chest")
+        {
+            return;
+        }
+
+        NetworkPlayer.Local.Inventory.ToggleInventory();
+        _cameraLook.CanLook = true;
+        CanMove = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void OnInventoryToggled(bool isOpen)
+    {
+        _cameraLook.CanLook = !isOpen;
+        CanMove = !isOpen;
+        Cursor.visible = isOpen;
+        Cursor.lockState = isOpen ? CursorLockMode.None : CursorLockMode.Locked;
+    }
 }
