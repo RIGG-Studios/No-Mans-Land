@@ -1,14 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Animations;
+using UnityEngine.Events;
+
 
 public class LocalInventory : MonoBehaviour, IInventory
 {
     [SerializeField] private LocInventoryContainer[] inventories;
 
-    private SlotHandler _slotHandler;
+    public UnityEvent<ItemListData> onItemAdded;
+    public UnityEvent<ItemListData> onItemRemoved;
+
+    protected SlotHandler SlotHandler;
 
     public List<ItemListData> Items { get; private set; } = new();
 
@@ -28,9 +31,9 @@ public class LocalInventory : MonoBehaviour, IInventory
         {
             bool isFull = true;
             
-            for (int i = 0; i < _slotHandler.Slots.Length; i++)
+            for (int i = 0; i < SlotHandler.Slots.Length; i++)
             {
-                if (_slotHandler.Slots[i].HasItem)
+                if (SlotHandler.Slots[i].HasItem)
                 {
                     continue;
                 }
@@ -42,7 +45,7 @@ public class LocalInventory : MonoBehaviour, IInventory
         }
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
         List<Slot> slots = new();
 
@@ -58,10 +61,10 @@ public class LocalInventory : MonoBehaviour, IInventory
             }
         }
         
-        _slotHandler = new SlotHandler(this, slots.ToArray());
+        SlotHandler = new SlotHandler(this, slots.ToArray());
     }
 
-    private void Start()
+    public virtual void Start()
     {
         for (int i = 0; i < inventories.Length; i++)
         {
@@ -73,9 +76,9 @@ public class LocalInventory : MonoBehaviour, IInventory
     }
     
 
-    public void AddItem(int itemID, int slotID = -1)
+    public virtual void AddItem(int itemID, int slotID = -1)
     {
-        Slot slot = slotID != -1 ? _slotHandler.Slots[slotID] :  _slotHandler.GetNextSlot();
+        Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] :  SlotHandler.GetNextSlot();
 
         if (slot == null)
         {
@@ -95,9 +98,10 @@ public class LocalInventory : MonoBehaviour, IInventory
         
         slot.InitItem(item, ref inventoryItem);
         Items.Add(inventoryItem);
+            onItemAdded?.Invoke(inventoryItem);
     }
 
-    public void RemoveItem(int itemID)
+    public virtual void RemoveItem(int itemID)
     {
         ItemListData itemData = default;
         FindItem(itemID, ref itemData);
@@ -108,16 +112,31 @@ public class LocalInventory : MonoBehaviour, IInventory
             return;
         }
 
-        Slot slot = _slotHandler.FindSlotByID(itemData.SlotID);
+        Slot slot = SlotHandler.FindSlotByID(itemData.SlotID);
         
         slot.Reset();
         Items.Remove(itemData);
+        onItemRemoved?.Invoke(itemData);
     }
 
     public void UpdateItems(Item item, int newSlotID)
     {
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (item.itemID == Items[i].ItemID)
+            {
+                var inventoryItem = Items[i];
+                inventoryItem.SlotID = newSlotID;
+                Items[i] = inventoryItem;
+            }
+        }
     }
 
+    private void OnSlotReset(Slot slot)
+    {
+        
+    }
+    
     public void FindItem(int itemID, ref ItemListData itemData)
     {
         for (int i = 0; i < Items.Count; i++)

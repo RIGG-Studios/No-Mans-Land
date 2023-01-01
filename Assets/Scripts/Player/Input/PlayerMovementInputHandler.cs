@@ -11,6 +11,7 @@ public class PlayerMovementInputHandler : InputBase
 
     private bool _isSprintPressed;
     private bool _isJumpPressed;
+    private bool _isFirePressed;
     
     private void Start()
     {
@@ -24,6 +25,11 @@ public class PlayerMovementInputHandler : InputBase
         InputActions.Player.Jump.performed += ctx =>
         {
             _isJumpPressed = true;
+        };
+
+        InputActions.Player.Fire.performed += ctx =>
+        {
+            OnFirePressed();
         };
     }
     
@@ -49,6 +55,21 @@ public class PlayerMovementInputHandler : InputBase
     {
         _movementDirection = InputActions.Player.Move.ReadValue<Vector2>();
     }
+
+    private void OnFirePressed()
+    {
+        if (NetworkPlayer.Local.Inventory.EquippedItem == null)
+        {
+            return;
+        }
+
+        if (NetworkPlayer.Local.Inventory.IsOpen)
+        {
+            return;
+        }
+        
+        _isFirePressed = true;
+    }
     
     private void OnInput(NetworkRunner runner, NetworkInput input)
     {
@@ -67,10 +88,12 @@ public class PlayerMovementInputHandler : InputBase
             MovementInput = _movementDirection,
             LookForward = _cameraLook.PlayerRotation,
             IsJumpPressed = _isJumpPressed,
-            IsSprintPressed = _isSprintPressed
+            IsSprintPressed = _isSprintPressed,
+            IsFirePressed = _isFirePressed
         };
 
         _isJumpPressed = false;
+        _isFirePressed = false;
 
         return networkInputData;
     }

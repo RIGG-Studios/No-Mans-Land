@@ -15,6 +15,7 @@ public class Item : ScriptableObject
     [Space]
     public int maxStack = 1;
 
+    public bool isEquippable;
     public GameObject fpPrefab;
     public GameObject tpPrefab;
 

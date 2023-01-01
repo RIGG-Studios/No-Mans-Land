@@ -10,7 +10,7 @@ public class PlayerInteractionHandler : MonoBehaviour
 {
     public bool CanInteract { get; private set; }
     
-    [SerializeField, Range(0, 5)] private float maxInteractionDistance;
+    [SerializeField, Range(0, 25)] private float maxInteractionDistance;
     [SerializeField] private LayerMask interactLayer;
     [SerializeField] private Transform lookFromPoint;
     [SerializeField] private GameObject interactUI;

@@ -9,4 +9,8 @@ public struct NetworkInputData : INetworkInput
     public Quaternion LookForward;
     public NetworkBool IsJumpPressed;
     public NetworkBool IsSprintPressed;
+    
+    
+    public NetworkBool IsFirePressed;
+    public NetworkBool IsReloadPressed;
 }

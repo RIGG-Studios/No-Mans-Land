@@ -13,12 +13,24 @@ public static class SlotSpawner
             return slot;
         }
     }
+    
+    private static GameObject NetworkSlotPrefab
+    {
+        get
+        {
+            GameObject slot = Resources.Load<GameObject>("Prefabs/NetworkSlot");
+
+            return slot;
+        }
+    }
 
     public static List<Slot> AllSlots = new ();
 
-    public static Slot[] GenerateSlots(Transform grid, int size)
+    public static Slot[] GenerateSlots(Transform grid, int size, bool networked = false)
     {
-        if (SlotPrefab == null)
+        GameObject slotPrefab = networked ? NetworkSlotPrefab : SlotPrefab;
+        
+        if (slotPrefab == null)
         {
             Debug.Log("Trying to spawn slots with no scene handler");
             return null;
@@ -28,7 +40,7 @@ public static class SlotSpawner
 
         for (int i = 0; i < size; i++)
         {
-            Slot slot = SceneHandler.Instance.Spawn(SlotPrefab, grid).GetComponent<Slot>();
+            Slot slot = SceneHandler.Instance.Spawn(slotPrefab, grid).GetComponent<Slot>();
             
             slots.Add(slot);
             AllSlots.Add(slot);

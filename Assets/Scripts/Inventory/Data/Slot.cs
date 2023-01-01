@@ -6,19 +6,19 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image itemIcon;
-    [SerializeField] private Text stackText;
+    [SerializeField] protected Image itemIcon;
+    [SerializeField] protected Text stackText;
 
-    public int ID { get; private set; }
-    public bool HasItem { get; private set; }
-    public IInventory Inventory { get; private set; }
-    
-    public bool IsHovered { get; private set; }
-
-    [HideInInspector]
-    public ItemListData InventoryItem;
+    public int ID { get; set; }
+    public bool HasItem { get; set; }
+    public IInventory Inventory { get; set; }
+    public bool IsHovered { get; set; }
     
     private SlotHandler _slotHandler;
+
+    public delegate void OnSlotReset(Slot slot);
+
+    public OnSlotReset SlotReset;
 
     public void InitSlot(IInventory inventory, SlotHandler slotHandler, int id)
     {
@@ -29,6 +29,9 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
         _slotHandler = slotHandler;
         Inventory = inventory;
     }
+    
+    [HideInInspector]
+    public ItemListData InventoryItem;
 
     public void InitItem(Item item, ref ItemListData inventoryItem)
     {
@@ -44,13 +47,15 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
         HasItem = true;
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         HasItem = false;
 
         itemIcon.enabled = false;
         stackText.enabled = false;
         InventoryItem = default;
+        
+        SlotReset?.Invoke(this);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -99,7 +104,7 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-            IsHovered = true;
+        IsHovered = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)

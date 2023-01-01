@@ -19,11 +19,10 @@ public class PlayerInventoryInput : InputBase
     {
         InputActions.Player.ToggleInventory.performed += ctx => _playerInventory.ToggleInventory();
         
-        InputActions.Player.Slot1.performed += ctx => _playerInventory.SelectSlot(0);
-        InputActions.Player.Slot2.performed += ctx => _playerInventory.SelectSlot(1);
-        InputActions.Player.Slot3.performed += ctx => _playerInventory.SelectSlot(2);
-        InputActions.Player.Slot4.performed += ctx => _playerInventory.SelectSlot(3);
-        InputActions.Player.Slot5.performed += ctx => _playerInventory.SelectSlot(4);
-        InputActions.Player.Slot6.performed += ctx => _playerInventory.SelectSlot(5);
+        InputActions.Player.Slot1.performed += ctx => _playerInventory.SelectSlot(15);
+        InputActions.Player.Slot2.performed += ctx => _playerInventory.SelectSlot(16);
+        InputActions.Player.Slot3.performed += ctx => _playerInventory.SelectSlot(17);
+        InputActions.Player.Slot4.performed += ctx => _playerInventory.SelectSlot(18);
+        InputActions.Player.Slot5.performed += ctx => _playerInventory.SelectSlot(19);
     }
 }

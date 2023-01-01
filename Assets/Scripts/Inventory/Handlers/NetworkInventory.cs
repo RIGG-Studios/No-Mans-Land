@@ -50,7 +50,6 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
         SlotHandler = new SlotHandler(this, slots);
         
         
-        Debug.Log("loc");
         Invoke(nameof(AddItemDelay), 5.0f);
     }
     

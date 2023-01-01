@@ -75,8 +75,6 @@ public class PlayerMovementHandler : NetworkBehaviour
             _inputHandler.DisableSprint();
             MovementState = PlayerMovementStates.Moving;
         }
-        
-        CheckForGround();
     }
     
     public override void FixedUpdateNetwork()
@@ -95,7 +93,7 @@ public class PlayerMovementHandler : NetworkBehaviour
         UpdatePosition(networkInputData);
         UpdateStates(networkInputData);
             
-        if (networkInputData.IsJumpPressed && _isGrounded)
+        if (networkInputData.IsJumpPressed)
         {
             _rigidbody.velocity /= 2;
             _rigidbody.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
@@ -114,6 +112,7 @@ public class PlayerMovementHandler : NetworkBehaviour
         _horizontal = movementInput.x;
         _vertical = movementInput.y;
 
+
         if (_onLadder)
         {
             _rigidbody.velocity = Vector3.zero;
@@ -129,7 +128,6 @@ public class PlayerMovementHandler : NetworkBehaviour
         else
         {
             _rigidbody.AddForce(Physics.gravity * gravity, ForceMode.Force);
-
             _rigidbody.useGravity = true;
 
             Vector3 forward = transform.forward;
@@ -144,7 +142,6 @@ public class PlayerMovementHandler : NetworkBehaviour
                               Runner.DeltaTime;
             
             _rigidbody.MovePosition(nextPos);
-
         }
     }
 
@@ -168,6 +165,11 @@ public class PlayerMovementHandler : NetworkBehaviour
         {
             MovementState = PlayerMovementStates.Climbing;
         }
+    }
+
+    public void AddForce(Vector3 velocity, ForceMode forceMode)
+    {
+        _rigidbody.AddForce(velocity, forceMode);
     }
 
     private float CalculateSpeed()
@@ -199,7 +201,6 @@ public class PlayerMovementHandler : NetworkBehaviour
 
     private void CheckForGround()
     {
-        RaycastHit hit;
         _isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, 1, 0), groundCheckDist);
     }
 
