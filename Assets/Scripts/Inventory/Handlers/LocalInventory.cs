@@ -4,7 +4,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class LocalInventory : MonoBehaviour, IInventory
+public class LocalItemData
+{
+    public int SlotID;
+    public int Stack;
+    
+    public Item Item;
+    public ItemController ItemController;
+}
+
+public class LocalInventory : ContextBehaviour, IInventory
 {
     [SerializeField] private LocInventoryContainer[] inventories;
 
@@ -45,7 +54,7 @@ public class LocalInventory : MonoBehaviour, IInventory
         }
     }
 
-    public virtual void Awake()
+    public void InitSlots()
     {
         List<Slot> slots = new();
 

@@ -11,7 +11,7 @@ public class ModularWeaponEditor : Editor
     private readonly GUIContent _addAimLabel = new GUIContent("Add Aim Component");
     private readonly GUIContent _addAttackerLabel = new GUIContent("Add Attacker Component");
     private readonly GUIContent _addReloadLabel = new GUIContent("Add Reload Component");
-    private readonly GUIContent _addRecoilLabel = new GUIContent("Add Recoiler Component");
+    private readonly GUIContent _addRecoilLabel = new GUIContent("Add Recoil Component");
 
     private ModularWeapon _modularGun;
 
@@ -51,6 +51,8 @@ public class ModularWeaponEditor : Editor
         ShowModuleDetails(typeof(IAttacker), _addAttackerLabel);
         EditorGUILayout.Space();
         ShowModuleDetails(typeof(IRecoil), _addRecoilLabel);
+        EditorGUILayout.Space();
+        ShowModuleDetails(typeof(IReloader), _addReloadLabel);
     }
     
     void AddModule(object o)

@@ -9,51 +9,43 @@ using Behaviour = UnityEngine.Behaviour;
 public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 {
     public static NetworkPlayer Local { get; set; }
-
-    [Networked(OnChanged = nameof(OnNameChanged))]
-    public NetworkString<_16> PlayerName { get; set; }
-    
     
 
+    [Header("Network")]
     [SerializeField] private Behaviour[] remoteComponentsToDisable;
     [SerializeField] private GameObject[] remoteGameObjectsDisable;
     
-    [Space]
-    
     public UnityEvent onLocalPlayerInit;
-    
-    
-     public PlayerInteractionHandler Interaction { get; private set; } 
-     public PlayerMovementHandler Movement { get; private set; }
-     public CameraLook Camera { get; private set; } 
-     public PlayerInventory Inventory { get; private set; }
-     public PlayerAttacker Attack { get; private set; }
 
-     [HideInInspector]
-     public Player Owner;
-
-     private bool _requestRespawn;
-     
-    protected override void Awake()
-    {
-        base.Awake();
-        
-        Interaction = GetComponent<PlayerInteractionHandler>();
-        Movement = GetComponent<PlayerMovementHandler>();
-        Camera = GetComponentInChildren<CameraLook>();
-        Inventory = GetComponent<PlayerInventory>();
-        Attack = GetComponent<PlayerAttacker>();
-    }
+    [Header("Local")]
+    [SerializeField] private PlayerInteractionHandler interaction;
+    [SerializeField] private PlayerMovementHandler movement;
+    [SerializeField] private CameraLook cameraLook;
+    [SerializeField] private PlayerInventory inventory;
+    [SerializeField] private PlayerAttacker attacker;
+    [SerializeField] private PlayerHealth health;
     
+    public PlayerInteractionHandler Interaction => interaction;
+    public PlayerMovementHandler Movement => movement;
+    public CameraLook Camera => cameraLook;
+    public PlayerInventory Inventory => inventory;
+    public PlayerAttacker Attack => attacker;
+    public PlayerHealth Health => health;
+    
+    [HideInInspector]
+    public Player Owner;
+
+    private bool _requestRespawn;
+
     public override void Spawned()
     {
         if (Object.HasInputAuthority)
         {
             Local = this;
-            RPC_RequestUpdatePlayerName(Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)");
             Context.Camera.SetActive(false);
         }
-        
+
+        gameObject.name = Owner.PlayerName.ToString();
         SetupPlayer();
     }
 
@@ -90,11 +82,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         Inventory.CanUse = false;
     }
 
-    private static void OnNameChanged(Changed<NetworkPlayer> changed)
-    {
-        changed.Behaviour.gameObject.name = changed.Behaviour.PlayerName.ToString();
-    }
-
     private void SetupPlayer()
     {
         //is this player local
@@ -116,17 +103,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         }
 
         string playerName = Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)";
-
-        if (Object.HasInputAuthority)
-        {
-            RPC_RequestUpdatePlayerName(playerName);
-        }
-    }
-
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    public void RPC_RequestUpdatePlayerName(string playerName)
-    {
-        PlayerName = playerName;
     }
 
 

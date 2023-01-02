@@ -48,7 +48,8 @@ public class PlayerAttacker : NetworkBehaviour
         }
         
         IsAttacking = true;
-        Invoke(nameof(ResetAttack), 0.09f);
+        _lastAttack = Time.time;
+        Invoke(nameof(ResetAttack), 0.9f);
     }
 
     public void HitScanAttack(float damage, float length)
@@ -56,9 +57,16 @@ public class PlayerAttacker : NetworkBehaviour
         LagCompensatedHit hitInfo =
             HitScanHandler.RegisterHitScan(Runner, Object, _player.Camera.transform, length, attackableLayers);
 
+        if (hitInfo.Hitbox == null && hitInfo.Collider == null)
+        {
+            return;
+        }
+        
+        
         Vector3 dir = (hitInfo.Point - _player.Camera.transform.position).normalized;
 
-        HitData hitData = NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage);
+        HitData hitData =
+            NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage, HitFeedbackTypes.AnimatedDamageText);
 
         if (hitData.Action != HitAction.None)
         {
@@ -86,39 +94,4 @@ public class PlayerAttacker : NetworkBehaviour
             changed.Behaviour.OnAttackRemote();
         }
     }
-    
-            
-    /*/
-    Transform raycastTransform = _player.Camera.transform;
-
-    Runner.LagCompensation.Raycast(raycastTransform.position, raycastTransform.forward, length,
-        Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
-
-    float hitDist = 100f;
-
-    if (hitInfo.Hitbox != null)
-    {
-        
-        if(Object.HasInputAuthority) DamageNotifier.Instance.OnDamageEntity(hitInfo.Point, 34);
-
-        if (Object.HasStateAuthority)
-        {
-            hitInfo.Hitbox.GetComponent<IDamageable>().Damage(_player.PlayerName.ToString(), 20f);
-        }
-        else
-        {
-            
-        }
-    }
-    else if (hitInfo.Collider != null)
-    {
-        //hit physics collider
-    }
-    else
-    {
-        //hit nothing
-    }
-
-    _lastAttack = Time.time;
-    /*/
 }

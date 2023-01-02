@@ -88,7 +88,7 @@ public class PlayerMovementHandler : NetworkBehaviour
         {
             return;
         }
-        
+
         UpdateRotation(networkInputData);
         UpdatePosition(networkInputData);
         UpdateStates(networkInputData);

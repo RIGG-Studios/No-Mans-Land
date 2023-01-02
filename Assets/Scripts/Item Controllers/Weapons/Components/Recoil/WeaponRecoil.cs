@@ -33,6 +33,7 @@ public class WeaponRecoil : WeaponComponent, IRecoil
 
     public void DoRecoil()
     {
+        Debug.Log("recoil : " + Weapon.Player.Object.HasInputAuthority);
         _recoil1Pos += new Vector3(recoilRotation.x, Random.Range(-recoilRotation.y, recoilRotation.y), 
             Random.Range(-recoilRotation.z, recoilRotation.z));
 

@@ -2,18 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+
 
 public struct PlayerStats : INetworkStruct
 {
     public PlayerRef PlayerRef;
-
+    
     public short Kills;
     public short Deaths;
     public short Score;
-    public TickTimer RespawnTimer;
-    public byte Position;
+    public byte TeamID;
+}
+
+public enum StatTypes : byte
+{
+    Kills,
+    Deaths,
+    Score,
+    TeamID
 }
 
 public class Player : ContextBehaviour
@@ -24,14 +33,40 @@ public class Player : ContextBehaviour
     [Networked]
     public ref PlayerStats Stats => ref MakeRef<PlayerStats>();
     
+    [Networked(OnChanged = nameof(OnNameChanged))]
+    public NetworkString<_16> PlayerName { get; set; }
+
+
+    
     [SerializeField] private NetworkPlayer playerPrefab;
 
     public NetworkPlayer PlayerPrefab => playerPrefab;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        if (Object.HasInputAuthority)
+        {
+            RPC_RequestUpdatePlayerName(Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)");
+        }
+    }
     
     public void AssignNetworkPlayer(NetworkPlayer player)
     {
         ActivePlayer = player;
         ActivePlayer.Owner = this;
+    }
+    
+    private static void OnNameChanged(Changed<Player> changed)
+    {
+        changed.Behaviour.gameObject.name = changed.Behaviour.PlayerName.ToString() + "_PERSISTANT";
+    }
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void RPC_RequestUpdatePlayerName(string playerName)
+    {
+        PlayerName = playerName;
     }
 
     public void ClearNetworkPlayer()
@@ -88,4 +123,26 @@ public class Player : ContextBehaviour
         }
     }
 
+    public void SetStat(StatTypes type, int value)
+    {
+        switch (type)
+        {
+            case StatTypes.Deaths:
+                Stats.Deaths = (short)value;
+                return;
+            
+            case StatTypes.Kills:
+                Stats.Kills = (short)value;
+                return;
+            
+            
+            case StatTypes.Score:
+                Stats.Score = (short)value;
+                return;
+            
+            case StatTypes.TeamID:
+                Stats.TeamID = (byte)value;
+                return;
+        }
+    }
 }

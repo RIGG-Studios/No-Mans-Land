@@ -33,7 +33,7 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
     [HideInInspector]
     public ItemListData InventoryItem;
 
-    public void InitItem(Item item, ref ItemListData inventoryItem)
+    public virtual void InitItem(Item item, ref ItemListData inventoryItem)
     {
         itemIcon.enabled = true;
         itemIcon.sprite = item.itemIcon;
@@ -49,6 +49,11 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
 
     public virtual void Reset()
     {
+        if (HasItem)
+        {
+            
+        }
+        
         HasItem = false;
 
         itemIcon.enabled = false;
@@ -67,7 +72,7 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
     {
         if (_slotHandler == null || !HasItem) return;
 
-        Slot[] slots = SlotSpawner.AllSlots.ToArray();
+        Slot[] slots = FindObjectsOfType<Slot>();
 
         float closestDist = -1f;
         Slot closestSlot = null;

@@ -32,7 +32,10 @@ public class Gameplay : ContextBehaviour
         if (Players.ContainsKey(playerRef))
         {
             Debug.Log($"Player {playerRef} already joined");
+            return;
         }
+        
+        Context.Teams.AddToTeam(player);
 
         Players.Add(playerRef, player);
         SpawnNetworkPlayer(player);
@@ -96,7 +99,7 @@ public class Gameplay : ContextBehaviour
     {
         DespawnNetworkPlayer(player);
 
-        var networkPlayer = SpawnNetworkPlayer(player.Object.InputAuthority, player.PlayerPrefab);
+        NetworkPlayer networkPlayer = SpawnNetworkPlayer(player.Object.InputAuthority, player.PlayerPrefab);
         player.AssignNetworkPlayer(networkPlayer);
     }
 
@@ -107,8 +110,41 @@ public class Gameplay : ContextBehaviour
             return;
         }
         
+        
         Runner.Despawn(player.ActivePlayer.Object);
         player.ClearNetworkPlayer();
+    }
+
+    public void OnPlayerDeath(NetworkHealthHandler health)
+    {
+        Debug.Log("gameplay got death call");
+
+        if (health == null)
+        {
+            return;
+        }
+        
+        if (Players.TryGet(health.Object.InputAuthority, out Player player))
+        {
+            AddSpawnRequest(player, 3.0f);
+        }
+    }
+    
+    
+    protected void AddSpawnRequest(Player player, float spawnDelay)
+    {
+        int delayTicks = Mathf.RoundToInt(Runner.Simulation.Config.TickRate * spawnDelay);
+
+        _spawnRequests.Add(new SpawnRequest()
+        {
+            Player = player,
+            Tick = Runner.Tick + delayTicks,
+        });
+    }
+
+    public void TryFindPlayer(PlayerRef playerRef, out Player player)
+    {
+        Players.TryGet(playerRef, out player);
     }
 
 

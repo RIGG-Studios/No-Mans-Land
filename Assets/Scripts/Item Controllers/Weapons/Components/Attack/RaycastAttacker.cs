@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class RaycastAttacker : WeaponComponent, IAttacker
 {
     [SerializeField] private float raycastLength;
+    [SerializeField] private ParticleSystem[] muzzleFlash;
     [SerializeField] private float damage;
 
     public event Action onAttack;
@@ -23,9 +24,22 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
     public void Attack()
     {
-        Weapon.Player.Attack.HitScanAttack(damage, raycastLength);
+        if (Weapon.Reloader is {CurrentAmmo: <= 0})
+        {
+            return;
+        }
         
+        Weapon.Player.Attack.HitScanAttack(damage, raycastLength);
         Animator.SetTrigger(_fire);
+        
+        Debug.Log("ahh");
         onAttack?.Invoke();
+        
+        Debug.Log(onAttack.GetInvocationList().Length);
+
+        foreach (ParticleSystem particle in muzzleFlash)
+        {
+            particle.Play();
+        }
     }
 }

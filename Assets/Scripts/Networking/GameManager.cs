@@ -17,6 +17,7 @@ public class GameManager : SimulationBehaviour, IPlayerJoined, IPlayerLeft
     
     private bool _gameplaySpawned;
 
+    private NetworkTeams _networkTeams;
 
     public void PlayerJoined(PlayerRef player)
     {
@@ -33,7 +34,6 @@ public class GameManager : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 
         Player playerObj = Runner.Spawn(playerPrefab, inputAuthority: player);
         _players.Add(player, playerObj);
-        
         Runner.SetPlayerObject(player, playerObj.Object);
     }
 

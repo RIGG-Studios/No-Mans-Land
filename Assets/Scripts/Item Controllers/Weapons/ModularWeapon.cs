@@ -16,26 +16,30 @@ public class ModularWeapon : BaseWeapon
     
     public WeaponStates WeaponState { get; private set; }
     
-
     public Item item;
 
     private Animator _weaponAnimator;
 
     public IAimer Aimer { get; private set; }
     public IAttacker Attacker { get; private set; }
-    
     public IRecoil CameraRecoil { get; private set; }
-    
     public IRecoil WeaponRecoil { get; private set; }
-    
+    public IReloader Reloader { get; private set; }
 
-    public void SetAttacker(IAttacker attacker) => Attacker = attacker;
+    private bool _test;
+
+    public void SetAttacker(IAttacker attacker)
+    {
+        Debug.Log("att");
+        Attacker = attacker; 
+    } 
     public void SetAimer(IAimer aimer) => Aimer = aimer;
 
     public void SetCameraRecoil(IRecoil recoil)
     {
         if (Attacker != null)
         {
+            Debug.Log("a9tt");
             Attacker.onAttack += CameraRecoil.DoRecoil;
         }
         
@@ -54,6 +58,17 @@ public class ModularWeapon : BaseWeapon
         if (Aimer != null)
         {
             Aimer.onAim += WeaponRecoil.OnAimStateChanged;
+        }
+    }
+
+    public void SetReloader(IReloader reloader)
+    {
+        Reloader = reloader;
+        
+        if (Attacker != null && !_test)
+        {
+            Attacker.onAttack += reloader.OnFired;
+            _test = true;
         }
     }
 

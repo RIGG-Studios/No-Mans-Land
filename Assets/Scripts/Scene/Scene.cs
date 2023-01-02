@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 namespace NoMansLand.Scene
@@ -14,6 +13,7 @@ namespace NoMansLand.Scene
 
         public SceneInput Input;
         public SceneCamera Camera;
+        public NetworkTeams Teams;
         
         //Gameplay
 
@@ -77,13 +77,14 @@ namespace NoMansLand.Scene
             yield return Activate();
         }
         
+
         public void Initialize()
         {
             if (_initialized)
             {
                 return;
             }
-
+            
             ContextReady = true;
             
             CollectServices();
@@ -184,7 +185,7 @@ namespace NoMansLand.Scene
                 return;
             }
 
-            if (_sceneComponents.Contains(service) == true)
+            if (_sceneComponents.Contains(service))
             {
                 Debug.LogError($"Service {service.gameObject.name} already added.");
                 return;

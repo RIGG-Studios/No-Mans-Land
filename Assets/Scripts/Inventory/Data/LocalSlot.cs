@@ -2,17 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalSlot : MonoBehaviour
+public class LocalSlot : BaseSlot
 {
-    // Start is called before the first frame update
-    void Start()
+    public LocalItemData InventoryItem { get; private set; }
+    
+    public override void InitLocalItem(LocalItemData itemData)
     {
-        
+        InventoryItem = itemData;
+
+        slotIcon.sprite = itemData.Item.itemIcon;
+
+        if (itemData.Item.IsStackable)
+        {
+            stackText.enabled = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Reset()
     {
-        
+        if (HasItem)
+        {
+            InventoryItem.ItemController.Hide();
+        }
+
+        HasItem = false;
+
+        slotIcon.enabled = false;
+        stackText.enabled = false;
+        InventoryItem = null;
     }
 }

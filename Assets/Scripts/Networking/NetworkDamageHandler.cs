@@ -10,9 +10,17 @@ public enum HitAction : byte
     Heal
 }
 
+public enum HitFeedbackTypes : byte
+{
+    None,
+    AnimatedHitMarker,
+    AnimatedDamageText
+}
+
 public struct HitData
 {
     public HitAction Action;
+    public HitFeedbackTypes Feedback;
     public float Damage;
     public Vector3 Position;
     public Vector3 Direction;
@@ -35,16 +43,15 @@ public interface INetworkDamagable
 
     PlayerRef OwnerRef { get; }
     
-    void ProcessHit(ref HitData hit);
+    bool ProcessHit(ref HitData hit);
 }
 
 public static class NetworkDamageHandler 
 {
-    public static HitData ProcessHit(PlayerRef attackerRef, Vector3 direction, LagCompensatedHit hit, float damage, HitAction hitAction)
+    public static HitData ProcessHit(PlayerRef attackerRef, Vector3 direction, LagCompensatedHit hit, float damage, HitAction hitAction, HitFeedbackTypes feedbackType)
     {
         INetworkDamagable networkDamagable = GetDamageTarget(hit.Hitbox, hit.Collider);
 
-        Debug.Log(networkDamagable);
         if (networkDamagable == null)
         {
             return default;
@@ -57,6 +64,7 @@ public static class NetworkDamageHandler
             Direction = direction,
             Position = hit.Point,
             Normal = hit.Normal,
+            Feedback = feedbackType,
             Victim = networkDamagable,
             AttackerRef = attackerRef
         };
@@ -66,9 +74,13 @@ public static class NetworkDamageHandler
 
     private static HitData ProcessHit(ref HitData hitData)
     {
-        hitData.Victim.ProcessHit(ref hitData);
+        bool success = hitData.Victim.ProcessHit(ref hitData);
 
-        Debug.Log("Procesed Hit");
+        if (success)
+        {
+            Debug.Log("Succesfully damaged player");
+        }
+        
         return hitData;
     }
 

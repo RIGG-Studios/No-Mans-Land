@@ -16,7 +16,7 @@ public class SceneComponent : MonoBehaviour
     private bool _isActive;
 
 
-    internal void Init(Scene scene, SceneContext context)
+    public void Init(Scene scene, SceneContext context)
     {
         if (_isInitialized)
         {
@@ -31,7 +31,7 @@ public class SceneComponent : MonoBehaviour
         _isInitialized = true;
     }
 
-    internal void Activate()
+    public void Activate()
     {
         if (!_isInitialized)
         {
@@ -47,7 +47,7 @@ public class SceneComponent : MonoBehaviour
         _isActive = true;
     }
 
-    internal void DeActivate()
+    public void DeActivate()
     {
         if (_isActive == false)
         {
@@ -59,7 +59,7 @@ public class SceneComponent : MonoBehaviour
         _isActive = false;
     }
     
-    internal void Tick()
+    public void Tick()
     {
         if (_isActive == false)
         {
@@ -69,7 +69,7 @@ public class SceneComponent : MonoBehaviour
         OnTick();
     }
 
-    internal void LateTick()
+    public void LateTick()
     {
         if (_isActive == false)
         {

@@ -20,7 +20,7 @@ public class PlayerInventory : LocalInventory
     
     private PlayerItemControllerHandler _itemControllerHandler;
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
 
@@ -28,6 +28,16 @@ public class PlayerInventory : LocalInventory
         CanUse = true;
     }
 
+    public override void Start()
+    {
+        if (Object.HasInputAuthority)
+        {
+            InitSlots();
+        }
+        
+        base.Start();
+    }
+    
     public void ToggleInventory()
     {
         if (!CanUse)
@@ -98,11 +108,8 @@ public class PlayerInventory : LocalInventory
     {
         ItemController[] itemControllers = _itemControllerHandler.itemControllers.ToArray();
         
-        Debug.Log(itemControllers.Length);
         for (int i = 0; i < itemControllers.Length; i++)
         {
-            Debug.Log(itemID);
-            Debug.Log(itemControllers[i].Item.itemID);
             if (itemID == itemControllers[i].Item.itemID)
             {
                 return itemControllers[i];

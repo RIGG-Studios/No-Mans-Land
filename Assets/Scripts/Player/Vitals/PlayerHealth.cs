@@ -13,9 +13,11 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
     public NetworkBool IsDead { get; private set; }
 
     [SerializeField] private Text healthText;
+    [SerializeField] private GameObject deathPanel;
+    [SerializeField] private Text respawnTimeText;
     
-    public UnityEvent<TakeDamageData> onDamageTaken;
-    public UnityEvent<OnDeathData> onDeath;
+    public UnityEvent<HitData> onDamageTaken;
+    public UnityEvent onDeath;
 
 
     private const byte StartingHealth = 100;
@@ -37,31 +39,31 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         bool isDeadCurrent = changed.Behaviour.IsDead;
 
         changed.LoadOld();
-
-        bool isDeadOld = changed.Behaviour.IsDead;
-
+        
         if (isDeadCurrent)
             changed.Behaviour.OnDeath();
     }
 
     private void OnDeath()
     {
-        onDeath?.Invoke(new OnDeathData()
+        if (Object.HasStateAuthority)
         {
-            Attacker = String.Empty
-        });
+            Context.Gameplay.OnPlayerDeath(this);
+        }
+        
+        if (Object.HasInputAuthority)
+        {
+            deathPanel.SetActive(true);
+            onDeath?.Invoke();
+        }
     }
 
-    public override void Damage(float damage, PlayerRef attackerRef)
+    public override bool Damage(HitData hitData)
     {
-        RPC_Damage(damage);
-        
-        onDamageTaken.Invoke(new TakeDamageData
-        {
-            Damage = damage,
-            Attacker = attackerRef,
-            NewHealth = Health
-        });
+        RPC_Damage(hitData.Damage);
+        onDamageTaken.Invoke(hitData);
+
+        return true;
     }
 
     protected override void OnHealthReduced()
@@ -87,10 +89,9 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         }
     }
 
-    public void ProcessHit(ref HitData hit)
+    public bool ProcessHit(ref HitData hit)
     {
-        Debug.Log("Procesed Hit Success");
-        Damage(hit.Damage, hit.AttackerRef);
+        return Damage(hit);
     }
 
     public void HitPerformed(HitData hit)

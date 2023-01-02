@@ -9,8 +9,7 @@ public class GameplayScene : Scene
 {
     protected override void OnInitialize()
     {
-        var contextBehaviours = 
-            Context.Runner.SimulationUnityScene.FindObjectsOfTypeInOrder<IContextBehaviour>(true);
+        var contextBehaviours = FindObjectsOfType<ContextBehaviour>(true);
 
         foreach (ContextBehaviour behaviour in contextBehaviours)
         {
