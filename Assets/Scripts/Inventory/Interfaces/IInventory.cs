@@ -25,6 +25,8 @@ public interface IInventory
     
     void AddItem(int itemID, int slotID = 0, int stack = 1);
     void RemoveItem(int itemID);
+
+    void OnSlotReset(Slot slot);
     void UpdateItems(Item item, int newSlotID);
 
     bool FindItem(int itemID, out ItemListData itemData);

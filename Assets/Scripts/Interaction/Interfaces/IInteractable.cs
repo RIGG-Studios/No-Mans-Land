@@ -12,6 +12,6 @@ public interface IInteractable
 
     void StopLookAtInteract();
 
-    bool ButtonInteract();
+    bool ButtonInteract(NetworkPlayer networkPlayer);
     void StopButtonInteract();
 }

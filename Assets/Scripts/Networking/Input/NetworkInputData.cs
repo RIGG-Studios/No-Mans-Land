@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public enum Buttons
+public enum PlayerButtons
 {
     Jump,
     Movement,
@@ -10,17 +10,24 @@ public enum Buttons
     Reload
 }
 
+public enum ShipButtons
+{
+    ToggleCameraView
+}
+
 public struct NetworkInputData : INetworkInput
 {
     public NetworkButtons Buttons;
-    
-    
+
     public Vector2 MovementInput;
     public Quaternion LookForward;
-    public NetworkBool IsJumpPressed;
-    public NetworkBool IsSprintPressed;
+
+    public NetworkBool SailingShip;
+}
+
+public struct NetworkShipInputData : INetworkStruct
+{
+    public ShipButtons Buttons;
     
-    
-    public NetworkBool IsFirePressed;
-    public NetworkBool IsReloadPressed;
+    public Vector2 MovementInput;
 }

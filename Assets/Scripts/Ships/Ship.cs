@@ -25,7 +25,25 @@ public class Ship : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-    //    _rigidbody.AddForce(transform.forward * speed, ForceMode.Force);
+        _rigidbody.AddForce(_velocity, ForceMode.Force);
+    }
+
+    private void SetVelocity(Vector3 velocity)
+    {
+        _velocity = velocity;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_RequestPilotChange(PlayerRef playerRef)
+    {
+        Object.AssignInputAuthority(playerRef);
+        HasPilot = true;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_RequestResetPilot()
+    {
+        HasPilot = false;
     }
     
 

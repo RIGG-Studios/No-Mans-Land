@@ -128,6 +128,11 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
         RequestRemoveItem(inventoryItem);
     }
 
+    public void OnSlotReset(Slot slot)
+    {
+        throw new NotImplementedException();
+    }
+
     public void UpdateItems(Item item, int newSlotID)
     {
         RequestUpdateItems(item.itemID, newSlotID);

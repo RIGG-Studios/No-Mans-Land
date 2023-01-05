@@ -13,7 +13,7 @@ public class Cannon : MonoBehaviour, IInteractable
     public string LookAtID => "[F] INTERACT";
     public string ID => "Cannon";
     
-    public bool ButtonInteract()
+    public bool ButtonInteract(NetworkPlayer player)
     {
         if (isOccupied)
         {

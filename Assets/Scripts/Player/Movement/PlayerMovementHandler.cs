@@ -28,6 +28,8 @@ public class PlayerMovementHandler : StateMachine
     [HideInInspector]
     public CameraLook cameraLook;
     
+    public Ship Ship { get; set; }
+    
     
     [Networked]
     public NetworkButtons ButtonsPrevious { get; set; }
@@ -73,16 +75,16 @@ public class PlayerMovementHandler : StateMachine
 
         ButtonsPrevious = input.Buttons;
 
-        if (pressed.IsSet(Buttons.Jump))
+        if (pressed.IsSet(PlayerButtons.Jump))
         {
             EnterState(State.StateTypes.Jumping);
         }
 
-        if (pressed.IsSet(Buttons.Sprint))
+        if (pressed.IsSet(PlayerButtons.Sprint))
         {
             EnterState(State.StateTypes.Sprinting);
         }
-        else if (released.IsSet(Buttons.Sprint) || input.MovementInput == Vector2.zero)
+        else if (released.IsSet(PlayerButtons.Sprint) || input.MovementInput == Vector2.zero)
         {
             EnterState(State.StateTypes.Moving);
             _inputProvider.ResetSprint();
@@ -146,6 +148,16 @@ public class PlayerMovementHandler : StateMachine
             
             cameraLook.gameObject.SetActive(false);
             CanMove = false;
+        }
+
+        if (interactable.ID == "ShipWheel")
+        {
+            ShipSteeringWheelInteraction wheel = interactable as ShipSteeringWheelInteraction;
+
+            if (wheel != null)
+            {
+                Ship = wheel.Ship;
+            }
         }
         
         if (interactable.ID != "Chest")

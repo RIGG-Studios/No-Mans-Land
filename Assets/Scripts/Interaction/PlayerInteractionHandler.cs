@@ -46,11 +46,10 @@ public class PlayerInteractionHandler : MonoBehaviour
                 _currentInteractable = null;
                 interactUI.SetActive(false);
             }
-
             return;
         }
         
-        if (hit.transform.TryGetComponent(out IInteractable interactable))
+        if (hit.collider.TryGetComponent(out IInteractable interactable))
         {
             _currentInteractable = interactable;
             
@@ -80,7 +79,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             return;
         }
         
-        bool success = _currentInteractable.ButtonInteract();
+        bool success = _currentInteractable.ButtonInteract(NetworkPlayer.Local);
 
         if (success)
         {

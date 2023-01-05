@@ -41,7 +41,6 @@ public class ItemAnimator : MonoBehaviour
     {
         float angle = NetworkPlayer.Local.Movement.Horizontal * horizontalMovementAngle;
         
-        Debug.Log(angle);
         movementTransform.localRotation = Quaternion.Slerp(movementTransform.localRotation, 
             Quaternion.Euler(0.0f, 0.0f, angle), Time.deltaTime * 5f);
     }

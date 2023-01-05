@@ -83,9 +83,9 @@ public class InputProvider : InputBase
         tickInput.MovementInput = _moveDir;
         tickInput.LookForward = _cameraLook.PlayerRotation;
         
-        tickInput.Buttons.Set(Buttons.Fire, _isFirePressed);
-        tickInput.Buttons.Set(Buttons.Sprint, _isSprintPressed);
-        tickInput.Buttons.Set(Buttons.Jump, _isJumpPressed);
+        tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
+        tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);
+        tickInput.Buttons.Set(PlayerButtons.Jump, _isJumpPressed);
         
         input.Set(tickInput);
 

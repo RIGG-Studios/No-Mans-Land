@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,19 +6,25 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] protected Image itemIcon;
-    [SerializeField] protected Text stackText;
-
     public int ID { get; set; }
     public bool HasItem { get; set; }
     public IInventory Inventory { get; set; }
     public bool IsHovered { get; set; }
     
+    
+    [SerializeField] protected Image itemIcon;
+    [SerializeField] protected Text stackText;
+
     private SlotHandler _slotHandler;
-
+    private Animator _animator;
+    
     public delegate void OnSlotReset(Slot slot);
-
     public OnSlotReset SlotReset;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     public void InitSlot(IInventory inventory, SlotHandler slotHandler, int id)
     {
@@ -48,13 +54,16 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
         HasItem = true;
     }
 
+    public void SelectSlot()
+    {
+        _animator.SetTrigger("Show");
+    }
+
     public virtual void Reset()
     {
-        if (HasItem)
-        {
-            
-        }
-        
+        SlotReset?.Invoke(this);
+        _animator.SetTrigger("Hide");
+
         HasItem = false;
 
         itemIcon.enabled = false;

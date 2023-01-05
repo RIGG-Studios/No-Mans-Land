@@ -21,7 +21,8 @@ public class SlotHandler
         
         for (int i = 0; i < Slots.Length; i++)
         {
-            slots[i].InitSlot(_inventory,this, i);
+            Slots[i].InitSlot(_inventory,this, i);
+            Slots[i].SlotReset += OnSlotReset;
         }
     }
 
@@ -29,11 +30,15 @@ public class SlotHandler
     {
         Slots = slots;
         
-                
         for (int i = 0; i < Slots.Length; i++)
         {
             slots[i].InitSlot(_inventory,this, i);
         }
+    }
+
+    public void OnSlotReset(Slot slot)
+    {
+        _inventory.OnSlotReset(slot);
     }
 
 

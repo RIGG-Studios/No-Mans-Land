@@ -61,16 +61,28 @@ public class PlayerInventory : LocalInventory
         ItemListData data = SlotHandler.Slots[i].InventoryItem;
         ItemController itemController = FindItemController(data.ItemID);
 
-        Debug.Log(itemController);
         if (itemController == null)
         {
             return;
         }
         
-        SwitchItemControllers(itemController);
+        SwitchItemControllers(itemController, data.SlotID);
     }
 
-    private void SwitchItemControllers(ItemController nextController)
+    public override void OnSlotReset(Slot slot)
+    {
+        if (EquippedItem == null)
+        {
+            return;
+        }
+        
+        if (slot.InventoryItem.ItemID == EquippedItem.Item.itemID)
+        {
+            HideCurrentItem();
+        }
+    }
+
+    private void SwitchItemControllers(ItemController nextController, int slotID)
     {
         if (EquippedItem != null)
         {
@@ -82,6 +94,23 @@ public class PlayerInventory : LocalInventory
             nextController.Equip();
             EquippedItem = nextController;
         }
+        
+        SlotHandler.FindSlotByID(slotID).SelectSlot();
+    }
+
+    private void HideCurrentItem()
+    {
+        StartCoroutine(IE_HideCurrentItem());
+    }
+
+    private IEnumerator IE_HideCurrentItem()
+    {
+        EquippedItem.Hide();
+        float hideTime = EquippedItem.GetHideTime();
+        yield return new WaitForSeconds(hideTime);
+        
+        EquippedItem.gameObject.SetActive(false);
+        EquippedItem = null;
     }
 
     private IEnumerator IE_SwitchItems(ItemController nextController)
@@ -99,7 +128,7 @@ public class PlayerInventory : LocalInventory
         
         float equipTime = nextController.GetEquipTime();
         yield return new WaitForSeconds(equipTime);
-
+        
         EquippedItem = nextController;
         IsSwitching = false;
     }

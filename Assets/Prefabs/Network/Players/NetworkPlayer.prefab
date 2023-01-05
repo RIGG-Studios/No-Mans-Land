@@ -1098,7 +1098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementTransform: {fileID: 2440542176383257896}
-  horizontalMovementAngle: 15
+  horizontalMovementAngle: -15
 --- !u!1 &1546747480105808753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1111,6 @@ GameObject:
   - component: {fileID: 3179884598373680720}
   - component: {fileID: 8874177288923519252}
   - component: {fileID: 1919621228866644800}
-  - component: {fileID: 4051836563772890578}
   - component: {fileID: 6467673482923859489}
   - component: {fileID: 8644226651885257243}
   - component: {fileID: 1678779374052586985}
@@ -1252,18 +1251,6 @@ MonoBehaviour:
   climbSpeed: 5
   groundCheckDist: 0.4
   cameraLook: {fileID: 0}
---- !u!114 &4051836563772890578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1546747480105808753}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1365c6d5f836d145baea376a6d20ae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &6467673482923859489
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1349,7 +1336,7 @@ MonoBehaviour:
   maxInteractionDistance: 2
   interactLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   lookFromPoint: {fileID: 8389939585149380230}
   interactUI: {fileID: 8056894815621154931}
   onLookAtInteract:
@@ -1525,6 +1512,7 @@ MonoBehaviour:
     _value: 0
   healthText: {fileID: 8724042928543564241}
   deathPanel: {fileID: 1671487997009177103}
+  model: {fileID: 2575829573406690218}
   respawnTimeText: {fileID: 1642206299603436722}
   onDamageTaken:
     m_PersistentCalls:

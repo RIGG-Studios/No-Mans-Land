@@ -129,6 +129,10 @@ public class LocalInventory : ContextBehaviour, IInventory
         onItemRemoved?.Invoke(itemData);
     }
 
+    public virtual void OnSlotReset(Slot slot)
+    {
+    }
+
     public void UpdateItems(Item item, int newSlotID)
     {
         for (int i = 0; i < Items.Count; i++)

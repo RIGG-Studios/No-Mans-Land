@@ -36,7 +36,7 @@ public class PlayerAttacker : NetworkBehaviour
         ButtonsPrevious = input.Buttons;
         
         
-        if (pressed.IsSet(Buttons.Fire) && !IsAttacking)
+        if (pressed.IsSet(PlayerButtons.Fire) && !IsAttacking)
         {
             Attack();
         }

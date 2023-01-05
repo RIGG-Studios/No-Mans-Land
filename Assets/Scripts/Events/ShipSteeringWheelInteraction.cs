@@ -6,6 +6,10 @@ using UnityEngine.Events;
 
 public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
 {
+    [SerializeField] private Ship ship;
+
+    public Ship Ship => ship;
+    
     public string LookAtID => "[F] INTERACT";
     public string ID => "SteeringWheel";
     
@@ -14,7 +18,7 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
 
     public void StopLookAtInteract() { }
 
-    public bool ButtonInteract()
+    public bool ButtonInteract(NetworkPlayer networkPlayer)
     {
         if (Ship == null)
         {
@@ -25,12 +29,13 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
         {
             return false;
         }
-        
-        
+
+        Ship.RPC_RequestPilotChange(networkPlayer.Object.InputAuthority);
         return true;
     }
 
     public void StopButtonInteract()
     {
+        Ship.RPC_RequestResetPilot();
     }
 }

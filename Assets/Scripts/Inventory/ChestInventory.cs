@@ -32,7 +32,7 @@ public class ChestInventory : NetworkInventory, IInteractable
         LookAtID = string.Empty;
     }
     
-    public bool ButtonInteract()
+    public bool ButtonInteract(NetworkPlayer player)
     {
         if (IsOpen)
         {

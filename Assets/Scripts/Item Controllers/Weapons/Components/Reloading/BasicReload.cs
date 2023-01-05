@@ -27,6 +27,10 @@ public class BasicReload : WeaponComponent, IReloader
         base.Awake();
 
         CurrentAmmo = maxCurrentAmmo;
+        
+        ammoText.enabled = true;
+        ammoText.text = CurrentAmmo + "/" + maxCurrentAmmo;
+        
         InputActions.Player.Reload.performed += ctx => Reload();
     }
 

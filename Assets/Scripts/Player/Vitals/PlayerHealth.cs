@@ -14,6 +14,7 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
 
     [SerializeField] private Text healthText;
     [SerializeField] private GameObject deathPanel;
+    [SerializeField] private GameObject model;
     [SerializeField] private Text respawnTimeText;
     
     public UnityEvent<HitData> onDamageTaken;
@@ -50,6 +51,8 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         {
             Context.Gameplay.OnPlayerDeath(this);
         }
+        
+        model.gameObject.SetActive(false);
         
         if (Object.HasInputAuthority)
         {
