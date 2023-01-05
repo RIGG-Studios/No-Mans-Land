@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State 
+public class State 
 {
     public enum StateTypes
     {
@@ -21,13 +21,13 @@ public abstract class State
         MovementHandler = movementHandler;
     }
     
-    public abstract void Enter();
-    public abstract void Exit();
+    public virtual void Enter() { }
+    public virtual void Exit() { }
 
     public virtual void OnUpdate() { }
     public virtual void OnFixedUpdate() { }
-    public virtual void OnLateUpdate() { }
+    public virtual void OnFixedUpdateNetwork() { }
 
-    public virtual void Move(Vector2 moveDir) { }
+    public virtual void Move(NetworkInputData input) { }
     public virtual void Look(Vector2 lookDir) { }
 }

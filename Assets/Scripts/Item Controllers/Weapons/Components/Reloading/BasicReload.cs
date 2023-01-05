@@ -1,18 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 public class BasicReload : WeaponComponent, IReloader
 {
     [SerializeField] private bool autoReload;
     [SerializeField] private int maxCurrentAmmo;
+    [SerializeField] private GameObject reloadText;
     [SerializeField] private WeaponAnimationData reloadAnimationData;
 
-    [Space]
-    
-    [SerializeField] private int startingCurrentAmmo;
-    [SerializeField] private int startingReserveAmmo;
+    [Space] [SerializeField] private Item ammoItem;
     
     private static readonly int ReloadHash = Animator.StringToHash("Reload");
 
@@ -20,14 +19,21 @@ public class BasicReload : WeaponComponent, IReloader
     public int ReserveAmmo { get; set; }
     public bool IsReloading { get; set; }
 
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        InputActions.Player.Reload.performed += ctx => Reload();
+    }
+    
     public void OnFired()
     {
         DecrementCurrentAmmo();
 
-        Debug.Log(CurrentAmmo);
-        if (CurrentAmmo <= 0 && autoReload)
+        if (CurrentAmmo <= 0)
         {
-            Reload();
+            reloadText.SetActive(true);
         }
     }
     
@@ -47,17 +53,7 @@ public class BasicReload : WeaponComponent, IReloader
     {
         CurrentAmmo += amount;
     }
-
-    public override void Awake()
-    {
-        base.Awake();
-
-        CurrentAmmo = startingCurrentAmmo;
-        ReserveAmmo = startingReserveAmmo;
-        
-      //  InputActions.Player
-    }
-
+    
     public void Reload()
     {
         if (IsReloading)
@@ -70,6 +66,13 @@ public class BasicReload : WeaponComponent, IReloader
 
     private IEnumerator IE_Reload()
     {
+        if (!Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
+        {
+            yield break;
+        }
+        
+        reloadText.SetActive(false);
+
         IsReloading = true;
 
         Animator.SetTrigger(ReloadHash);
@@ -78,12 +81,12 @@ public class BasicReload : WeaponComponent, IReloader
 
         int ammoNeeded = maxCurrentAmmo - CurrentAmmo;
 
-        if (ReserveAmmo < ammoNeeded)
+        if (itemData.Stack < ammoNeeded)
         {
-            ammoNeeded = ReserveAmmo;
+            ammoNeeded = itemData.Stack;
         }
         
-        ReserveAmmo -= ammoNeeded;
+        Weapon.Player.Inventory.UpdateItemStack(ref itemData, ammoNeeded);
         CurrentAmmo += ammoNeeded;
 
         IsReloading = false;

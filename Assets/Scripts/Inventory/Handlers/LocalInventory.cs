@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -79,13 +80,13 @@ public class LocalInventory : ContextBehaviour, IInventory
         {
             for (int z = 0; z < inventories[i].startingItems.Length; z++)
             {
-                AddItem(inventories[i].startingItems[z].itemID);
+                AddItem(inventories[i].startingItems[z].itemID, -1, inventories[i].startingItems[z].maxStack);
             }
         }
     }
     
 
-    public virtual void AddItem(int itemID, int slotID = -1)
+    public virtual void AddItem(int itemID, int slotID = -1, int stack = 1)
     {
         Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] :  SlotHandler.GetNextSlot();
 
@@ -103,7 +104,7 @@ public class LocalInventory : ContextBehaviour, IInventory
             return;
         }
 
-        ItemListData inventoryItem = new ItemListData(itemID, slot.ID, 1);
+        ItemListData inventoryItem = new ItemListData(itemID, slot.ID, stack);
         
         slot.InitItem(item, ref inventoryItem);
         Items.Add(inventoryItem);
@@ -113,7 +114,7 @@ public class LocalInventory : ContextBehaviour, IInventory
     public virtual void RemoveItem(int itemID)
     {
         ItemListData itemData = default;
-        FindItem(itemID, ref itemData);
+        FindItem(itemID, out itemData);
 
         if (itemData.ItemID == 0)
         {
@@ -141,12 +142,39 @@ public class LocalInventory : ContextBehaviour, IInventory
         }
     }
 
-    private void OnSlotReset(Slot slot)
+
+    public void UpdateItemStack(ref ItemListData itemData, int amount = 1)
     {
+        Slot slot = SlotHandler.FindSlotByID(itemData.SlotID);
+
+        if (slot == null)
+        {
+            Debug.Log("Couldn't find item slot");
+            return;
+        }
+
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (Items[i].SlotID == itemData.SlotID)
+            {
+                ItemListData itm = Items[i];
+                itm.Stack -= amount;
+                
+                Items[i] = itm;
+                slot.UpdateItemStackText(Items[i].Stack);
+
+                if (itm.Stack <= 0)
+                {
+                    RemoveItem(itm.ItemID);
+                }
+                break;
+            }
+        }
         
     }
-    
-    public void FindItem(int itemID, ref ItemListData itemData)
+
+
+    public bool FindItem(int itemID, out ItemListData itemData)
     {
         for (int i = 0; i < Items.Count; i++)
         {
@@ -156,7 +184,10 @@ public class LocalInventory : ContextBehaviour, IInventory
             }
 
             itemData = Items[i];
-            return;
+            return true;
         }
+
+        itemData = default;
+        return false;
     }
 }

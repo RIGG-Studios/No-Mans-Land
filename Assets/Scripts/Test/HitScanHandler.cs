@@ -11,4 +11,9 @@ public class HitScanHandler
 
          return hitInfo;
     }
+
+    public static NetworkObject RequestProjectile(NetworkRunner runner, PlayerRef inputAuth, GameObject projectilePrefab, Transform spawnPoint)
+    {
+        return runner.Spawn(projectilePrefab, spawnPoint.position, spawnPoint.rotation, inputAuth);
+    }
 }

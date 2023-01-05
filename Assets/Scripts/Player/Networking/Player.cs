@@ -41,17 +41,16 @@ public class Player : ContextBehaviour
     [SerializeField] private NetworkPlayer playerPrefab;
 
     public NetworkPlayer PlayerPrefab => playerPrefab;
+    
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        
         if (Object.HasInputAuthority)
         {
             RPC_RequestUpdatePlayerName(Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)");
         }
     }
-    
+
     public void AssignNetworkPlayer(NetworkPlayer player)
     {
         ActivePlayer = player;

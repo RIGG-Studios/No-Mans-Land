@@ -38,12 +38,13 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
         itemIcon.enabled = true;
         itemIcon.sprite = item.itemIcon;
 
+        InventoryItem = inventoryItem;
         if (item.IsStackable)
         {
+            UpdateItemStackText(inventoryItem.Stack);
             stackText.enabled = true;
         }
-
-        InventoryItem = inventoryItem;
+        
         HasItem = true;
     }
 
@@ -105,6 +106,12 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
         {
             itemIcon.transform.localPosition = Vector3.zero;
         }
+    }
+
+    public void UpdateItemStackText(int stack)
+    {
+        InventoryItem.Stack = stack;
+        stackText.text = $"x{stack}";
     }
 
     public void OnPointerEnter(PointerEventData eventData)

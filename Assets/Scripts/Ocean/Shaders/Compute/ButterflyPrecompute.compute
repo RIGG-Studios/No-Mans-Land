@@ -1,0 +1,66 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> butterfly;
+int oceanResolution;
+int BitReverse(int n, int bits);
+
+[numthreads(1,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    const float pi = 3.141592653589f;
+    const float k = fmod(id.y * ((float)oceanResolution / pow(2, id.x + 1)), oceanResolution);
+    float2 twiddle = float2(cos(2.0f * pi * k / (float)oceanResolution), sin(2.0f * pi * k / (float)oceanResolution));
+    const int span = (int)pow(2, id.x);
+    int wing = 0;
+
+    if(fmod(id.y, pow(2, id.x + 1)) < pow(2, id.x))
+    {
+        wing = 1;
+    }
+    else
+    {
+        wing = 0;
+    }
+
+    if(id.x == 0)
+    {
+        if(wing == 1)
+        {
+            butterfly[id.xy] = float4(twiddle.x, twiddle.y, BitReverse(id.y, log2(oceanResolution)),
+                BitReverse(id.y + 1, log2(oceanResolution)));
+        }
+        else
+        {
+            butterfly[id.xy] = float4(twiddle.x, twiddle.y, BitReverse(id.y - 1, log2(oceanResolution)),
+                BitReverse(id.y, log2(oceanResolution)));
+        }
+    }
+    else
+    {
+        if(wing == 1)
+        {
+            butterfly[id.xy] = float4(twiddle.x, twiddle.y, id.y, id.y + span);
+        }
+        else
+        {
+            butterfly[id.xy] = float4(twiddle.x, twiddle.y, id.y - span, id.y);
+        }
+    }
+}
+
+//Stolen from https://github.com/antoniospg/UnityOcean
+int BitReverse(int n, int bits)
+{
+    int reversedN = n;
+    int nCpy = n;
+    int count = bits - 1;
+
+    nCpy >>= 1;
+    while (nCpy > 0) {
+        reversedN = (reversedN << 1) | (nCpy & 1);
+        count--;
+        nCpy >>= 1;
+    }
+
+    return ((reversedN << count) & ((1 << bits) - 1));
+}

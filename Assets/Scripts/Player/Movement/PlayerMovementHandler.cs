@@ -244,6 +244,17 @@ public class PlayerMovementHandler : NetworkBehaviour
 
     public void OnButtonInteract(IInteractable interactable)
     {
+        if (interactable.ID == "Cannon")
+        {
+            if (HasInputAuthority && NetworkPlayer.Local.Inventory.IsOpen)
+            {
+                NetworkPlayer.Local.Inventory.ToggleInventory();
+            }
+            
+            _cameraLook.gameObject.SetActive(false);
+            CanMove = false;
+        }
+        
         if (interactable.ID != "Chest")
         {
             return;
@@ -261,6 +272,17 @@ public class PlayerMovementHandler : NetworkBehaviour
         if (interactable.ID != "Chest")
         {
             return;
+        }
+        
+        if (interactable.ID == "Cannon")
+        {
+            if (HasInputAuthority && NetworkPlayer.Local.Inventory.IsOpen)
+            {
+                NetworkPlayer.Local.Inventory.ToggleInventory();
+            }
+            
+            _cameraLook.gameObject.SetActive(true);
+            CanMove = true;
         }
 
         NetworkPlayer.Local.Inventory.ToggleInventory();

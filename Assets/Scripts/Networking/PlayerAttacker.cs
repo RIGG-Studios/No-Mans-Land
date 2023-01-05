@@ -49,7 +49,7 @@ public class PlayerAttacker : NetworkBehaviour
         
         IsAttacking = true;
         _lastAttack = Time.time;
-        Invoke(nameof(ResetAttack), 0.9f);
+        Invoke(nameof(ResetAttack), 0.09f);
     }
 
     public void HitScanAttack(float damage, float length)

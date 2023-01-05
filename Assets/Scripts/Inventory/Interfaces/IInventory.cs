@@ -23,9 +23,9 @@ public interface IInventory
 {
     bool IsFull { get; }
     
-    void AddItem(int itemID, int slotID = 0);
+    void AddItem(int itemID, int slotID = 0, int stack = 1);
     void RemoveItem(int itemID);
     void UpdateItems(Item item, int newSlotID);
 
-    void FindItem(int itemID, ref ItemListData itemData);
+    bool FindItem(int itemID, out ItemListData itemData);
 }

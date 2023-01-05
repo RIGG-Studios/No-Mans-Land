@@ -30,16 +30,18 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         }
         
         Weapon.Player.Attack.HitScanAttack(damage, raycastLength);
-        Animator.SetTrigger(_fire);
-        
-        Debug.Log("ahh");
         onAttack?.Invoke();
         
-        Debug.Log(onAttack.GetInvocationList().Length);
+        FireEffects();
+    }
 
+    private void FireEffects()
+    {
         foreach (ParticleSystem particle in muzzleFlash)
         {
             particle.Play();
         }
+        
+        Animator.SetTrigger(_fire);
     }
 }

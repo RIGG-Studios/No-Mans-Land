@@ -60,7 +60,7 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
         {
             for (int i = 0; i < startingItems.Length; i++)
             {
-                AddItem(startingItems[i].itemID);
+                AddItem(startingItems[i].itemID, -1, startingItems[i].maxStack);
             }
         }
         else
@@ -69,7 +69,7 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
         }
     }
     
-    public void AddItem(int itemID, int slotID = -1)
+    public void AddItem(int itemID, int slotID = -1, int stack = 1)
     {
         Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] :  SlotHandler.GetNextSlot();
 
@@ -120,7 +120,7 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
     {
         ItemListData inventoryItem = default;
         
-        FindItem(itemID, ref inventoryItem);
+        FindItem(itemID, out inventoryItem);
 
         Slot itemSlot = SlotHandler.FindSlotByID(inventoryItem.SlotID);
         
@@ -149,7 +149,7 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
         }
     }
 
-    public void FindItem(int itemID, ref ItemListData itemData)
+    public bool FindItem(int itemID, out ItemListData itemData)
     {
         for (int i = 0; i < Items.Count; i++)
         {
@@ -159,7 +159,10 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
             }
 
             itemData = Items[i];
-            break;
+            return true;
         }
+
+        itemData = default;
+        return false;
     }
 }

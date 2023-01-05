@@ -1,17 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour, IInteractable
 {
-    public enum CannonState
-    {
-        Occupied,
-        Empty
-    }
-
-
-    public CannonState State { get; private set; } = CannonState.Empty;
+    [Networked] 
+    public NetworkBool isOccupied { get; set; }
 
     [SerializeField] private Camera cannonCamera;
 
@@ -20,14 +15,40 @@ public class Cannon : MonoBehaviour, IInteractable
     
     public bool ButtonInteract()
     {
+        if (isOccupied)
+        {
+            return false;
+        }
+        
+        RPC_RequestOccupyCannon(true);
+
+        if (!isOccupied)
+        {
+            return false;
+        }
+        
+        SetupCannon();
         return true;
+
     }
 
     public void StopButtonInteract()
     {
     }
-    
+
     public void LookAtInteract() { }
     public void StopLookAtInteract() { }
 
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_RequestOccupyCannon(bool occupy)
+    {
+        isOccupied = occupy;
+    }
+
+    private void SetupCannon()
+    {
+        cannonCamera.gameObject.SetActive(true);
+        
+    }
 }

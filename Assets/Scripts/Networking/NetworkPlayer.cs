@@ -37,6 +37,13 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 
     private bool _requestRespawn;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        FindObjectOfType<GenerateQuadTree>().AssignPlayer(transform);
+    }
+
     public override void Spawned()
     {
         if (Object.HasInputAuthority)
@@ -45,7 +52,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
             Context.Camera.SetActive(false);
         }
 
-        gameObject.name = Owner.PlayerName.ToString();
         SetupPlayer();
     }
 
