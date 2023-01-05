@@ -5,41 +5,34 @@ using UnityEngine;
 
 public class ModularWeapon : BaseWeapon
 {
-    public enum WeaponStates
-    {
-        None,
-        Idle,
-        Equipping,
-        Reloading,
-        Hiding
-    }
-    
-    public WeaponStates WeaponState { get; private set; }
-    
     public Item item;
-
-    private Animator _weaponAnimator;
-
+    
     public IAimer Aimer { get; private set; }
     public IAttacker Attacker { get; private set; }
     public IRecoil CameraRecoil { get; private set; }
     public IRecoil WeaponRecoil { get; private set; }
     public IReloader Reloader { get; private set; }
 
+    private WeaponComponent[] _weaponComponents;
+    
+    
+    private Animator _weaponAnimator;
     private bool _test;
 
     public void SetAttacker(IAttacker attacker)
     {
-        Debug.Log("att");
         Attacker = attacker; 
-    } 
-    public void SetAimer(IAimer aimer) => Aimer = aimer;
+    }
+
+    public void SetAimer(IAimer aimer)
+    {
+        Aimer = aimer;
+    }
 
     public void SetCameraRecoil(IRecoil recoil)
     {
         if (Attacker != null)
         {
-            Debug.Log("a9tt");
             Attacker.onAttack += CameraRecoil.DoRecoil;
         }
         
@@ -82,17 +75,22 @@ public class ModularWeapon : BaseWeapon
             Debug.Log("Couldn't find Animator");
         }
         
-        WeaponComponent[] components = GetComponents<WeaponComponent>();
+        _weaponComponents = GetComponents<WeaponComponent>();
 
-        foreach (WeaponComponent component in components)
+        foreach (WeaponComponent component in _weaponComponents)
         {
             component.Init(this, _weaponAnimator);
         }
     }
 
-    public void Aim()
+    public override void Equip()
     {
-
+        base.Equip();
+        
+        foreach (WeaponComponent component in _weaponComponents)
+        {
+            component.OnEquip();
+        }
     }
 
     public override void Attack()
@@ -105,13 +103,13 @@ public class ModularWeapon : BaseWeapon
         Attacker.Attack();
     }
 
-    public void ChangeState(WeaponStates state)
+    public override void Hide()
     {
-        if (WeaponState == state)
+        base.Hide();
+        
+        foreach (WeaponComponent component in _weaponComponents)
         {
-            return;
+            component.OnHide();
         }
-
-        WeaponState = state;
     }
 }

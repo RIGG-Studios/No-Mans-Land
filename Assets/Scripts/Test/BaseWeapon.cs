@@ -27,6 +27,8 @@ public class BaseWeapon : ItemController
 
     public override void Equip() => StartCoroutine(IE_Equip());
     public override void Hide() => StartCoroutine(IE_Hide());
+    
+    
     public override float GetEquipTime() => equipAnimationData.ClipLength;
     public override float GetHideTime() => hideAnimationData.ClipLength;
     

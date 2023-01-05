@@ -16,6 +16,9 @@ public class WeaponComponent : InputBase
 
         Weapon = GetComponent<ModularWeapon>();
     }
+
+    public virtual void OnEquip() {}
+    public virtual void OnHide() { }
     
     public void Init(ModularWeapon weapon, Animator animator)
     {

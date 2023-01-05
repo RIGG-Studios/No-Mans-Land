@@ -2,26 +2,18 @@ using System;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public enum PlayerMovementStates
-{
-    Idle,
-    Moving,
-    Sprinting,
-    InAir,
-    Climbing
-}
-
-public class PlayerMovementHandler : NetworkBehaviour
+public class PlayerMovementHandler : StateMachine
 {
     public bool CanMove { get; set; }
     public bool IsMovingForward { get; private set; }
+    public bool IsGrounded { get; private set; }
+    public bool IsMoving { get; private set; }
+    public float Vertical { get; private set; }
+    public float Horizontal { get; private set; }
 
-    public PlayerMovementStates MovementState { get; private set; }
-
-    
     public float movementSpeed = 7;
-    public float defaultFOV = 90f;
     public float jumpSpeed = 10f;
     public float sprintSpeed = 10f;
     public float sprintFOV = 110f;
@@ -32,54 +24,40 @@ public class PlayerMovementHandler : NetworkBehaviour
     
     private bool _canSendInputToStates = true;
     private Rigidbody _rigidbody;
-    private CameraLook _cameraLook;
-    private PlayerMovementInputHandler _inputHandler;
     
-    private float _vertical;
-    private bool _isGrounded;
-    private float _horizontal;
-
+    [HideInInspector]
+    public CameraLook cameraLook;
+    
+    
+    [Networked]
+    public NetworkButtons ButtonsPrevious { get; set; }
+    
     private Ladder _ladder;
     private bool _onLadder;
 
+    private InputProvider _inputProvider;
     private Vector3 _slopeNormal;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         _rigidbody = GetComponent<Rigidbody>();
-        _cameraLook = GetComponentInChildren<CameraLook>();
-        _inputHandler = GetComponent<PlayerMovementInputHandler>();
+        cameraLook = GetComponentInChildren<CameraLook>();
+        _inputProvider = GetComponent<InputProvider>();
     }
 
     private void Start()
     {
+        InitStates(this);
+        EnterState(State.StateTypes.Moving);
+        
         CanMove = true;
-    }
-
-    private void Update()
-    {
-        if (!Object.HasInputAuthority)
-        {
-            return;
-        }
-        
-        IsMovingForward = _vertical >= 0.5f;
-        
-        var fov = MovementState == PlayerMovementStates.Sprinting ? sprintFOV : defaultFOV;
-        
-        _cameraLook.SetFOV(fov);
-
-
-        if (MovementState == PlayerMovementStates.Sprinting && !IsMovingForward)
-        {
-            _inputHandler.DisableSprint();
-            MovementState = PlayerMovementStates.Moving;
-        }
     }
     
     public override void FixedUpdateNetwork()
     {
-        if (!GetInput(out NetworkInputData networkInputData))
+        if (!GetInput(out NetworkInputData input))
         {
             return;
         }
@@ -89,136 +67,51 @@ public class PlayerMovementHandler : NetworkBehaviour
             return;
         }
 
-        UpdateRotation(networkInputData);
-        UpdatePosition(networkInputData);
-        UpdateStates(networkInputData);
-            
-        if (networkInputData.IsJumpPressed)
+
+        NetworkButtons pressed = input.Buttons.GetPressed(ButtonsPrevious);
+        NetworkButtons released = input.Buttons.GetReleased(ButtonsPrevious);
+
+        ButtonsPrevious = input.Buttons;
+
+        if (pressed.IsSet(Buttons.Jump))
         {
-            _rigidbody.velocity /= 2;
-            _rigidbody.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
-        }
-    }
-
-    private void UpdateRotation(NetworkInputData networkInputData)
-    {
-        transform.rotation = Quaternion.Slerp(transform.rotation, networkInputData.LookForward, 1f);
-    }
-
-    private void UpdatePosition(NetworkInputData networkInputData)
-    {
-        Vector2 movementInput = networkInputData.MovementInput.normalized;
-
-        _horizontal = movementInput.x;
-        _vertical = movementInput.y;
-
-
-        if (_onLadder)
-        {
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.useGravity = false;
-            Vector3 forward = Vector3.up;
-
-            Vector3 nextPos = transform.position +
-                              (forward * _vertical + transform.right * _horizontal) * CalculateSpeed() *
-                              Runner.DeltaTime;
-            
-            _rigidbody.MovePosition(nextPos);
-        }
-        else
-        {
-            _rigidbody.AddForce(Physics.gravity * gravity, ForceMode.Force);
-            _rigidbody.useGravity = true;
-
-            Vector3 forward = transform.forward;
-            
-            if (OnSlope())
-            {
-                forward = Vector3.ProjectOnPlane(forward, _slopeNormal);
-            }
-            
-            Vector3 nextPos = transform.position +
-                              (forward * _vertical + transform.right * _horizontal) * CalculateSpeed() *
-                              Runner.DeltaTime;
-            
-            _rigidbody.MovePosition(nextPos);
-        }
-    }
-
-    private void UpdateStates(NetworkInputData networkInputData)
-    {
-        if (_vertical == 0.0f && _horizontal == 0.0f)
-        {
-            MovementState = PlayerMovementStates.Idle;
-        }
-        else
-        {
-            MovementState = PlayerMovementStates.Moving;
+            EnterState(State.StateTypes.Jumping);
         }
 
-        if (networkInputData.IsSprintPressed)
+        if (pressed.IsSet(Buttons.Sprint))
         {
-            MovementState = PlayerMovementStates.Sprinting;
+            EnterState(State.StateTypes.Sprinting);
+        }
+        else if (released.IsSet(Buttons.Sprint) || input.MovementInput == Vector2.zero)
+        {
+            EnterState(State.StateTypes.Moving);
+            _inputProvider.ResetSprint();
         }
 
-        if (_onLadder)
+        IsMoving = input.MovementInput != Vector2.zero;
+        
+        CheckForGround();
+        
+        if (CurrentState != null)
         {
-            MovementState = PlayerMovementStates.Climbing;
+            CurrentState.Move(input);
         }
+
+        Vertical = input.MovementInput.y;
+        Horizontal = input.MovementInput.x;
     }
 
     public void AddForce(Vector3 velocity, ForceMode forceMode)
     {
         _rigidbody.AddForce(velocity, forceMode);
     }
-
-    private float CalculateSpeed()
-    {
-        var speed = 0.0f;
-
-        switch (MovementState)
-        {
-            case PlayerMovementStates.Idle:
-                speed = movementSpeed;
-                break;
-                
-            case PlayerMovementStates.Moving:
-                speed = movementSpeed;
-                break;
-                
-            case PlayerMovementStates.Sprinting:
-                speed = sprintSpeed;
-                break;
-            
-            case PlayerMovementStates.Climbing:
-                speed = climbSpeed;
-                break;
-        }
-        
-        
-        return speed;
-    }
+    
 
     private void CheckForGround()
     {
-        _isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, 1, 0), groundCheckDist);
+        IsGrounded = Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, groundCheckDist);
     }
-
-    private bool OnSlope()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2 * 0.5f + 0.5f))
-        {
-            if (hit.normal != Vector3.up)
-            {
-                _slopeNormal = hit.normal;
-                return true;
-            }
-        }
-
-        return false;
-    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -251,7 +144,7 @@ public class PlayerMovementHandler : NetworkBehaviour
                 NetworkPlayer.Local.Inventory.ToggleInventory();
             }
             
-            _cameraLook.gameObject.SetActive(false);
+            cameraLook.gameObject.SetActive(false);
             CanMove = false;
         }
         
@@ -261,7 +154,7 @@ public class PlayerMovementHandler : NetworkBehaviour
         }
 
         NetworkPlayer.Local.Inventory.ToggleInventory();
-        _cameraLook.CanLook = false;
+        cameraLook.CanLook = false;
         CanMove = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -281,12 +174,12 @@ public class PlayerMovementHandler : NetworkBehaviour
                 NetworkPlayer.Local.Inventory.ToggleInventory();
             }
             
-            _cameraLook.gameObject.SetActive(true);
+            cameraLook.gameObject.SetActive(true);
             CanMove = true;
         }
 
         NetworkPlayer.Local.Inventory.ToggleInventory();
-        _cameraLook.CanLook = true;
+        cameraLook.CanLook = true;
         CanMove = true;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -294,7 +187,7 @@ public class PlayerMovementHandler : NetworkBehaviour
 
     public void OnInventoryToggled(bool isOpen)
     {
-        _cameraLook.CanLook = !isOpen;
+        cameraLook.CanLook = !isOpen;
         CanMove = !isOpen;
         Cursor.visible = isOpen;
         Cursor.lockState = isOpen ? CursorLockMode.None : CursorLockMode.Locked;

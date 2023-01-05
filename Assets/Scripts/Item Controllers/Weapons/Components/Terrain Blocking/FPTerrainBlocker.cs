@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class FPTerrainBlocker : MonoBehaviour
 {
+    public bool IsBlocked { get; private set; }
+    
     [SerializeField] private Transform blockTransform;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float itemLength;
@@ -30,11 +33,13 @@ public class FPTerrainBlocker : MonoBehaviour
         {
             _currentPos = blockedPos;
             _currentRot = Quaternion.Euler(blockedRot);
+            IsBlocked = true;
         }
         else
         {
             _currentPos = Vector3.zero;
             _currentRot = Quaternion.identity;
+            IsBlocked = false;
         }
 
 

@@ -10,6 +10,9 @@ public class PlayerAttacker : NetworkBehaviour
     [Networked(OnChanged = nameof(OnAttackChanged))]
     public bool IsAttacking { get; set; }
 
+    [Networked]
+    public NetworkButtons ButtonsPrevious { get; set; }
+
     
     [SerializeField] private LayerMask attackableLayers;
 
@@ -23,12 +26,17 @@ public class PlayerAttacker : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!GetInput(out NetworkInputData inputData))
+        if (!GetInput(out NetworkInputData input))
         {
             return;
         }
+        
+        NetworkButtons pressed = input.Buttons.GetPressed(ButtonsPrevious);
 
-        if (inputData.IsFirePressed && !IsAttacking)
+        ButtonsPrevious = input.Buttons;
+        
+        
+        if (pressed.IsSet(Buttons.Fire) && !IsAttacking)
         {
             Attack();
         }

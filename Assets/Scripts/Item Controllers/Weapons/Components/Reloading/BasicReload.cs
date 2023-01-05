@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BasicReload : WeaponComponent, IReloader
 {
     [SerializeField] private bool autoReload;
     [SerializeField] private int maxCurrentAmmo;
     [SerializeField] private GameObject reloadText;
+    [SerializeField] private Text ammoText;
     [SerializeField] private WeaponAnimationData reloadAnimationData;
 
     [Space] [SerializeField] private Item ammoItem;
@@ -24,14 +26,31 @@ public class BasicReload : WeaponComponent, IReloader
     {
         base.Awake();
 
+        CurrentAmmo = maxCurrentAmmo;
         InputActions.Player.Reload.performed += ctx => Reload();
+    }
+
+    public override void OnEquip()
+    {
+        if (CurrentAmmo <= 0 && Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
+        {
+            reloadText.SetActive(true);
+        }
+
+        ammoText.enabled = true;
+    }
+
+    public override void OnHide()
+    {
+        reloadText.SetActive(false);
+        ammoText.enabled = false;
     }
     
     public void OnFired()
     {
         DecrementCurrentAmmo();
 
-        if (CurrentAmmo <= 0)
+        if (CurrentAmmo <= 0 && Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
         {
             reloadText.SetActive(true);
         }
@@ -47,6 +66,16 @@ public class BasicReload : WeaponComponent, IReloader
     public void DecrementCurrentAmmo(int amount = 1)
     {
         CurrentAmmo -= amount;
+
+        if (CurrentAmmo <= 0)
+        {
+            ammoText.enabled = false;
+        }
+        else
+        {
+            ammoText.enabled = true;
+            ammoText.text = CurrentAmmo + "/" + maxCurrentAmmo;
+        }
     }
 
     public void IncrementCurrentAmmo(int amount = 1)
@@ -61,6 +90,11 @@ public class BasicReload : WeaponComponent, IReloader
             return;
         }
 
+        if (CurrentAmmo >= maxCurrentAmmo)
+        {
+            return;
+        }
+
         StartCoroutine(IE_Reload());
     }
 
@@ -70,7 +104,7 @@ public class BasicReload : WeaponComponent, IReloader
         {
             yield break;
         }
-        
+
         reloadText.SetActive(false);
 
         IsReloading = true;
@@ -88,6 +122,16 @@ public class BasicReload : WeaponComponent, IReloader
         
         Weapon.Player.Inventory.UpdateItemStack(ref itemData, ammoNeeded);
         CurrentAmmo += ammoNeeded;
+        
+        if (CurrentAmmo > 0)
+        {
+            ammoText.enabled = true;
+            ammoText.text = CurrentAmmo + "/" + maxCurrentAmmo;
+        }
+        else
+        {
+            reloadText.SetActive(true);
+        }
 
         IsReloading = false;
     }

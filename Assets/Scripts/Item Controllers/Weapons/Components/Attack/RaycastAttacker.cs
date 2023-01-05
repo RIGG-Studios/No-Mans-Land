@@ -15,6 +15,15 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     
     private readonly int _fire = Animator.StringToHash("Fire");
 
+    private FPTerrainBlocker _blocker;
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        _blocker = GetComponent<FPTerrainBlocker>();
+    }
+    
     public override void OnEnable()
     {
         base.OnEnable();
@@ -28,7 +37,17 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         {
             return;
         }
-        
+
+        if (Weapon.Reloader is {IsReloading: true})
+        {
+            return;
+        }
+
+        if (_blocker.IsBlocked)
+        {
+            return;
+        }
+
         Weapon.Player.Attack.HitScanAttack(damage, raycastLength);
         onAttack?.Invoke();
         

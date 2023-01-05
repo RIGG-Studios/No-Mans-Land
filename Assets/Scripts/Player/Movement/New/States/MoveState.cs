@@ -5,23 +5,30 @@ using UnityEngine;
 
 public class MoveState : State
 {
-    private float _gravity;
-    private float _movementSpeed;
-    private Vector3 _slopeNormal;
-    private Rigidbody _rigidbody;
-    private Transform _transform;
-    private NetworkRunner _runner;
+    protected float Gravity;
+    protected float MovementSpeed;
+    protected Vector3 SlopeNormal;
+    protected Rigidbody Rigidbody;
+    protected Transform Transform;
+    protected NetworkRunner Runner;
+    protected CameraLook CameraController;
 
-    public override void Init(PlayerMovementHandler movementHandler)
+    public override void Init(PlayerMovementHandler movementHandler, StateTypes type)
     {
-        base.Init(movementHandler);
+        base.Init(movementHandler, type);
+        
+        Gravity = movementHandler.gravity;
+        MovementSpeed = movementHandler.movementSpeed;
 
-        _gravity = movementHandler.gravity;
-        _movementSpeed = movementHandler.movementSpeed;
+        Rigidbody = movementHandler.GetComponent<Rigidbody>();
+        Transform = movementHandler.transform;
+        Runner = movementHandler.Runner;
+        CameraController = movementHandler.cameraLook;
+    }
 
-        _rigidbody = movementHandler.GetComponent<Rigidbody>();
-        _transform = movementHandler.transform;
-        _runner = movementHandler.Runner;
+    public override void OnUpdate()
+    {
+        CameraController.SetFOV(0, true);
     }
 
     public override void Move(NetworkInputData input)
@@ -32,39 +39,39 @@ public class MoveState : State
     
     private void UpdateRotation(NetworkInputData networkInputData)
     {
-        _transform.rotation = Quaternion.Slerp(_transform.rotation, networkInputData.LookForward, 1f);
+        Transform.rotation = Quaternion.Slerp(Transform.rotation, networkInputData.LookForward, 1f);
     }
     
     private void UpdatePosition(NetworkInputData networkInputData)
     {
         Vector2 movementInput = networkInputData.MovementInput.normalized;
 
-        _rigidbody.AddForce(Physics.gravity * _gravity, ForceMode.Force);
-        _rigidbody.useGravity = true;
+        Rigidbody.AddForce(Physics.gravity * Gravity, ForceMode.Force);
+        Rigidbody.useGravity = true;
 
-        Vector3 forward = _transform.forward;
+        Vector3 forward = Transform.forward;
             
         if (OnSlope())
         {
-            forward = Vector3.ProjectOnPlane(forward, _slopeNormal);
+            forward = Vector3.ProjectOnPlane(forward, SlopeNormal);
         }
+
+        Vector3 nextPos = Transform.position +
+                          (forward * movementInput.y + Transform.right * movementInput.x) * MovementSpeed *
+                          Runner.DeltaTime;
             
-        Vector3 nextPos = _transform.position +
-                          (forward * movementInput.y + _transform.right * movementInput.x) * _movementSpeed *
-                          _runner.DeltaTime;
-            
-        _rigidbody.MovePosition(nextPos);
+        Rigidbody.MovePosition(nextPos);
     }
     
     private bool OnSlope()
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(_transform.position, Vector3.down, out hit, 2 * 0.5f + 0.5f))
+        if (Physics.Raycast(Transform.position, Vector3.down, out hit, 2 * 0.5f + 0.5f))
         {
             if (hit.normal != Vector3.up)
             {
-                _slopeNormal = hit.normal;
+                SlopeNormal = hit.normal;
                 return true;
             }
         }

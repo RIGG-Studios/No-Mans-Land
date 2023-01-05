@@ -9,16 +9,18 @@ public class State
         Moving,
         Jumping,
         Swinging,
-        Ladder
+        Ladder,
+        Sprinting
     }
     
     public StateTypes Type { get; private set; }
 
     protected PlayerMovementHandler MovementHandler;
 
-    public virtual void Init(PlayerMovementHandler movementHandler)
+    public virtual void Init(PlayerMovementHandler movementHandler, StateTypes type)
     {
         MovementHandler = movementHandler;
+        Type = type;
     }
     
     public virtual void Enter() { }
