@@ -5,32 +5,26 @@ using Fusion;
 using UnityEngine;
 
 
-[RequireComponent(typeof(ShipBuoyancy))]
 public class Ship : NetworkBehaviour
 {
     [Networked(OnChanged = nameof(HasPilotChanged))]
     public bool HasPilot { get; set; }
 
-    [SerializeField] private float speed;
-    
-    private Rigidbody _rigidbody;
+    [SerializeField] private Transform rudderTransform;
 
-    private Vector3 _velocity;
-    private Transform _point;
+    public Transform RudderTransform => rudderTransform;
+    
+    private ShipPhysicsHandler _shipPhysics;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _shipPhysics = GetComponent<ShipPhysicsHandler>();
     }
 
-    public override void FixedUpdateNetwork()
+    public void MoveShip(ShipMovementData input)
     {
-        _rigidbody.AddForce(_velocity, ForceMode.Force);
-    }
-
-    private void SetVelocity(Vector3 velocity)
-    {
-        _velocity = velocity;
+        Debug.Log(_shipPhysics);
+        _shipPhysics.MoveShip(input);
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -43,6 +37,7 @@ public class Ship : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_RequestResetPilot()
     {
+        Object.AssignInputAuthority(default);
         HasPilot = false;
     }
     

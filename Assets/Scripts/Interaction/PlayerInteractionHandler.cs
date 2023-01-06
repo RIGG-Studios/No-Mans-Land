@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(PlayerInteractionInputHandler))]
@@ -14,7 +15,9 @@ public class PlayerInteractionHandler : MonoBehaviour
     [SerializeField] private LayerMask interactLayer;
     [SerializeField] private Transform lookFromPoint;
     [SerializeField] private GameObject interactUI;
-
+    [SerializeField] private Text interactText;
+    
+    
     public UnityEvent<IInteractable> onLookAtInteract = new();
     public UnityEvent<IInteractable> onButtonInteract = new();
     public UnityEvent<IInteractable> onButtonInteractStop = new();
@@ -43,6 +46,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             {
                 _sentLookAtEvent = false;
                 _currentInteractable.StopLookAtInteract();
+                interactText.text = "";
                 _currentInteractable = null;
                 interactUI.SetActive(false);
             }
@@ -56,6 +60,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             if (!_sentLookAtEvent)
             {
                 onLookAtInteract?.Invoke(_currentInteractable);
+                interactText.text = _currentInteractable.LookAtID;
                 interactUI.SetActive(true);
                 _sentLookAtEvent = true;
             }
@@ -66,6 +71,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             {
                 _sentLookAtEvent = false;
                 _currentInteractable.StopLookAtInteract();
+                interactText.text = "";
                 _currentInteractable = null;
                 interactUI.SetActive(false);
             }

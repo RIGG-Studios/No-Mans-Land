@@ -17,6 +17,9 @@ public class BaseWeapon : ItemController
 {
     public WeaponAnimationData equipAnimationData;
     public WeaponAnimationData hideAnimationData;
+    
+    protected bool IsEquipping { get; set; }
+    protected bool IsHiding { get; set; }
 
     protected Animator Animator;
 
@@ -35,15 +38,19 @@ public class BaseWeapon : ItemController
     
     private IEnumerator IE_Equip()
     {
+        IsEquipping = true;
         Animator.SetTrigger("Equip");
         
         yield return new WaitForSeconds(equipAnimationData.ClipLength);
+        IsEquipping = false;
     }
 
     private IEnumerator IE_Hide()
     {
+        IsHiding = true;
         Animator.SetTrigger("Hide");
         
         yield return new WaitForSeconds(hideAnimationData.ClipLength);
+        IsHiding = false;
     }
 }

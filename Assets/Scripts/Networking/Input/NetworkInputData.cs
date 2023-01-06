@@ -25,7 +25,7 @@ public struct NetworkInputData : INetworkInput
     public NetworkBool SailingShip;
 }
 
-public struct NetworkShipInputData : INetworkStruct
+public struct NetworkShipInputData : INetworkInput
 {
     public ShipButtons Buttons;
     

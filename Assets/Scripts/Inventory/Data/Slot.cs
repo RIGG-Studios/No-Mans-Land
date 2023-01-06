@@ -56,13 +56,11 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
 
     public void SelectSlot()
     {
-        _animator.SetTrigger("Show");
     }
 
     public virtual void Reset()
     {
         SlotReset?.Invoke(this);
-        _animator.SetTrigger("Hide");
 
         HasItem = false;
 

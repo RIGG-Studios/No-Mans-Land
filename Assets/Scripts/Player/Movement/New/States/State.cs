@@ -10,7 +10,8 @@ public class State
         Jumping,
         Swinging,
         Ladder,
-        Sprinting
+        Sprinting,
+        Sailing
     }
     
     public StateTypes Type { get; private set; }

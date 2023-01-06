@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 public class PlayerMovementHandler : StateMachine
 {
     public bool CanMove { get; set; }
+    
     public bool IsMovingForward { get; private set; }
     public bool IsGrounded { get; private set; }
     public bool IsMoving { get; private set; }
@@ -63,6 +64,11 @@ public class PlayerMovementHandler : StateMachine
         {
             return;
         }
+        
+        if (CurrentState != null)
+        {
+            CurrentState.Move(input);
+        }
 
         if (!CanMove)
         {
@@ -75,16 +81,23 @@ public class PlayerMovementHandler : StateMachine
 
         ButtonsPrevious = input.Buttons;
 
+        
         if (pressed.IsSet(PlayerButtons.Jump))
         {
             EnterState(State.StateTypes.Jumping);
+        }
+
+        if (Object.HasInputAuthority)
+        {
+            Debug.Log(pressed.IsSet(PlayerButtons.Sprint));
+            Debug.Log(released.IsSet(PlayerButtons.Sprint));
         }
 
         if (pressed.IsSet(PlayerButtons.Sprint))
         {
             EnterState(State.StateTypes.Sprinting);
         }
-        else if (released.IsSet(PlayerButtons.Sprint) || input.MovementInput == Vector2.zero)
+        else if ((released.IsSet(PlayerButtons.Sprint) || input.MovementInput == Vector2.zero) && CurrentStateType != State.StateTypes.Sailing)
         {
             EnterState(State.StateTypes.Moving);
             _inputProvider.ResetSprint();
@@ -93,12 +106,6 @@ public class PlayerMovementHandler : StateMachine
         IsMoving = input.MovementInput != Vector2.zero;
         
         CheckForGround();
-        
-        if (CurrentState != null)
-        {
-            CurrentState.Move(input);
-        }
-
         Vertical = input.MovementInput.y;
         Horizontal = input.MovementInput.x;
     }
@@ -150,13 +157,16 @@ public class PlayerMovementHandler : StateMachine
             CanMove = false;
         }
 
-        if (interactable.ID == "ShipWheel")
+        if (interactable.ID == "SteeringWheel")
         {
             ShipSteeringWheelInteraction wheel = interactable as ShipSteeringWheelInteraction;
 
             if (wheel != null)
             {
                 Ship = wheel.Ship;
+                
+                Debug.Log("Enter sail state");
+                EnterState(State.StateTypes.Sailing);
             }
         }
         
@@ -174,9 +184,9 @@ public class PlayerMovementHandler : StateMachine
     
     public void OnStopButtonInteract(IInteractable interactable)
     {
-        if (interactable.ID != "Chest")
+        if (interactable.ID == "SteeringWheel")
         {
-            return;
+            EnterState(State.StateTypes.Moving);
         }
         
         if (interactable.ID == "Cannon")
@@ -188,6 +198,11 @@ public class PlayerMovementHandler : StateMachine
             
             cameraLook.gameObject.SetActive(true);
             CanMove = true;
+        }
+        
+        if (interactable.ID != "Chest")
+        {
+            return;
         }
 
         NetworkPlayer.Local.Inventory.ToggleInventory();

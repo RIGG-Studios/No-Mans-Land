@@ -1339,6 +1339,7 @@ MonoBehaviour:
     m_Bits: 128
   lookFromPoint: {fileID: 8389939585149380230}
   interactUI: {fileID: 8056894815621154931}
+  interactText: {fileID: 8056894815621154941}
   onLookAtInteract:
     m_PersistentCalls:
       m_Calls: []

@@ -12,6 +12,7 @@ public class StateMachine : ContextBehaviour
     protected MoveState MoveState;
     protected SprintState SprintState;
     protected JumpState JumpState;
+    protected ShipSailingState SailingState;
     
     protected void InitStates(PlayerMovementHandler movementHandler)
     {
@@ -23,6 +24,9 @@ public class StateMachine : ContextBehaviour
 
         JumpState = new JumpState();
         JumpState.Init(movementHandler, State.StateTypes.Jumping);
+
+        SailingState = new ShipSailingState();
+        SailingState.Init(movementHandler, State.StateTypes.Sailing);
     }
 
     private void Update()
@@ -40,6 +44,8 @@ public class StateMachine : ContextBehaviour
             return;
         }
 
+        
+        Debug.Log("Entering state: " + stateType);
         CurrentState?.Exit();
         CurrentState = nextState;
         CurrentState.Enter();
@@ -60,6 +66,9 @@ public class StateMachine : ContextBehaviour
             
             case State.StateTypes.Jumping:
                 return JumpState;
+            
+            case State.StateTypes.Sailing:
+                return SailingState;
         }
 
         return null;

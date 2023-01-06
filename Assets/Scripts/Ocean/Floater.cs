@@ -29,7 +29,7 @@ public class Floater : NetworkBehaviour
     {
         rigidBody.useGravity = true;
         float waveHeight = fakeAmplitude * Mathf.Sin( Runner.DeltaTime + _randomPhase) + seaLevel;
-        if (!(transform.position.y < waveHeight)) return;
+        if (!(transform.position.y < waveHeight))  return;
         
         float displacementMultiplier = Mathf.Clamp01((waveHeight - transform.position.y) / depthBeforeSubmerged) * displacementAmount;
         
@@ -37,5 +37,4 @@ public class Floater : NetworkBehaviour
         rigidBody.AddForce(-rigidBody.velocity * (displacementMultiplier * waterDrag * Runner.DeltaTime), ForceMode.VelocityChange);
         rigidBody.AddTorque(-rigidBody.angularVelocity * (displacementMultiplier * waterAngularDrag *  Runner.DeltaTime), ForceMode.VelocityChange);
     }
-        
 }

@@ -7,7 +7,7 @@ using Cursor = UnityEngine.Cursor;
 
 public class CameraLook : MonoBehaviour
 {
- public bool CanLook { get; set; }
+    public bool CanLook { get; set; }
     
     [SerializeField] private Transform camTransform;
     [SerializeField] private Transform playerTransform;

@@ -13,6 +13,7 @@ public class ItemAnimator : MonoBehaviour
     
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
     private static readonly int IsSprinting = Animator.StringToHash("IsSprinting");
+    private static readonly int IsAiming = Animator.StringToHash("IsAiming");
 
     private void Awake()
     {
@@ -28,6 +29,13 @@ public class ItemAnimator : MonoBehaviour
 
     private void UpdateAnimator()
     {
+        if (NetworkPlayer.Local.Inventory.EquippedItem != null)
+        {
+            ItemControllerState currentItemState = NetworkPlayer.Local.Inventory.EquippedItem.GetState();
+
+            _animator.SetBool(IsAiming, currentItemState.IsAiming);
+        }
+        
         bool isWalking = NetworkPlayer.Local.Movement.CurrentStateType == State.StateTypes.Moving &&
                          NetworkPlayer.Local.Movement.IsMoving;
         

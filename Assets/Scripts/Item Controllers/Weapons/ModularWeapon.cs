@@ -21,11 +21,21 @@ public class ModularWeapon : BaseWeapon
 
     public void SetAttacker(IAttacker attacker)
     {
+        if (Attacker != null)
+        {
+            return;
+        }
+        
         Attacker = attacker; 
     }
 
     public void SetAimer(IAimer aimer)
     {
+        if (Aimer != null)
+        {
+            return;
+        }
+        
         Aimer = aimer;
     }
 
@@ -41,6 +51,11 @@ public class ModularWeapon : BaseWeapon
 
     public void SetWeaponRecoil(IRecoil recoil)
     {
+        if (WeaponRecoil != null)
+        {
+            return;
+        }
+        
         WeaponRecoil = recoil;
 
         if (Attacker != null)
@@ -101,6 +116,27 @@ public class ModularWeapon : BaseWeapon
         }
         
         Attacker.Attack();
+    }
+
+    public override ItemControllerState GetState()
+    {
+        ItemControllerState state = default;
+        
+        if (Aimer is {IsAiming: true})
+        {
+            state.IsAiming = true;
+        }
+
+        if (Reloader is {IsReloading: true})
+        {
+            state.IsReloading = true;
+        }
+        
+        
+        state.IsEquipping = IsEquipping;
+        state.isHiding = IsHiding;
+
+        return state;
     }
 
     public override void Hide()
