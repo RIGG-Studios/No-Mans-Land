@@ -33,9 +33,6 @@ public class CameraLook : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         _lookRotation.x = playerTransform.eulerAngles.y;
         _lookRotation.y = camTransform.eulerAngles.y;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour, IInteractable
+public class Cannon : MonoBehaviour
 {
     [Networked] 
     public NetworkBool isOccupied { get; set; }

@@ -74,25 +74,16 @@ public class PlayerMovementHandler : StateMachine
         {
             return;
         }
-
-
+        
         NetworkButtons pressed = input.Buttons.GetPressed(ButtonsPrevious);
         NetworkButtons released = input.Buttons.GetReleased(ButtonsPrevious);
 
         ButtonsPrevious = input.Buttons;
-
         
         if (pressed.IsSet(PlayerButtons.Jump))
         {
             EnterState(State.StateTypes.Jumping);
         }
-
-        if (Object.HasInputAuthority)
-        {
-            Debug.Log(pressed.IsSet(PlayerButtons.Sprint));
-            Debug.Log(released.IsSet(PlayerButtons.Sprint));
-        }
-
         if (pressed.IsSet(PlayerButtons.Sprint))
         {
             EnterState(State.StateTypes.Sprinting);

@@ -73,7 +73,7 @@ public class GrapplingHook : BaseWeapon
             _lineRenderer.positionCount = 2;
             
             Vector3 dir = (_grapplePoint - _playerCamera.transform.position).normalized;
-            Player.Movement.AddForce(dir * jumpImpulse, ForceMode.Acceleration);
+          //  Player.Movement.AddForce(dir * jumpImpulse, ForceMode.Acceleration);
         }
 
     }

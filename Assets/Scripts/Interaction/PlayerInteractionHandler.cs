@@ -23,8 +23,14 @@ public class PlayerInteractionHandler : MonoBehaviour
     public UnityEvent<IInteractable> onButtonInteractStop = new();
 
     private bool _sentLookAtEvent;
-
     private IInteractable _currentInteractable;
+
+    private NetworkPlayer _networkPlayer;
+
+    private void Awake()
+    {
+        _networkPlayer = GetComponent<NetworkPlayer>();
+    }
 
     private void Start()
     {
@@ -85,12 +91,44 @@ public class PlayerInteractionHandler : MonoBehaviour
             return;
         }
         
-        bool success = _currentInteractable.ButtonInteract(NetworkPlayer.Local);
+        bool success = _currentInteractable.ButtonInteract(NetworkPlayer.Local, out ButtonInteractionData interactionData);
 
         if (success)
         {
             interactUI.SetActive(false);
             onButtonInteract?.Invoke(_currentInteractable);
+
+            if (interactionData.StopMovement)
+            {
+                _networkPlayer.Movement.CanMove = false;
+            }
+
+            if (interactionData.EnableMovement)
+            {
+                _networkPlayer.Movement.CanMove = true;
+            }
+
+            if (interactionData.OpenInventory)
+            {
+                if(!_networkPlayer.Inventory.IsOpen)
+                    _networkPlayer.Inventory.ToggleInventory();
+            }
+            
+            if (interactionData.HideInventory)
+            {
+                if(_networkPlayer.Inventory.IsOpen)
+                    _networkPlayer.Inventory.ToggleInventory();
+            }
+
+            if (interactionData.EnableCameraLook)
+            {
+                _networkPlayer.Camera.enabled = true;
+            }
+            
+            if (interactionData.StopCameraLook)
+            {
+                _networkPlayer.Camera.enabled = false;
+            }
         }
     }
 
@@ -102,7 +140,39 @@ public class PlayerInteractionHandler : MonoBehaviour
         }
         
         _currentInteractable.StopLookAtInteract();
-        _currentInteractable.StopButtonInteract();
         onButtonInteractStop?.Invoke(_currentInteractable);
+        _currentInteractable.StopButtonInteract(out ButtonInteractionData interactionData);
+        
+        if (interactionData.StopMovement)
+        {
+            _networkPlayer.Movement.CanMove = false;
+        }
+
+        if (interactionData.EnableMovement)
+        {
+            _networkPlayer.Movement.CanMove = true;
+        }
+
+        if (interactionData.OpenInventory)
+        {
+            if(!_networkPlayer.Inventory.IsOpen)
+                _networkPlayer.Inventory.ToggleInventory();
+        }
+            
+        if (interactionData.HideInventory)
+        {
+            if(_networkPlayer.Inventory.IsOpen)
+                _networkPlayer.Inventory.ToggleInventory();
+        }
+
+        if (interactionData.EnableCameraLook)
+        {
+            _networkPlayer.Camera.enabled = true;
+        }
+            
+        if (interactionData.StopCameraLook)
+        {
+            _networkPlayer.Camera.enabled = false;
+        }
     }
 }

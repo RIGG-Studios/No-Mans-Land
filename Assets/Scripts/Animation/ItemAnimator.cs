@@ -29,18 +29,13 @@ public class ItemAnimator : MonoBehaviour
 
     private void UpdateAnimator()
     {
-        if (NetworkPlayer.Local.Inventory.EquippedItem != null)
-        {
-            ItemControllerState currentItemState = NetworkPlayer.Local.Inventory.EquippedItem.GetState();
+        ItemControllerState currentItemState = NetworkPlayer.Local.Inventory.GetEquippedItemState();
 
-            _animator.SetBool(IsAiming, currentItemState.IsAiming);
-        }
+        bool isAiming = currentItemState.IsAiming;
+        bool isSprinting = NetworkPlayer.Local.Movement.IsSprinting && !isAiming;
+        bool isWalking = NetworkPlayer.Local.Movement.IsMoving && !isSprinting && !isAiming;
         
-        bool isWalking = NetworkPlayer.Local.Movement.CurrentStateType == State.StateTypes.Moving &&
-                         NetworkPlayer.Local.Movement.IsMoving;
-        
-        bool isSprinting = NetworkPlayer.Local.Movement.CurrentStateType == State.StateTypes.Sprinting;
-        
+        _animator.SetBool(IsAiming, isAiming);
         _animator.SetBool(IsWalking, isWalking);
         _animator.SetBool(IsSprinting, isSprinting);
     }

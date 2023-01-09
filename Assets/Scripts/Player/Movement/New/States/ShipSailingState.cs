@@ -52,7 +52,7 @@ public class ShipSailingState : State
             RotationalVelocity = rotationalVelocity
         };
         
-        _ship.MoveShip(shipMovementData);
+      //  _ship.MoveShip(shipMovementData);
     }
 
     private void UpdateRotation(NetworkInputData networkInputData)

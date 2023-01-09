@@ -32,24 +32,43 @@ public class ChestInventory : NetworkInventory, IInteractable
         LookAtID = string.Empty;
     }
     
-    public bool ButtonInteract(NetworkPlayer player)
+    public bool ButtonInteract(NetworkPlayer player, out ButtonInteractionData interactionData)
     {
+        bool success = true;
+        
         if (IsOpen)
         {
-            return false;
+            success = false;
         }
         
         RefreshInventory();
         RPC_RequestChestStatus(true);
         chestUI.SetActive(true);
-        return true;
+
+        interactionData = new ButtonInteractionData()
+        {
+            StopMovement = true,
+            EnableCursor = true,
+            OpenInventory = true,
+            StopCameraLook = true
+        };
+        
+        return success;
     }
 
-    public void StopButtonInteract()
+    public void StopButtonInteract(out ButtonInteractionData interactionData)
     {
         chestUI.SetActive(false);
         RPC_RequestChestStatus(false);
         RPC_RequestUpdateInventory(Items.ToArray());
+        
+        interactionData = new ButtonInteractionData()
+        {
+            EnableMovement = false,
+            DisableCursor = true,
+            HideInventory = true,
+            EnableCameraLook = true
+        };
     }
 
     protected override void RequestUpdateItems(int itemID, int newSlotID)

@@ -1,6 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+public struct ButtonInteractionData
+{
+    public bool OpenInventory;
+    public bool HideInventory;
+
+    public bool EnableCursor;
+    public bool DisableCursor;
+
+    public bool StopMovement;
+    public bool EnableMovement;
+
+    public bool StopCameraLook;
+    public bool EnableCameraLook;
+}
 
 public interface IInteractable
 { 
@@ -12,6 +23,6 @@ public interface IInteractable
 
     void StopLookAtInteract();
 
-    bool ButtonInteract(NetworkPlayer networkPlayer);
-    void StopButtonInteract();
+    bool ButtonInteract(NetworkPlayer networkPlayer, out ButtonInteractionData interactData);
+    void StopButtonInteract(out ButtonInteractionData interactionData);
 }

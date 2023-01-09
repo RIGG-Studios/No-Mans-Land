@@ -33,4 +33,6 @@ public class ShipInputProvider : InputBase
         
         input.Set(tickInput);
     }
+    
+    
 }

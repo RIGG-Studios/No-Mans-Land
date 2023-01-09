@@ -11,27 +11,43 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
     public Ship Ship => ship;
     
     public string LookAtID => "[F] INTERACT";
-    public string ID => "SteeringWheel";
+    public string ID => "ShipWheel";
     
     
     public void LookAtInteract() { }
 
     public void StopLookAtInteract() { }
-
-    public bool ButtonInteract(NetworkPlayer networkPlayer)
+    
+    
+    public bool ButtonInteract(NetworkPlayer networkPlayer, out ButtonInteractionData interactData)
     {
-        if (Ship == null)
-        {
-            return false;
-        }
+        bool success = !(Ship == null);
 
         if (Ship.HasPilot)
         {
-            return false;
+            success = false;
         }
 
         Ship.RPC_RequestPilotChange(networkPlayer.Object.InputAuthority);
+        
+        interactData = new ButtonInteractionData()
+        {
+            DisableCursor = true,
+            StopMovement = true,
+            HideInventory = true
+        };
+
         return true;
+    }
+
+    public void StopButtonInteract(out ButtonInteractionData interactionData)
+    {
+        Ship.RPC_RequestResetPilot();
+
+        interactionData = new ButtonInteractionData()
+        {
+            EnableMovement = true
+        };
     }
 
     public void StopButtonInteract()

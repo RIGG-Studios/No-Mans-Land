@@ -17,16 +17,27 @@ public class ShipPhysicsHandler : NetworkBehaviour
     private void Awake()
     {
         _floaters = GetComponentsInChildren<Floater>();
+        
         _ship = GetComponent<Ship>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void MoveShip(ShipMovementData input)
+
+    public override void FixedUpdateNetwork()
     {
-        Vector3 velocity = input.ForwardVelocity;
+        for (int i = 0; i < _floaters.Length; i++)
+        {
+          //  _floaters[i].UpdateBuoyancy(Runner.DeltaTime);
+        }
         
-        _rigidbody.AddForce(velocity, ForceMode.Force);
         
-        _rigidbody.AddForceAtPosition(input.RotationalVelocity, _ship.RudderTransform.position, ForceMode.Force);
+        if (!GetInput(out NetworkInputData input))
+        {
+            Debug.Log("Not getting inpuit");
+            return;
+        }
+        
+        _rigidbody.AddForce(transform.forward * input.MovementInput.y * movementSpeed, ForceMode.Force);
+        _rigidbody.AddForceAtPosition(input.MovementInput.x * -_ship.RudderTransform.right * movementSpeed, _ship.RudderTransform.position, ForceMode.Force);
     }
 }

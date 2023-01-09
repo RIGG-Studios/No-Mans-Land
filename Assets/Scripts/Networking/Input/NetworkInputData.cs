@@ -21,8 +21,15 @@ public struct NetworkInputData : INetworkInput
 
     public Vector2 MovementInput;
     public Quaternion LookForward;
+    
+    //states
+    public NetworkBool IsAiming;
+    public NetworkBool IsReloading;
 
-    public NetworkBool SailingShip;
+    //0 character controller
+    //1 cannon controller
+    //2 sailing controller
+    public int CurrentState;
 }
 
 public struct NetworkShipInputData : INetworkInput

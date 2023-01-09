@@ -17,7 +17,6 @@ public class PlayerInventory : LocalInventory
     public bool IsOpen { get; private set; }
     public bool CanUse { get; set; }
     
-    
     private PlayerItemControllerHandler _itemControllerHandler;
 
     protected override void Awake()
@@ -68,6 +67,18 @@ public class PlayerInventory : LocalInventory
         
         SwitchItemControllers(itemController, data.SlotID);
     }
+    
+    public ItemControllerState GetEquippedItemState()
+    {
+        if (EquippedItem == null)
+        {
+            return default;
+        }
+
+        return EquippedItem.GetState();
+    }
+
+
 
     public override void OnSlotReset(Slot slot)
     {

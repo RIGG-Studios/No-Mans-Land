@@ -13,6 +13,11 @@ public class InputProvider : InputBase
     private bool _isJumpPressed;
     private bool _isFirePressed;
 
+    private int _currentState;
+
+    private bool _isAiming;
+    private bool _isReloading;
+
 
     private NetworkInput _networkInput;
 
@@ -20,11 +25,7 @@ public class InputProvider : InputBase
     private void Start()
     {
         _cameraLook = GetComponentInChildren<CameraLook>();
-
-        InputActions.Player.Run.performed += ctx =>
-        {
-            _isSprintPressed = !_isSprintPressed;
-        };
+        
 
         InputActions.Player.Jump.performed += ctx =>
         {
@@ -40,8 +41,14 @@ public class InputProvider : InputBase
     private void Update()
     {
         _moveDir = InputActions.Player.Move.ReadValue<Vector2>();
+        _isSprintPressed = InputActions.Player.Run.IsPressed();
         
+        ItemControllerState frameState = NetworkPlayer.Local.Inventory.GetEquippedItemState();
         
+        _isReloading = frameState.IsReloading;
+        _isAiming = frameState.IsAiming;
+
+        _currentState = NetworkPlayer.Local.Movement.RequestedState;
     }
 
     public override void OnEnable()
@@ -82,6 +89,10 @@ public class InputProvider : InputBase
 
         tickInput.MovementInput = _moveDir;
         tickInput.LookForward = _cameraLook.PlayerRotation;
+
+        tickInput.IsAiming = _isAiming;
+        tickInput.IsReloading = _isReloading;
+        tickInput.CurrentState = _currentState;
         
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
         tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);

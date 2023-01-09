@@ -20,12 +20,7 @@ public class Ship : NetworkBehaviour
     {
         _shipPhysics = GetComponent<ShipPhysicsHandler>();
     }
-
-    public void MoveShip(ShipMovementData input)
-    {
-        Debug.Log(_shipPhysics);
-        _shipPhysics.MoveShip(input);
-    }
+    
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_RequestPilotChange(PlayerRef playerRef)

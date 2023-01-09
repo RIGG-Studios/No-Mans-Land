@@ -5,8 +5,19 @@ using UnityEngine;
 
 public class Gameplay : ContextBehaviour
 {
+    public enum GameplayStates : byte
+    {
+        StartingGame,
+        PreBattle,
+        InBattle,
+        EndGame
+    }
+    
     [Networked, Capacity(16)]
     public NetworkDictionary<PlayerRef, Player> Players { get; } = new();
+    
+    [Networked]
+    public GameplayStates GameplayState { get; set; }
 
 
     private SpawnPoint[] _spawnPoints;

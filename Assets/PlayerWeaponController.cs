@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
-public class PlayerWeaponController : MonoBehaviour
+public class PlayerWeaponController : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Rigidbody _rigidbody;
+
+
+    private void Awake()
     {
-        
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public override void FixedUpdateNetwork()
     {
-        
+        _rigidbody.AddForce(transform.forward * 400f, ForceMode.Force);
     }
 }

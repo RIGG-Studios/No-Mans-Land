@@ -8,9 +8,9 @@ using Behaviour = UnityEngine.Behaviour;
 
 public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 {
+
     public static NetworkPlayer Local { get; set; }
     
-
     [Header("Network")]
     [SerializeField] private Behaviour[] remoteComponentsToDisable;
     [SerializeField] private GameObject[] remoteGameObjectsDisable;
@@ -19,14 +19,14 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 
     [Header("Local")]
     [SerializeField] private PlayerInteractionHandler interaction;
-    [SerializeField] private PlayerMovementHandler movement;
+    [SerializeField] private PlayerNetworkMovement movement;
     [SerializeField] private CameraLook cameraLook;
     [SerializeField] private PlayerInventory inventory;
     [SerializeField] private PlayerAttacker attacker;
     [SerializeField] private PlayerHealth health;
     
     public PlayerInteractionHandler Interaction => interaction;
-    public PlayerMovementHandler Movement => movement;
+    public PlayerNetworkMovement Movement => movement;
     public CameraLook Camera => cameraLook;
     public PlayerInventory Inventory => inventory;
     public PlayerAttacker Attack => attacker;
@@ -35,7 +35,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     [HideInInspector]
     public Player Owner;
 
-    private bool _requestRespawn;
 
     protected override void Awake()
     {
@@ -49,32 +48,18 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         if (Object.HasInputAuthority)
         {
             Local = this;
+            Context.Input.RequestCursorLock();
             Context.Camera.SetActive(false);
+        }
+
+        if (Object.HasStateAuthority)
+        {
+            Movement.CanMove = true;
         }
 
         SetupPlayer();
     }
 
-    public override void FixedUpdateNetwork()
-    {
-        if (_requestRespawn)
-        {
-            RespawnPlayer();
-            _requestRespawn = false;
-        }
-    }
-
-    private void RespawnPlayer()
-    {
-        if (!Object.HasInputAuthority)
-        {
-            return;
-        }
-        
-        Camera.CanLook = true;
-        Movement.CanMove = true;
-        Inventory.CanUse = true;
-    }
 
     public void OnDeath()
     {
@@ -107,8 +92,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         {
             onLocalPlayerInit?.Invoke();
         }
-
-        string playerName = Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)";
     }
 
 
@@ -122,8 +105,18 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         Runner.Despawn(Object);
     }
 
-    public void RequestRespawn()
+    public void OnInventoryToggled(bool state)
     {
-        _requestRespawn = true;
+        Movement.CanMove = !state;
+        Camera.CanLook = !state;
+
+        if (state)
+        {
+            Context.Input.RequestCursorRelease();
+        }
+        else
+        {
+            Context.Input.RequestCursorLock();
+        }
     }
 }

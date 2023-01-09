@@ -115,7 +115,6 @@ MonoBehaviour:
   fakeAmplitude: 0.1
   depthBeforeSubmerged: 1
   displacementAmount: 1
-  floaterCount: 4
   waterDrag: 2
   waterAngularDrag: 2
   rigidBody: {fileID: 1298592924}
@@ -234,7 +233,6 @@ MonoBehaviour:
   fakeAmplitude: 0.1
   depthBeforeSubmerged: 1
   displacementAmount: 1
-  floaterCount: 4
   waterDrag: 2
   waterAngularDrag: 2
   rigidBody: {fileID: 1298592924}
@@ -454,7 +452,6 @@ MonoBehaviour:
   fakeAmplitude: 0.1
   depthBeforeSubmerged: 1
   displacementAmount: 1
-  floaterCount: 4
   waterDrag: 2
   waterAngularDrag: 2
   rigidBody: {fileID: 1298592924}
@@ -826,7 +823,6 @@ MonoBehaviour:
   fakeAmplitude: 0.1
   depthBeforeSubmerged: 1
   displacementAmount: 1
-  floaterCount: 4
   waterDrag: 2
   waterAngularDrag: 2
   rigidBody: {fileID: 1298592924}

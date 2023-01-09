@@ -1110,7 +1110,6 @@ GameObject:
   - component: {fileID: 7313245591291696875}
   - component: {fileID: 3179884598373680720}
   - component: {fileID: 8874177288923519252}
-  - component: {fileID: 1919621228866644800}
   - component: {fileID: 6467673482923859489}
   - component: {fileID: 8644226651885257243}
   - component: {fileID: 1678779374052586985}
@@ -1123,6 +1122,8 @@ GameObject:
   - component: {fileID: 4111844027948265564}
   - component: {fileID: 5968819807260933364}
   - component: {fileID: 3460570078531062315}
+  - component: {fileID: 6321791394010194454}
+  - component: {fileID: 67780509746397124}
   m_Layer: 6
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -1193,7 +1194,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interaction: {fileID: 3421363453046290868}
-  movement: {fileID: 1919621228866644800}
+  movement: {fileID: 67780509746397124}
   cameraLook: {fileID: 2711695760728551273}
   inventory: {fileID: 3134399232989235859}
   attacker: {fileID: 2676349010370680657}
@@ -1222,35 +1223,14 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 3179884598373680720}
-  - {fileID: 1919621228866644800}
   - {fileID: 1678779374052586985}
   - {fileID: 3134399232989235859}
   - {fileID: 2113765977}
   - {fileID: 2676349010370680657}
   - {fileID: 4111844027948265564}
   - {fileID: 5968819807260933364}
+  - {fileID: 67780509746397124}
   SimulationBehaviours: []
---- !u!114 &1919621228866644800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1546747480105808753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 062ebfe0a6c811948ab3306278869906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  movementSpeed: 7
-  jumpSpeed: 10
-  sprintSpeed: 10
-  sprintFOV: 110
-  gravity: 1.6
-  climbSpeed: 5
-  groundCheckDist: 0.4
-  cameraLook: {fileID: 0}
 --- !u!54 &6467673482923859489
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1346,8 +1326,8 @@ MonoBehaviour:
   onButtonInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1919621228866644800}
-        m_TargetAssemblyTypeName: PlayerMovementHandler, Assembly-CSharp
+      - m_Target: {fileID: 67780509746397124}
+        m_TargetAssemblyTypeName: PlayerNetworkMovement, Assembly-CSharp
         m_MethodName: OnButtonInteract
         m_Mode: 0
         m_Arguments:
@@ -1361,9 +1341,9 @@ MonoBehaviour:
   onButtonInteractStop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1919621228866644800}
-        m_TargetAssemblyTypeName: PlayerMovementHandler, Assembly-CSharp
-        m_MethodName: OnStopButtonInteract
+      - m_Target: {fileID: 67780509746397124}
+        m_TargetAssemblyTypeName: PlayerNetworkMovement, Assembly-CSharp
+        m_MethodName: OnButtonStopInteract
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1420,8 +1400,8 @@ MonoBehaviour:
   onInventoryToggled:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1919621228866644800}
-        m_TargetAssemblyTypeName: PlayerMovementHandler, Assembly-CSharp
+      - m_Target: {fileID: 3179884598373680720}
+        m_TargetAssemblyTypeName: NetworkPlayer, Assembly-CSharp
         m_MethodName: OnInventoryToggled
         m_Mode: 0
         m_Arguments:
@@ -1545,6 +1525,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c1f047815ddeb488a4434fdf97a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6321791394010194454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546747480105808753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7d704669187134ab047bb8556e612d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 7
+  jumpSpeed: 10
+  sprintSpeed: 10
+  sprintFOV: 110
+  climbSpeed: 5
+  gravity: 1.6
+  groundCheckDist: 0.4
+--- !u!114 &67780509746397124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546747480105808753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac6d47024f394446848fccce40dbae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _IsSprinting: 0
+  _IsMoving: 0
+  _CanMove: 0
+  _CurrentState: 0
 --- !u!1 &1671487997009177103
 GameObject:
   m_ObjectHideFlags: 0
