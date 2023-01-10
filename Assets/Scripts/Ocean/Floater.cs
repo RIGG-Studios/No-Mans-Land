@@ -15,14 +15,21 @@ public class Floater : NetworkBehaviour
     [SerializeField] private float waterAngularDrag;
     [SerializeField] private Rigidbody rigidBody;
 
-    private float _randomPhase;
-    private float _waveHeight;
+   // private float _randomPhase;
+   // private float _waveHeight;
     
+   [Networked]
+   private float RandomPhase { get; set; }
+   
+   [Networked]
+   private float WaveHeight { get; set; }
+   
+   [Networked]
+   private NetworkBool SetUpPhase { get; set; }
     
 
     private void Awake()
     {
-        _randomPhase = Random.Range(-10.0f, 10.0f);
         rigidBody.useGravity = false;
     }
     
@@ -30,23 +37,29 @@ public class Floater : NetworkBehaviour
     {
         rigidBody.useGravity = true;
 
-        if (!(transform.position.y < _waveHeight))
+        if (!(transform.position.y < WaveHeight))
         {
             return;
         }
 
-        _waveHeight = fakeAmplitude * Mathf.Sin( WaveTime.Instance.Time + _randomPhase) + seaLevel;
+        if (Object.HasStateAuthority && !SetUpPhase)
+        {
+            RandomPhase = Random.Range(-10.0f, 10.0f);
+            SetUpPhase = true;
+        }
+
+        WaveHeight = fakeAmplitude * Mathf.Sin( WaveTime.Instance.Time + RandomPhase) + seaLevel;
         
-        float displacementMultiplier = Mathf.Clamp01((_waveHeight - transform.position.y) / depthBeforeSubmerged) *
+        float displacementMultiplier = Mathf.Clamp01((WaveHeight - transform.position.y) / depthBeforeSubmerged) *
                                        displacementAmount;
 
         rigidBody.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0),
             transform.position, ForceMode.Acceleration);
         
-        rigidBody.AddForce(-rigidBody.velocity * (displacementMultiplier * waterDrag * Runner.DeltaTime),
-            ForceMode.VelocityChange);
+    //    rigidBody.AddForce(-rigidBody.velocity * (displacementMultiplier * waterDrag * Runner.DeltaTime),
+        //    ForceMode.VelocityChange);
         
-        rigidBody.AddTorque(-rigidBody.angularVelocity * (displacementMultiplier * waterAngularDrag * Runner.DeltaTime),
-            ForceMode.VelocityChange);
+   //     rigidBody.AddTorque(-rigidBody.angularVelocity * (displacementMultiplier * waterAngularDrag * Runner.DeltaTime),
+   //         ForceMode.VelocityChange);
     }
 }
