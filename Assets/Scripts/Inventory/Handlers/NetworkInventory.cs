@@ -6,7 +6,7 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class NetworkInventory : NetworkBehaviour, IInventory
+public abstract class NetworkInventory : ContextBehaviour, IInventory
 {
     [SerializeField] protected int size;
     [SerializeField] protected Transform slotContainer;
@@ -79,7 +79,7 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
             return;
         }
 
-        Item item = SceneHandler.Instance.ItemDatabase.FindItem(itemID);
+        Item item = Context.ItemDatabase.FindItem(itemID);
 
         if (item == null)
         {
@@ -109,7 +109,7 @@ public abstract class NetworkInventory : NetworkBehaviour, IInventory
         for (int i = 0; i < Items.Count; i++)
         {
             Slot slot = SlotHandler.FindSlotByID(Items[i].SlotID);
-            Item item = SceneHandler.Instance.ItemDatabase.FindItem(Items[i].ItemID);
+            Item item = Context.ItemDatabase.FindItem(Items[i].ItemID);
 
             var itemData = Items[i];
             slot.InitItem(item, ref itemData);

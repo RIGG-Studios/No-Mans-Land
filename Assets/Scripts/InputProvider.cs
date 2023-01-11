@@ -1,9 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
+
+//network input class, used to send input/data across the network in an secure way
+//since Fusion's input system is the main way to drive state in a game, we will also send
+//state changes to be executed on the server (State Authority)
 public class InputProvider : InputBase
 {
     private Vector2 _moveDir;
@@ -14,13 +15,14 @@ public class InputProvider : InputBase
     private bool _isFirePressed;
 
     private int _currentState;
+    private int _currentWeaponID;
 
     private bool _isAiming;
     private bool _isReloading;
 
 
     private NetworkInput _networkInput;
-
+    
 
     private void Start()
     {
@@ -49,6 +51,7 @@ public class InputProvider : InputBase
         _isAiming = frameState.IsAiming;
 
         _currentState = NetworkPlayer.Local.Movement.RequestedState;
+        _currentWeaponID = NetworkPlayer.Local.Inventory.RequestedEquippedItem;
     }
 
     public override void OnEnable()
@@ -85,14 +88,19 @@ public class InputProvider : InputBase
             return;
         }
 
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
+        
         NetworkInputData tickInput = new NetworkInputData();
 
         tickInput.MovementInput = _moveDir;
         tickInput.LookForward = _cameraLook.PlayerRotation;
-
         tickInput.IsAiming = _isAiming;
         tickInput.IsReloading = _isReloading;
         tickInput.CurrentState = _currentState;
+        tickInput.CurrentWeaponID = _currentWeaponID;
         
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
         tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);

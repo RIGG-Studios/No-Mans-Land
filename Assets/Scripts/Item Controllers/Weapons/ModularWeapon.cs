@@ -41,12 +41,17 @@ public class ModularWeapon : BaseWeapon
 
     public void SetCameraRecoil(IRecoil recoil)
     {
+        if (CameraRecoil != null)
+        {
+            return;
+        }
+        
+        CameraRecoil = recoil;
+
         if (Attacker != null)
         {
             Attacker.onAttack += CameraRecoil.DoRecoil;
         }
-        
-        CameraRecoil = recoil;
     }
 
     public void SetWeaponRecoil(IRecoil recoil)

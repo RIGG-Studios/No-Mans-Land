@@ -20,4 +20,5 @@ MonoBehaviour:
   isEquippable: 1
   fpPrefab: {fileID: 8072611267142044377, guid: 977ab58d113bc1947b5f37ee7a50889d,
     type: 3}
-  tpPrefab: {fileID: 0}
+  tpPrefab: {fileID: 2503512450162827727, guid: f95179e5be7e724468de63be847e8a8a,
+    type: 3}

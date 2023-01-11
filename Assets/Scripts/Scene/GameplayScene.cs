@@ -7,8 +7,12 @@ using UnityEngine;
 
 public class GameplayScene : Scene
 {
+    [SerializeField] private ItemDatabase itemDatabase;
+    
     protected override void OnInitialize()
     {
+        Context.ItemDatabase = itemDatabase;
+        
         var contextBehaviours = FindObjectsOfType<ContextBehaviour>(true);
 
         foreach (ContextBehaviour behaviour in contextBehaviours)

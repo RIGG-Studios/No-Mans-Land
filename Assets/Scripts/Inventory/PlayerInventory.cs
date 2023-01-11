@@ -1,22 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerInventory : LocalInventory
 {
-    
     [SerializeField] private GameObject inventoryUI;
 
     public UnityEvent<bool> onInventoryToggled;
-    
-    
+    public UnityEvent<int> onItemsChanged;
+
+
     public ItemController EquippedItem { get; private set; }
     public bool IsSwitching { get; private set; }
     public bool IsOpen { get; private set; }
     public bool CanUse { get; set; }
+
+
+    [Networked(OnChanged = nameof(OnEquippedItemChanged))]
+    public int EquippedItemID { get; set; }
     
+    public int RequestedEquippedItem { get; private set; }
+
+
     private PlayerItemControllerHandler _itemControllerHandler;
 
     protected override void Awake()
@@ -27,6 +35,12 @@ public class PlayerInventory : LocalInventory
         CanUse = true;
     }
 
+    public static void OnEquippedItemChanged(Changed<PlayerInventory> changed)
+    {
+        Debug.Log(changed.Behaviour.EquippedItemID);
+        changed.Behaviour.onItemsChanged?.Invoke(changed.Behaviour.EquippedItemID);
+    }
+
     public override void Start()
     {
         if (Object.HasInputAuthority)
@@ -35,6 +49,16 @@ public class PlayerInventory : LocalInventory
         }
         
         base.Start();
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!GetInput(out NetworkInputData input))
+        {
+            return;
+        }
+
+        EquippedItemID = input.CurrentWeaponID;
     }
     
     public void ToggleInventory()
@@ -107,11 +131,13 @@ public class PlayerInventory : LocalInventory
         }
         
         SlotHandler.FindSlotByID(slotID).SelectSlot();
+        RequestedEquippedItem = nextController.Item.itemID;
     }
 
     private void HideCurrentItem()
     {
         StartCoroutine(IE_HideCurrentItem());
+        RequestedEquippedItem = -1;
     }
 
     private IEnumerator IE_HideCurrentItem()
@@ -122,6 +148,7 @@ public class PlayerInventory : LocalInventory
         
         EquippedItem.gameObject.SetActive(false);
         EquippedItem = null;
+        EquippedItemID = -1;
     }
 
     private IEnumerator IE_SwitchItems(ItemController nextController)
@@ -141,6 +168,7 @@ public class PlayerInventory : LocalInventory
         yield return new WaitForSeconds(equipTime);
         
         EquippedItem = nextController;
+
         IsSwitching = false;
     }
     

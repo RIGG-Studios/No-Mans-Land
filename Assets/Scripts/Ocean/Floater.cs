@@ -56,10 +56,12 @@ public class Floater : NetworkBehaviour
         rigidBody.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0),
             transform.position, ForceMode.Acceleration);
         
-    //    rigidBody.AddForce(-rigidBody.velocity * (displacementMultiplier * waterDrag * Runner.DeltaTime),
-        //    ForceMode.VelocityChange);
         
-   //     rigidBody.AddTorque(-rigidBody.angularVelocity * (displacementMultiplier * waterAngularDrag * Runner.DeltaTime),
-   //         ForceMode.VelocityChange);
+        //comment out these lines to fix network bouyancy interpolation
+        //add torque uses time.fixeddeltatime internally and that makes it uncompatiable with Fusion
+        rigidBody.AddForce(-rigidBody.velocity * (displacementMultiplier * waterDrag * Runner.DeltaTime),
+            ForceMode.VelocityChange);
+        rigidBody.AddTorque(-rigidBody.angularVelocity * (displacementMultiplier * waterAngularDrag * Runner.DeltaTime),
+            ForceMode.VelocityChange);
     }
 }

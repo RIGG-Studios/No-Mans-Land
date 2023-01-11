@@ -9,15 +9,11 @@ public class ShipPhysicsHandler : NetworkBehaviour
     [SerializeField] private float movementSpeed;
     
     private Rigidbody _rigidbody;
-    private Floater[] _floaters;
-
     private Ship _ship;
 
 
     private void Awake()
     {
-        _floaters = GetComponentsInChildren<Floater>();
-        
         _ship = GetComponent<Ship>();
         _rigidbody = GetComponent<Rigidbody>();
     }
@@ -25,15 +21,8 @@ public class ShipPhysicsHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        for (int i = 0; i < _floaters.Length; i++)
-        {
-          //  _floaters[i].UpdateBuoyancy(Runner.DeltaTime);
-        }
-        
-        
         if (!GetInput(out NetworkInputData input))
         {
-            Debug.Log("Not getting inpuit");
             return;
         }
         

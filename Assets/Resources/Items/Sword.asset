@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: 
   itemIcon: {fileID: 21300000, guid: 32e0122b9c12c9a4facabfda4aa51410, type: 3}
   maxStack: 1
-  isEquippable: 1
+  isEquippable: 0
   fpPrefab: {fileID: 8428355119811230320, guid: 3f7204d168f22bd4dbc61681e0ad0957,
     type: 3}
   tpPrefab: {fileID: 0}

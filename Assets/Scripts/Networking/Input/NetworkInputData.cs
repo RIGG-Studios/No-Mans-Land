@@ -30,11 +30,6 @@ public struct NetworkInputData : INetworkInput
     //1 cannon controller
     //2 sailing controller
     public int CurrentState;
-}
 
-public struct NetworkShipInputData : INetworkInput
-{
-    public ShipButtons Buttons;
-    
-    public Vector2 MovementInput;
+    public int CurrentWeaponID;
 }

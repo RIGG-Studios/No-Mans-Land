@@ -14,6 +14,7 @@ namespace NoMansLand.Scene
         public SceneInput Input;
         public SceneCamera Camera;
         public NetworkTeams Teams;
+        public ItemDatabase ItemDatabase;
         
         //Gameplay
 

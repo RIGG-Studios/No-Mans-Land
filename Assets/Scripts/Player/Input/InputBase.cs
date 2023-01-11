@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputBase : MonoBehaviour
+public class InputBase : ContextBehaviour
 {
     
     protected InputActions InputActions;

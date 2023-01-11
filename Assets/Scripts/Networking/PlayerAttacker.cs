@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.ParticleSystemJobs;
 
 public class PlayerAttacker : NetworkBehaviour
@@ -15,6 +16,7 @@ public class PlayerAttacker : NetworkBehaviour
 
     
     [SerializeField] private LayerMask attackableLayers;
+    [SerializeField] private UnityEvent onAttacked;
 
     private NetworkPlayer _player;
     private float _lastAttack;
@@ -86,7 +88,7 @@ public class PlayerAttacker : NetworkBehaviour
 
     private void OnAttackRemote()
     {
-        
+        onAttacked?.Invoke();
     }
     
     private static void OnAttackChanged(Changed<PlayerAttacker> changed)

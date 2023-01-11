@@ -96,7 +96,7 @@ public class LocalInventory : ContextBehaviour, IInventory
             return;
         }
 
-        Item item = SceneHandler.Instance.ItemDatabase.FindItem(itemID);
+        Item item = Context.ItemDatabase.FindItem(itemID);
 
         if (item == null)
         {

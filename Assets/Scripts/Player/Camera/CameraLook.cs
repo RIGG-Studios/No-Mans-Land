@@ -90,4 +90,10 @@ public class CameraLook : MonoBehaviour
 
         _fov = fov;
     }
+
+    public void UpdateRecoil(float x, float y)
+    {
+        _lookRotation.x += x;
+        _lookRotation.y += y;
+    }
 }

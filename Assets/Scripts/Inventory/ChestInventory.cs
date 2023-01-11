@@ -173,7 +173,7 @@ public class ChestInventory : NetworkInventory, IInteractable
                 slots[z].Reset();
                 if (newItems[i].SlotID == slots[z].ID)
                 {
-                    Item item = SceneHandler.Instance.ItemDatabase.FindItem(newItems[i].ItemID);
+                    Item item = Context.ItemDatabase.FindItem(newItems[i].ItemID);
                     
                     slots[z].InitItem(item, ref newItems[i]);
                 }

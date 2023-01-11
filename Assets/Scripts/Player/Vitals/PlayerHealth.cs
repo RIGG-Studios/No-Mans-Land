@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Net.Mime;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,14 +13,13 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
     [SerializeField] private Text healthText;
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private GameObject model;
-    [SerializeField] private Text respawnTimeText;
+    [SerializeField] private GameObject[] disableOnDeath;
     
     public UnityEvent<HitData> onDamageTaken;
     public UnityEvent onDeath;
 
 
     private const byte StartingHealth = 100;
-    private const float RespawnTimer = 10f;
 
     public bool IsActive => true;
     public PlayerRef OwnerRef => Object.InputAuthority;
@@ -53,11 +50,16 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         }
         
         model.gameObject.SetActive(false);
-        
+
         if (Object.HasInputAuthority)
         {
             deathPanel.SetActive(true);
             onDeath?.Invoke();
+
+            for (int i = 0; i < disableOnDeath.Length; i++)
+            {
+                disableOnDeath[i].SetActive(false);
+            }
         }
     }
 

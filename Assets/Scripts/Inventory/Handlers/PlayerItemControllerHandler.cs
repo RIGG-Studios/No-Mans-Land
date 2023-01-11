@@ -4,7 +4,7 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerItemControllerHandler : NetworkBehaviour
+public class PlayerItemControllerHandler : ContextBehaviour
 {
     [SerializeField] private Transform itemHolder;
     
@@ -18,7 +18,7 @@ public class PlayerItemControllerHandler : NetworkBehaviour
             return;
         }
         
-        Item item = SceneHandler.Instance.ItemDatabase.FindItem(itemData.ItemID);
+        Item item = Context.ItemDatabase.FindItem(itemData.ItemID);
 
         if (!item.isEquippable)
         {
