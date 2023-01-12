@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-[System.Serializable]
 public struct NetworkTeam : INetworkStruct
 {
     public byte TeamID;
     public int PlayerCount;
-
+    
+    public int ShipIndex;
 
     public NetworkBool IsFull => PlayerCount >= 1;
 
@@ -17,6 +17,7 @@ public struct NetworkTeam : INetworkStruct
     {
         TeamID = teamID;
         PlayerCount = playerCount;
+        ShipIndex = 0;
     }
 }
 
@@ -29,9 +30,7 @@ public class NetworkTeams : ContextBehaviour
     public NetworkLinkedList<NetworkTeam> Teams { get; } = new();
 
     private TeamUIItem[] _teamUi = new TeamUIItem[4];
-
-    private bool _initialized;
-
+    
     public void OnEnable()
     {
         Context.Teams = this;
@@ -43,17 +42,32 @@ public class NetworkTeams : ContextBehaviour
 
         _teamUi = GetComponentsInChildren<TeamUIItem>();
     }
-    
-    private void Init()
+
+    public override void Spawned()
     {
+        if (!HasStateAuthority)
+        {
+            return;
+        }
+        
         for (int i = 0; i < teamAmount; i++)
         {
             int id = i + 1;
             
             Teams.Add(new NetworkTeam((byte)id, 0));
         }
-        
-        _initialized = true;
+
+        for (int i = 0; i < Teams.Count; i++)
+        {
+            GetComponent<SceneShipHandler>().RequestShip(Teams[i].TeamID, Object.StateAuthority, out NetworkObject ship);
+
+            if (ship != null)
+            {
+                NetworkTeam team = Teams[i];
+                team.ShipIndex = i;
+                Teams.Set(i, team);
+            }
+        }
     }
 
     public void SelectTeam(int i)
@@ -76,11 +90,6 @@ public class NetworkTeams : ContextBehaviour
 
     public void AddToTeam(Player player, int teamIndex = -1)
     {
-        if (!_initialized)
-        {
-            Init();
-        }
-        
         byte teamID = 0;
         
         if (autoFillTeams)

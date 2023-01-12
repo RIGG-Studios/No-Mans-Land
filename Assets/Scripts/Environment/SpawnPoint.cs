@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum SpawnPointTypes : byte
+{
+    Player,
+    Ship
+}
 
 public class SpawnPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private SpawnPointTypes spawnType;
+    [SerializeField] private int teamID;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public SpawnPointTypes SpawnType => spawnType;
+    public int TeamID => teamID;
 }

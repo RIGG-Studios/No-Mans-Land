@@ -8,13 +8,7 @@ public static class SceneShipHandlerInstance
 
     public static void InitShipHandler(SceneShipHandler shipHandler)
     {
-        if (_shipHandler != null)
-        {
-            _shipHandler.DeActivate();
-        }
-
         _shipHandler = shipHandler;
-        _shipHandler.Activate();
     }
 
 

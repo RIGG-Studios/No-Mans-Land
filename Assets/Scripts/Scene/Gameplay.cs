@@ -110,7 +110,7 @@ public class Gameplay : ContextBehaviour
     {
         DespawnNetworkPlayer(player);
 
-        NetworkPlayer networkPlayer = SpawnNetworkPlayer(player.Object.InputAuthority, player.PlayerPrefab);
+        NetworkPlayer networkPlayer = SpawnNetworkPlayer(player.Object.InputAuthority, player.PlayerPrefab, player.Stats.TeamID);
         player.AssignNetworkPlayer(networkPlayer);
     }
 
@@ -159,11 +159,11 @@ public class Gameplay : ContextBehaviour
     }
 
 
-    private NetworkPlayer SpawnNetworkPlayer(PlayerRef inputAuthority, NetworkPlayer playerPrefab)
+    private NetworkPlayer SpawnNetworkPlayer(PlayerRef inputAuthority, NetworkPlayer playerPrefab, int teamID)
     {
         if (_spawnPoints == null)
         {
-            _spawnPoints = Runner.SimulationUnityScene.FindObjectsOfTypeInOrder<SpawnPoint>();
+            _spawnPoints = NetworkSpawnHandler.Instance.GetTeamPlayerSpawns(teamID);
         }
 
         _lastSpawnPoint = (_lastSpawnPoint + 1) % _spawnPoints.Length;
