@@ -35,21 +35,16 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     [HideInInspector]
     public Player Owner;
 
-
-    protected override void Awake()
-    {
-        base.Awake();
-        
-        FindObjectOfType<GenerateQuadTree>().AssignPlayer(transform);
-    }
-
+    
     public override void Spawned()
     {
         if (Object.HasInputAuthority)
         {
             Local = this;
             Context.Input.RequestCursorLock();
-            Context.Camera.SetActive(false);
+            Context.Camera.Disable();
+            FindObjectOfType<GenerateQuadTree>().AssignPlayer(transform);
+
         }
 
         if (Object.HasStateAuthority)

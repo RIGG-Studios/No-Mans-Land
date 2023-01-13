@@ -11,7 +11,7 @@ public struct NetworkTeam : INetworkStruct
     
     public int ShipIndex;
 
-    public NetworkBool IsFull => PlayerCount >= 1;
+    public NetworkBool IsFull => PlayerCount >= 4;
 
     public NetworkTeam(byte teamID, int playerCount)
     {

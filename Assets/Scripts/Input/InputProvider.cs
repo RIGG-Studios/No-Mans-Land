@@ -42,6 +42,11 @@ public class InputProvider : InputBase
 
     private void Update()
     {
+        if (NetworkPlayer.Local == null)
+        {
+            return;
+        }
+        
         _moveDir = InputActions.Player.Move.ReadValue<Vector2>();
         _isSprintPressed = InputActions.Player.Run.IsPressed();
         
@@ -68,6 +73,11 @@ public class InputProvider : InputBase
     
     private void OnFirePressed()
     {
+        if (NetworkPlayer.Local == null)
+        {
+            return;
+        }
+        
         if (NetworkPlayer.Local.Inventory.EquippedItem == null)
         {
             return;

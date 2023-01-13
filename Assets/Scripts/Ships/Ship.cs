@@ -9,6 +9,9 @@ public class Ship : NetworkBehaviour
 {
     [Networked(OnChanged = nameof(HasPilotChanged))]
     public bool HasPilot { get; set; }
+    
+    [Networked]
+    public byte TeamID { get; set; }
 
     [SerializeField] private Transform rudderTransform;
 
@@ -19,6 +22,17 @@ public class Ship : NetworkBehaviour
     private void Awake()
     {
         _shipPhysics = GetComponent<ShipPhysicsHandler>();
+    }
+
+    public void Init(byte id)
+    {
+        TeamID = id;
+
+        foreach (ISpawnPoint spawnPoint in GetComponentsInChildren<ISpawnPoint>())
+        {
+            spawnPoint.OverrideTeam(TeamID);
+            spawnPoint.Init();
+        }
     }
     
 

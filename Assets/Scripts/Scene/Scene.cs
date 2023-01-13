@@ -13,11 +13,16 @@ namespace NoMansLand.Scene
 
         public SceneInput Input;
         public SceneCamera Camera;
-        public NetworkTeams Teams;
+        public SceneUI UI;
         public ItemDatabase ItemDatabase;
-        public SceneShipHandler Ships;
         
         //Gameplay
+
+        [HideInInspector]
+        public NetworkTeams Teams;
+        
+        [HideInInspector]
+        public SceneShipHandler Ships;
 
         [HideInInspector]
         public Gameplay Gameplay;

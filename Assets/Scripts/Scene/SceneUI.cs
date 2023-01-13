@@ -1,35 +1,87 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum FadeTypes
+{
+    FadeIn,
+    FadeOut,
+    InstantFadeIn,
+    InstantFadeOut
+}
+
 public class SceneUI : SceneComponent
 {
-    [SerializeField] private Text timeText;
+    private UIComponent[] _uiComponents;
+    private UIComponent _openedMenu;
 
-    [SerializeField] private GameObject battleStartingWindow;
-    [SerializeField] private Text battleStartingTimerText;
-
-    
-    public void ToggleTimeText(bool state) => timeText.gameObject.SetActive(state);
-    public void ToggleBattleStartingWindow(bool state) => battleStartingWindow.gameObject.SetActive(state);
-
-    public void SetTimeText(float timer)
+    private void Awake()
     {
-        int minutes = Mathf.FloorToInt(timer / 60f);
-        int seconds = Mathf.RoundToInt(timer % 60f);
-        
-        if (seconds == 60)
-        {
-            seconds = 0;
-            minutes += 1;
-        }
- 
-        timeText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+        _uiComponents = GetComponentsInChildren<UIComponent>();
     }
 
-    public void SetBattleStartingTimerText(float timer)
+    private void Start()
     {
-        battleStartingTimerText.text = ((int)timer).ToString();
+        CloseAllMenus();
+    }
+
+    public T GetService<T>() where T : UIComponent
+    {
+        for (int i = 0, count = _uiComponents.Length; i < count; i++)
+        {
+            if (_uiComponents[i] is T service)
+                return service;
+        }
+
+        return null;
+    }
+
+    public void EnableMenu(string id)
+    {
+        if (_openedMenu)
+        {
+            _openedMenu.Disable();
+            _openedMenu.gameObject.SetActive(false);
+        }
+
+        UIComponent nextMenu = FindUIComponent(id);
+        
+        nextMenu.gameObject.SetActive(true);
+        nextMenu.Enable();
+        _openedMenu = nextMenu;
+    }
+
+    public void CloseAllMenus()
+    {
+        for (int i = 0; i < _uiComponents.Length; i++)
+        {
+            _uiComponents[i].Disable();
+            _uiComponents[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void DisableCurrentMenu()
+    {
+        if (_openedMenu)
+        {
+            _openedMenu.Disable();
+            _openedMenu.gameObject.SetActive(false);
+        }
+
+        _openedMenu = null;
+    }
+
+    private UIComponent FindUIComponent(string id)
+    {
+        for (int i = 0; i < _uiComponents.Length; i++)
+        {
+            if (id == _uiComponents[i].ID)
+            {
+                return _uiComponents[i];
+            }
+        }
+
+        return null;
     }
 }

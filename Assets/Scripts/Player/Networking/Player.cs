@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Fusion;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
 
 
+[Serializable]
 public struct PlayerStats : INetworkStruct
 {
     public PlayerRef PlayerRef;
@@ -15,6 +13,12 @@ public struct PlayerStats : INetworkStruct
     public short Deaths;
     public short Score;
     public byte TeamID;
+}
+public enum StateTypes : byte
+{
+    Dead,
+    Respawning,
+    Alive
 }
 
 public enum StatTypes : byte
@@ -27,6 +31,8 @@ public enum StatTypes : byte
 
 public class Player : ContextBehaviour
 {
+    public static Player Local;
+    
     [Networked(OnChanged = nameof(OnActiveNetworkPlayerChanged), OnChangedTargets = OnChangedTargets.All), HideInInspector]
     public NetworkPlayer ActivePlayer { get; private set; }
 
@@ -35,31 +41,48 @@ public class Player : ContextBehaviour
     
     [Networked(OnChanged = nameof(OnNameChanged))]
     public NetworkString<_16> PlayerName { get; set; }
+    
+    [Networked(OnChanged = nameof(OnStateChanged))]
+    public StateTypes State { get; set; }
 
 
     
     [SerializeField] private NetworkPlayer playerPrefab;
 
     public NetworkPlayer PlayerPrefab => playerPrefab;
-    
-
-    private void Start()
-    {
-        if (Object.HasInputAuthority)
-        {
-            RPC_RequestUpdatePlayerName(Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)");
-        }
-    }
 
     public void AssignNetworkPlayer(NetworkPlayer player)
     {
+        if (Object.HasInputAuthority)
+        {
+            Context.UI.CloseAllMenus();
+        }
+
         ActivePlayer = player;
+        State = StateTypes.Alive;
         ActivePlayer.Owner = this;
     }
     
     private static void OnNameChanged(Changed<Player> changed)
     {
         changed.Behaviour.gameObject.name = changed.Behaviour.PlayerName.ToString() + "_PERSISTANT";
+    }
+
+    private static void OnStateChanged(Changed<Player> changed)
+    {
+        Debug.Log($"{Time.time} OnStateChanged State {changed.Behaviour.State}");
+        
+        if (!changed.Behaviour.Object.HasInputAuthority)
+        {
+            return;
+        }
+
+        if (changed.Behaviour.State == StateTypes.Dead)
+        {
+            changed.Behaviour.Context.Camera.Enable();
+            changed.Behaviour.Context.Input.RequestCursorRelease();
+            changed.Behaviour.Context.UI.EnableMenu("SpawnSelectionMenu");
+        }
     }
     
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
@@ -82,10 +105,19 @@ public class Player : ContextBehaviour
     public override void Spawned()
     {
         Stats.PlayerRef = Object.InputAuthority;
+        State = StateTypes.Alive;
 
         if (Context.Gameplay != null)
         {
             Context.Gameplay.Join(this);
+        }
+
+
+        if (Object.HasInputAuthority)
+        {
+            RPC_RequestUpdatePlayerName(Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)");
+            Local = this;
+            Context.UI.EnableMenu("SpawnSelectionMenu");
         }
     }
 

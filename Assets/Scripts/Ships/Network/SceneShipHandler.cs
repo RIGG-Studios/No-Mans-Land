@@ -27,14 +27,14 @@ public class SceneShipHandler : ContextBehaviour
 
     private NetworkObject SpawnNetworkShip(PlayerRef inputAuthority, int teamID)
     {
-        SpawnPoint[] spawnPoints = NetworkSpawnHandler.Instance.GetTeamShipSpawns(teamID);
+        ISpawnPoint[] spawnPoints = NetworkSpawnHandler.Instance.GetTeamShipSpawns(teamID);
 
-        Debug.Log(spawnPoints.Length);
-        SpawnPoint spawnPoint = spawnPoints[0];
+        ISpawnPoint spawnPoint = spawnPoints[0];
         
-        NetworkObject ship = Runner.Spawn(shipPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation, inputAuthority)
+        NetworkObject ship = Runner.Spawn(shipPrefab, spawnPoint.Transform.position, spawnPoint.Transform.rotation, inputAuthority)
             .GetComponent<NetworkObject>();
 
+        ship.GetComponent<Ship>().Init((byte)teamID);
         return ship;
     }
 }

@@ -26,6 +26,8 @@ public class Gameplay : ContextBehaviour
     public struct SpawnRequest
     {
         public Player Player;
+        public Vector3 Position;
+        public Quaternion Rotation;
         public int Tick;
     }
     
@@ -49,7 +51,7 @@ public class Gameplay : ContextBehaviour
         Context.Teams.AddToTeam(player);
 
         Players.Add(playerRef, player);
-        SpawnNetworkPlayer(player);
+   //     SpawnNetworkPlayer(player);
     }
 
     public void Leave(NetworkBehaviour player)
@@ -102,15 +104,21 @@ public class Gameplay : ContextBehaviour
                 continue;
             }
 
-            SpawnNetworkPlayer(request.Player);
+            SpawnNetworkPlayer(request.Player, request.Position, request.Rotation);
         }
     }
 
-    private void SpawnNetworkPlayer(Player player)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_RequestSpawn(Player player, Vector3 pos, Quaternion rot, float delay = 0)
+    {
+        AddSpawnRequest(player, delay, pos, rot);
+    }
+
+    public void SpawnNetworkPlayer(Player player, Vector3 pos, Quaternion rot)
     {
         DespawnNetworkPlayer(player);
 
-        NetworkPlayer networkPlayer = SpawnNetworkPlayer(player.Object.InputAuthority, player.PlayerPrefab, player.Stats.TeamID);
+        NetworkPlayer networkPlayer = SpawnNetworkPlayer(player.Object.InputAuthority, player.PlayerPrefab,  pos, rot);
         player.AssignNetworkPlayer(networkPlayer);
     }
 
@@ -137,18 +145,28 @@ public class Gameplay : ContextBehaviour
         
         if (Players.TryGet(health.Object.InputAuthority, out Player player))
         {
-            AddSpawnRequest(player, 3.0f);
+            player.State = StateTypes.Dead;
+
+            StartCoroutine(DelayDespawnNetworkPlayer(player));
         }
+    }
+
+    private IEnumerator DelayDespawnNetworkPlayer(Player player)
+    {
+        yield return new WaitForSeconds(3.5f);
+        DespawnNetworkPlayer(player);
     }
     
     
-    protected void AddSpawnRequest(Player player, float spawnDelay)
+    protected void AddSpawnRequest(Player player, float spawnDelay, Vector3 pos = default, Quaternion rot = default)
     {
         int delayTicks = Mathf.RoundToInt(Runner.Simulation.Config.TickRate * spawnDelay);
 
         _spawnRequests.Add(new SpawnRequest()
         {
             Player = player,
+            Position = pos,
+            Rotation = rot,
             Tick = Runner.Tick + delayTicks,
         });
     }
@@ -159,16 +177,8 @@ public class Gameplay : ContextBehaviour
     }
 
 
-    private NetworkPlayer SpawnNetworkPlayer(PlayerRef inputAuthority, NetworkPlayer playerPrefab, int teamID)
+    private NetworkPlayer SpawnNetworkPlayer(PlayerRef inputAuthority, NetworkPlayer playerPrefab, Vector3 pos, Quaternion rot)
     {
-        if (_spawnPoints == null)
-        {
-            _spawnPoints = NetworkSpawnHandler.Instance.GetTeamPlayerSpawns(teamID);
-        }
-
-        _lastSpawnPoint = (_lastSpawnPoint + 1) % _spawnPoints.Length;
-        var spawnPoint = _spawnPoints[_lastSpawnPoint].transform;
-
-        return Runner.Spawn(playerPrefab, spawnPoint.position, spawnPoint.rotation, inputAuthority);
+        return Runner.Spawn(playerPrefab, pos, rot, inputAuthority);
     }
 }
