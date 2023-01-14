@@ -4,15 +4,15 @@ using UnityEngine;
 public enum PlayerButtons
 {
     Jump,
-    Movement,
     Sprint,
     Fire,
-    Reload
 }
 
-public enum ShipButtons
+public enum PlayerStates : byte
 {
-    ToggleCameraView
+    PlayerController,
+    ShipController,
+    CannonController
 }
 
 public struct NetworkInputData : INetworkInput
@@ -21,15 +21,14 @@ public struct NetworkInputData : INetworkInput
 
     public Vector2 MovementInput;
     public Quaternion LookForward;
+    public Quaternion VerticalLook;
     
-    //states
     public NetworkBool IsAiming;
     public NetworkBool IsReloading;
 
-    //0 character controller
-    //1 cannon controller
-    //2 sailing controller
-    public int CurrentState;
-
+    public float RawLookX;
+    public float RawLookY;
+    
+    public PlayerStates CurrentState;
     public int CurrentWeaponID;
 }

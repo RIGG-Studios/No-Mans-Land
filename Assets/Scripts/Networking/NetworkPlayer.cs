@@ -8,7 +8,6 @@ using Behaviour = UnityEngine.Behaviour;
 
 public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 {
-
     public static NetworkPlayer Local { get; set; }
     
     [Header("Network")]
@@ -24,13 +23,16 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     [SerializeField] private PlayerInventory inventory;
     [SerializeField] private PlayerAttacker attacker;
     [SerializeField] private PlayerHealth health;
-    
+    [SerializeField] private PlayerUI ui;
+
     public PlayerInteractionHandler Interaction => interaction;
     public PlayerNetworkMovement Movement => movement;
     public CameraLook Camera => cameraLook;
     public PlayerInventory Inventory => inventory;
     public PlayerAttacker Attack => attacker;
     public PlayerHealth Health => health;
+
+    public PlayerUI UI => ui;
     
     [HideInInspector]
     public Player Owner;

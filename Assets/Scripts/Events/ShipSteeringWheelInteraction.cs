@@ -10,7 +10,8 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
 
     public Ship Ship => ship;
     
-    public string LookAtID => "[F] INTERACT";
+    public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
+
     public string ID => "ShipWheel";
     
     

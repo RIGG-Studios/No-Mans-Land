@@ -52,7 +52,7 @@ public class PlayerAttacker : NetworkBehaviour
             return;
         }
         
-        if (Object.HasInputAuthority)
+        if (Object.HasInputAuthority && _player.Inventory.EquippedItem != null)
         {
             _player.Inventory.EquippedItem.Attack();
         }

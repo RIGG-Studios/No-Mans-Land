@@ -14,7 +14,7 @@ public class InputProvider : InputBase
     private bool _isJumpPressed;
     private bool _isFirePressed;
 
-    private int _currentState;
+    private PlayerStates _currentState;
     private int _currentWeaponID;
 
     private bool _isAiming;
@@ -77,11 +77,6 @@ public class InputProvider : InputBase
         {
             return;
         }
-        
-        if (NetworkPlayer.Local.Inventory.EquippedItem == null)
-        {
-            return;
-        }
 
         if (NetworkPlayer.Local.Inventory.IsOpen)
         {
@@ -107,6 +102,9 @@ public class InputProvider : InputBase
 
         tickInput.MovementInput = _moveDir;
         tickInput.LookForward = _cameraLook.PlayerRotation;
+        tickInput.VerticalLook = _cameraLook.CameraRotation;
+        tickInput.RawLookX = _cameraLook.RawLookX;
+        tickInput.RawLookY = _cameraLook.RawLookY;
         tickInput.IsAiming = _isAiming;
         tickInput.IsReloading = _isReloading;
         tickInput.CurrentState = _currentState;

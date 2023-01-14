@@ -2,7 +2,9 @@ using System;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 
 public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDamagable
@@ -42,6 +44,17 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
             changed.Behaviour.OnDeath();
     }
 
+    private void Update()
+    {
+        if (Object.HasInputAuthority)
+        {
+            if (Keyboard.current.yKey.wasPressedThisFrame)
+            {
+                Damage(new HitData() { Damage = 10 });
+            }
+        }
+    }
+
     private void OnDeath()
     {
         if (Object.HasStateAuthority)
@@ -60,6 +73,8 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
             {
                 disableOnDeath[i].SetActive(false);
             }
+
+            NetworkPlayer.Local.Camera.Fall();
         }
     }
 
@@ -71,11 +86,20 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         return true;
     }
 
+    public override bool Heal(float amount)
+    {
+        RPC_Heal(amount);
+
+        return true;
+    }
+
+
     protected override void OnHealthReduced()
     {
         if (Object.HasInputAuthority)
         {
-            healthText.text = "+ " + Health;
+            NetworkPlayer.Local.UI.EnableMenu("DamageMenu");
+            healthText.text = string.Format("<color={0}>+</color> {1}", "red", Health - 10f);
         }
     }
     
@@ -83,14 +107,26 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_Damage(float damage)
     {
-        Debug.Log($"{Time.time} {transform.name} took damage got {Health} left ");
         Health -= (byte)damage;
-        
+        Debug.Log($"{Time.time} {transform.name} took damage got {Health} left ");
+
         if (Health <= 0)
         {
             Debug.Log($"{Time.time} {transform.name} died");
             Health = 0;
             IsDead = true;
+        }
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_Heal(float healAmount)
+    {
+        Debug.Log($"{Time.time} {transform.name} got healed, got {Health} left ");
+        Health += (byte)healAmount;
+        
+        if (Health > 100)
+        {
+            Health = 100;
         }
     }
 

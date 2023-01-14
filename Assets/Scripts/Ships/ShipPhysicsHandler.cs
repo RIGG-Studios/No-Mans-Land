@@ -7,6 +7,7 @@ using UnityEngine;
 public class ShipPhysicsHandler : NetworkBehaviour
 {
     [SerializeField] private float movementSpeed;
+    [SerializeField] private float rotationSpeed;
     
     private Rigidbody _rigidbody;
     private Ship _ship;
@@ -27,6 +28,6 @@ public class ShipPhysicsHandler : NetworkBehaviour
         }
         
         _rigidbody.AddForce(transform.forward * input.MovementInput.y * movementSpeed, ForceMode.Force);
-        _rigidbody.AddForceAtPosition(input.MovementInput.x * -_ship.RudderTransform.right * movementSpeed, _ship.RudderTransform.position, ForceMode.Force);
+        _rigidbody.AddForceAtPosition(input.MovementInput.x * -_ship.RudderTransform.right * rotationSpeed, _ship.RudderTransform.position, ForceMode.Force);
     }
 }

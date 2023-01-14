@@ -35,6 +35,7 @@ public class Gameplay : ContextBehaviour
 
     public void Join(Player player)
     {
+        //only want to execute this code on the server
         if (!HasStateAuthority)
         {
             return;
@@ -48,10 +49,11 @@ public class Gameplay : ContextBehaviour
             return;
         }
         
-        Context.Teams.AddToTeam(player);
-
+        
+        Context.Teams.AddToTeam(player, out ISpawnPoint spawnPoint);
         Players.Add(playerRef, player);
-   //     SpawnNetworkPlayer(player);
+        
+        SpawnNetworkPlayer(player, spawnPoint.Transform.position, spawnPoint.Transform.rotation);
     }
 
     public void Leave(NetworkBehaviour player)
@@ -136,8 +138,6 @@ public class Gameplay : ContextBehaviour
 
     public void OnPlayerDeath(NetworkHealthHandler health)
     {
-        Debug.Log("gameplay got death call");
-
         if (health == null)
         {
             return;
@@ -145,8 +145,6 @@ public class Gameplay : ContextBehaviour
         
         if (Players.TryGet(health.Object.InputAuthority, out Player player))
         {
-            player.State = StateTypes.Dead;
-
             StartCoroutine(DelayDespawnNetworkPlayer(player));
         }
     }
@@ -154,6 +152,7 @@ public class Gameplay : ContextBehaviour
     private IEnumerator DelayDespawnNetworkPlayer(Player player)
     {
         yield return new WaitForSeconds(3.5f);
+        player.State = StateTypes.Dead;
         DespawnNetworkPlayer(player);
     }
     

@@ -11,6 +11,7 @@ public abstract class NetworkHealthHandler : ContextBehaviour
     protected virtual void OnHealthReduced() { }
 
     public abstract bool Damage(HitData hitData);
+    public abstract bool Heal(float amount);
     
     
     private static void OnHealthChanged(Changed<NetworkHealthHandler> changed)

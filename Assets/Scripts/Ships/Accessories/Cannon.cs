@@ -1,54 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour
+public class Cannon : NetworkBehaviour, IInteractable
 {
-    [Networked] 
-    public NetworkBool isOccupied { get; set; }
-
-    [SerializeField] private Camera cannonCamera;
-
-    public string LookAtID => "[F] INTERACT";
+    public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
     public string ID => "Cannon";
+
+    private CannonController _cannonController;
+
+    private void Awake()
+    {
+        _cannonController = GetComponent<CannonController>();
+    }
     
-    public bool ButtonInteract(NetworkPlayer player)
-    {
-        if (isOccupied)
-        {
-            return false;
-        }
-        
-        RPC_RequestOccupyCannon(true);
-
-        if (!isOccupied)
-        {
-            return false;
-        }
-        
-        SetupCannon();
-        return true;
-
-    }
-
-    public void StopButtonInteract()
-    {
-    }
 
     public void LookAtInteract() { }
     public void StopLookAtInteract() { }
+    
+    public bool ButtonInteract(NetworkPlayer networkPlayer, out ButtonInteractionData interactData)
+    {
+        interactData = default;
+        if (_cannonController.isOccupied)
+        {
+            return false;
+        }
+        
+        _cannonController.RPC_RequestOccupyCannon(true, networkPlayer.Object.InputAuthority);
+        
+        interactData = new ButtonInteractionData()
+        {
+            DisableCursor = true,
+            StopMovement = true,
+            HideInventory = true
+        };
+        
+        
+        return true;
+    }
+
+    public void StopButtonInteract(out ButtonInteractionData interactionData)
+    {
+        if (Object.HasInputAuthority)
+        {
+            _cannonController.RPC_RequestOccupyCannon(false);
+            _cannonController.Reset();
+        }
+        
+
+        interactionData = new ButtonInteractionData()
+        {
+            EnableMovement = true
+        };
+    }
 
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_RequestOccupyCannon(bool occupy)
-    {
-        isOccupied = occupy;
-    }
 
     private void SetupCannon()
     {
-        cannonCamera.gameObject.SetActive(true);
-        
+     //   cannonCamera.gameObject.SetActive(true);
     }
 }

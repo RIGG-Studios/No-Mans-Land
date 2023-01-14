@@ -111,13 +111,12 @@ public class Player : ContextBehaviour
         {
             Context.Gameplay.Join(this);
         }
-
-
+        
         if (Object.HasInputAuthority)
         {
             RPC_RequestUpdatePlayerName(Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)");
             Local = this;
-            Context.UI.EnableMenu("SpawnSelectionMenu");
+          //  Context.UI.EnableMenu("SpawnSelectionMenu");
         }
     }
 

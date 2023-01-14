@@ -24,15 +24,15 @@ public class PlayerItemControllerHandler : ContextBehaviour
         {
             return;
         }
-        
-        InitFPItem(item, ref itemData);
+
+        InitFPItem(item);
     }
 
-    private void InitFPItem(Item item, ref ItemListData itemData)
+    private void InitFPItem(Item item)
     {
         ItemController itemController = Instantiate(item.fpPrefab, itemHolder).GetComponent<ItemController>();
 
-        itemController.Init(NetworkPlayer.Local, item, ref itemData);
+        itemController.Init(NetworkPlayer.Local, item);
         itemController.gameObject.SetActive(false);
         
         itemControllers.Add(itemController);

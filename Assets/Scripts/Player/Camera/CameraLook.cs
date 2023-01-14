@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
 
 public class CameraLook : MonoBehaviour
 {
@@ -26,20 +21,26 @@ public class CameraLook : MonoBehaviour
     private float _fov;
     private float _defaultFOV;
 
-    private Camera _camera;
-
+    public Camera Camera { get; private set; }
     public Quaternion PlayerRotation { get; private set; }
     public Quaternion CameraRotation { get; private set; }
+    
+    public float RawLookX { get; private set; }
+    public float RawLookY { get; private set; }
+
+    private Rigidbody _rigidbody;
 
     private void Awake()
     {
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.isKinematic = true;
         _lookRotation.x = playerTransform.eulerAngles.y;
         _lookRotation.y = camTransform.eulerAngles.y;
 
         _nativeRotation.eulerAngles = new Vector3(0f, _lookRotation.y, 0f);
 
-        _camera = GetComponentInChildren<Camera>();
-        _defaultFOV = _camera.fieldOfView;
+        Camera = GetComponentInChildren<Camera>();
+        _defaultFOV = Camera.fieldOfView;
         _fov = _defaultFOV;
         CanLook = true;
     }
@@ -63,6 +64,9 @@ public class CameraLook : MonoBehaviour
         _lookRotation.y += nextVertical;
 
         _lookRotation.y = Mathf.Clamp(_lookRotation.y, -maxLookAngleY, maxLookAngleY);
+
+        RawLookX = _lookRotation.x;
+        RawLookY = _lookRotation.y;
         
         Quaternion camTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.y + (0), Vector3.left);
         Quaternion bodyTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.x + (0), Vector3.up);
@@ -70,7 +74,7 @@ public class CameraLook : MonoBehaviour
 
         camTransform.localRotation = CameraRotation;
         PlayerRotation = Quaternion.Slerp(playerTransform.localRotation, bodyTargetRotation, lookSmooth);
-        _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _fov, Time.deltaTime * 5f);
+        Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, _fov, Time.deltaTime * 5f);
     }
     
     
@@ -95,5 +99,11 @@ public class CameraLook : MonoBehaviour
     {
         _lookRotation.x += x;
         _lookRotation.y += y;
+    }
+
+    public void Fall()
+    {
+        _rigidbody.isKinematic = false;
+        _rigidbody.useGravity = true;
     }
 }

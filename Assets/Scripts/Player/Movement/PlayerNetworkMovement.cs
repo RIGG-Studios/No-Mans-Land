@@ -21,9 +21,9 @@ public class PlayerNetworkMovement : ContextBehaviour
     public bool CanMove { get; set; }
     
     [Networked]
-    public int CurrentState { get; set; }
+    public PlayerStates CurrentState { get; set; }
     
-    public int RequestedState { get; set; }
+    public PlayerStates RequestedState { get; set; }
     
     public float Vertical { get; private set; }
     public float Horizontal { get; private set; }
@@ -49,15 +49,15 @@ public class PlayerNetworkMovement : ContextBehaviour
 
         switch (input.CurrentState)
         {
-            case 0:
+            case PlayerStates.PlayerController:
                 CharacterMovement(input);
                 break;
             
-            case 1:
+            case PlayerStates.CannonController:
                 CannonMovement(input);
                 break;
             
-            case 2:
+            case PlayerStates.ShipController:
                 ShipMovement(input);
                 break;
         }
@@ -128,7 +128,7 @@ public class PlayerNetworkMovement : ContextBehaviour
 
         if (interactable.ID == "ShipWheel")
         {
-            RequestedState = 2;
+            RequestedState = PlayerStates.ShipController;
         }
     }
 
@@ -136,7 +136,7 @@ public class PlayerNetworkMovement : ContextBehaviour
     {
         if (interactable.ID == "ShipWheel")
         {
-            RequestedState = 0;
+            RequestedState = PlayerStates.PlayerController;
         }
     }
 }

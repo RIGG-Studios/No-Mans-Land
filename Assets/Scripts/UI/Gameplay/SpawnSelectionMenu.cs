@@ -28,7 +28,11 @@ public class SpawnSelectionMenu : UIComponent
 
     public void RefreshSpawnPoints(ISpawnPoint[] spawnPoints)
     {
-        Debug.Log(Player.Local);
+        if (Player.Local == null)
+        {
+            return;
+        }
+        
         ResetUI();
 
         for (int i = 0; i < spawnPoints.Length; i++)
@@ -54,6 +58,16 @@ public class SpawnSelectionMenu : UIComponent
         _spawnUI.Add(ui);
     }
 
+    public void ResetSpawnUI(ISpawnPoint spawnPoint)
+    {
+        SpawnPointUI ui = FindSpawnPointUI(spawnPoint);
+
+        if (ui != null)
+        {
+            ui.Reset();
+        }
+    }
+
     private void ResetUI()
     {
         for (int i = 0; i < _spawnUI.Count; i++)
@@ -62,5 +76,18 @@ public class SpawnSelectionMenu : UIComponent
         }
         
         _spawnUI.Clear();
+    }
+
+    private SpawnPointUI FindSpawnPointUI(ISpawnPoint spawnPoint)
+    {
+        for (int i = 0; i < _spawnUI.Count; i++)
+        {
+            if (spawnPoint == _spawnUI[i].SpawnPoint)
+            {
+                return _spawnUI[i];
+            }
+        }
+
+        return null;
     }
 }

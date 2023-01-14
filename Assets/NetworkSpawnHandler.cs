@@ -19,10 +19,17 @@ public class NetworkSpawnHandler : ContextBehaviour
     public List<ISpawnPoint> PlayerSpawnPoints = new();
     public List<ISpawnPoint> ShipSpawnPoints = new();
 
-    private void Awake()
+    private ISpawnPoint _selectedSpawnPoint;
+
+    
+    protected override void Awake()
     {
+        base.Awake();
         Instance = this;
-        
+    }
+
+    private void Start()
+    {
         RefreshSpawnPoints();
     }
 
@@ -39,19 +46,26 @@ public class NetworkSpawnHandler : ContextBehaviour
             spawnPoints.Add(s);
         }
         
-        Debug.Log(spawnPoints.Count);
-
         for (int i = 0; i < spawnPoints.Count; i++)
         {
             if(spawnPoints[i].SpawnType == SpawnPointTypes.Player) PlayerSpawnPoints.Add(spawnPoints[i]);
             if(spawnPoints[i].SpawnType == SpawnPointTypes.Ship) ShipSpawnPoints.Add(spawnPoints[i]);
         }
 
-        Context.UI.GetService<SpawnSelectionMenu>().RefreshSpawnPoints(spawnPoints.ToArray());
+        if (Context != null)
+        {
+            Context.UI.GetService<SpawnSelectionMenu>().RefreshSpawnPoints(spawnPoints.ToArray());
+        }
     }
 
 
-    public ISpawnPoint GetRandomPlayerSpawnPoint() => PlayerSpawnPoints[Random.Range(0, PlayerSpawnPoints.Count)];
+    public ISpawnPoint GetRandomPlayerSpawnPoint(int teamID)
+    {
+        ISpawnPoint[] spawnPoints = GetTeamPlayerSpawns(teamID);
+        
+        return  spawnPoints[Random.Range(0, spawnPoints.Length)];
+    }
+
     public ISpawnPoint GetRandomShipSpawnPoint() => ShipSpawnPoints[Random.Range(0, ShipSpawnPoints.Count)];
 
     public ISpawnPoint[] GetTeamPlayerSpawns(int teamID)
@@ -88,10 +102,14 @@ public class NetworkSpawnHandler : ContextBehaviour
         return spawnPoints.ToArray();
     }
 
-
-    private ISpawnPoint _selectedSpawnPoint;
+    
     public void OnSpawnPointSelected(ISpawnPoint spawnPoint)
     {
+        if (_selectedSpawnPoint != null)
+        {
+            Context.UI.GetService<SpawnSelectionMenu>().ResetSpawnUI(_selectedSpawnPoint);
+        }
+        
         _selectedSpawnPoint = spawnPoint;
     }
 
@@ -103,6 +121,7 @@ public class NetworkSpawnHandler : ContextBehaviour
         }
         
         Context.Camera.SmoothLerp(_selectedSpawnPoint.Transform,  5.0f);
+        Context.UI.CloseAllMenus();
         StartCoroutine(SpawnPlayerDelay());
     }
 

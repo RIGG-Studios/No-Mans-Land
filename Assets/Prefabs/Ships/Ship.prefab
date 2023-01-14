@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4574994611930226297}
   - component: {fileID: 8994270503222560019}
+  - component: {fileID: 5104853060253615862}
   m_Layer: 0
   m_Name: GameObject (3)
   m_TagString: Untagged
@@ -45,6 +46,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5104853060253615862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58711371659089068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &256185693684520706
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +70,7 @@ GameObject:
   - component: {fileID: 8176363962816804748}
   - component: {fileID: 7935193317670209484}
   - component: {fileID: 8779585550395871617}
+  - component: {fileID: 8774841516738394545}
   m_Layer: 0
   m_Name: StylShip_Loopholes
   m_TagString: Ship
@@ -143,6 +157,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3056853635112404945, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &8774841516738394545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256185693684520706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &306567586324266644
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 238970643467891415}
   - component: {fileID: 8899178969051911914}
+  - component: {fileID: 1247206560798533057}
   m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
@@ -188,6 +215,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1247206560798533057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306567586324266644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &353857592960071941
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +238,7 @@ GameObject:
   - component: {fileID: 8090699322047036992}
   - component: {fileID: 2819363038154543398}
   - component: {fileID: 1430412476635297604}
+  - component: {fileID: 2953144786144444289}
   m_Layer: 0
   m_Name: StylShip_Body
   m_TagString: Ship
@@ -271,6 +311,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2953144786144444289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353857592960071941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &354871247903138833
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +334,7 @@ GameObject:
   - component: {fileID: 4056405098780578858}
   - component: {fileID: 3428065977722564721}
   - component: {fileID: 2978739182022075327}
+  - component: {fileID: 2708851397223485043}
   m_Layer: 0
   m_Name: StylShip_SailFront
   m_TagString: Ship
@@ -354,6 +407,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2708851397223485043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354871247903138833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &707145651173058998
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +431,7 @@ GameObject:
   - component: {fileID: 5272753018935120678}
   - component: {fileID: 4238983178787415338}
   - component: {fileID: 7183735859253310226}
+  - component: {fileID: 401034467687900706}
   m_Layer: 0
   m_Name: StylShip_Flag2
   m_TagString: Ship
@@ -452,6 +518,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4585281, y: 1.28439, z: 3.7960062}
   m_Center: {x: -0.0011741519, y: -0.00000017881393, z: -0.00000071525574}
+--- !u!114 &401034467687900706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707145651173058998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &794517195500609893
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +628,7 @@ GameObject:
   - component: {fileID: 794517195793648502}
   - component: {fileID: 794517195793648500}
   - component: {fileID: 794517195793648503}
+  - component: {fileID: 4044178896882440510}
   m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
@@ -595,6 +674,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83e0aee14a36aca4ab9ac547dd22b45e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4044178896882440510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794517195793648497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &794517196594429650
@@ -850,7 +941,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  movementSpeed: 400
+  movementSpeed: 650
+  rotationSpeed: 200
 --- !u!54 &794517197198059437
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -905,6 +997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2334541426572105181}
   - component: {fileID: 3809729900967234695}
+  - component: {fileID: 1852370340004074223}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -940,6 +1033,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1852370340004074223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916536524449257774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &929022430400502110
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +1057,7 @@ GameObject:
   - component: {fileID: 5820241066283287883}
   - component: {fileID: 6310490627906509718}
   - component: {fileID: 3781624454470804623}
+  - component: {fileID: 714348165462751956}
   m_Layer: 0
   m_Name: StylShip_Door1
   m_TagString: Ship
@@ -1037,6 +1143,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7657881, y: 3.3887968, z: 0.55}
   m_Center: {x: 0.8056214, y: 0, z: 0.000000018626451}
+--- !u!114 &714348165462751956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929022430400502110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1184697438370763094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,6 +1165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5493628642314717504}
   - component: {fileID: 1411224363640126750}
+  - component: {fileID: 4405290577493635399}
   m_Layer: 0
   m_Name: Colliders (8)
   m_TagString: Untagged
@@ -1082,6 +1201,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4405290577493635399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184697438370763094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1256275535564891457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,6 +1225,7 @@ GameObject:
   - component: {fileID: 7601807237303686724}
   - component: {fileID: 7204894090222359944}
   - component: {fileID: 3388601257391027324}
+  - component: {fileID: 6667754461743265700}
   m_Layer: 0
   m_Name: StylShip_StairsSmall
   m_TagString: Ship
@@ -1180,6 +1312,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5622094869005991890, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &6667754461743265700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256275535564891457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1344050389571187435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,6 +1335,7 @@ GameObject:
   - component: {fileID: 8086299997762792343}
   - component: {fileID: 6895156423458883714}
   - component: {fileID: 3627317488463512424}
+  - component: {fileID: 7898660231759927641}
   m_Layer: 0
   m_Name: StylShip_Ropes
   m_TagString: Ship
@@ -1263,6 +1408,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7898660231759927641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344050389571187435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1617875732544046925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,6 +1490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1707507198505729670}
   - component: {fileID: 1707507198505729668}
+  - component: {fileID: 9150965258514231274}
   m_Layer: 0
   m_Name: GameObject (3)
   m_TagString: Ship
@@ -1368,6 +1526,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.87, y: 0.3, z: 6.23}
   m_Center: {x: 0, y: 0, z: 0.3}
+--- !u!114 &9150965258514231274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707507198505729665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1858598324660872530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1550,7 @@ GameObject:
   - component: {fileID: 8996330009146879004}
   - component: {fileID: 5122338885934305626}
   - component: {fileID: 6085318794554188801}
+  - component: {fileID: 4680494761972396326}
   m_Layer: 0
   m_Name: StylShip_MainFlag
   m_TagString: Ship
@@ -1465,6 +1636,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6025529, y: 3.513004, z: 1.9640051}
   m_Center: {x: 0.0032946318, y: 0, z: 0}
+--- !u!114 &4680494761972396326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858598324660872530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1971032315966717209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6067791384540079343}
   - component: {fileID: 2046732760960054837}
+  - component: {fileID: 2023457870973262706}
   m_Layer: 0
   m_Name: Colliders (4)
   m_TagString: Untagged
@@ -1510,6 +1694,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2023457870973262706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971032315966717209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1987592785162767773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,6 +1718,7 @@ GameObject:
   - component: {fileID: 4087995889543742712}
   - component: {fileID: 3424334831503993351}
   - component: {fileID: 5151971954418083422}
+  - component: {fileID: 8481830273691660834}
   m_Layer: 0
   m_Name: StylShip_Bracing
   m_TagString: Ship
@@ -1608,6 +1805,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8536357229465938433, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &8481830273691660834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987592785162767773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2054819350379815774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,6 +1893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6666879720886404328}
   - component: {fileID: 7805524574782279172}
+  - component: {fileID: 7122585738738133394}
   m_Layer: 0
   m_Name: Colliders (9)
   m_TagString: Untagged
@@ -1719,6 +1929,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7122585738738133394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055262641421169683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2064949199185137520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,6 +1951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2856386230142776470}
   - component: {fileID: 7830585917444180802}
+  - component: {fileID: 7555416961894183243}
   m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -1764,6 +1987,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7555416961894183243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064949199185137520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2149697432776881785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1774,6 +2009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4739655711961412541}
   - component: {fileID: 7470140899072616172}
+  - component: {fileID: 6674047866931568682}
   m_Layer: 0
   m_Name: Colliders (12)
   m_TagString: Untagged
@@ -1809,6 +2045,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6674047866931568682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2149697432776881785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2759320120925805001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1821,6 +2069,7 @@ GameObject:
   - component: {fileID: 4471429183406489405}
   - component: {fileID: 9026953423614347122}
   - component: {fileID: 4001529208589373610}
+  - component: {fileID: 3780360064903191391}
   m_Layer: 0
   m_Name: StylShip_Wall
   m_TagString: Ship
@@ -1907,6 +2156,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6604862736774694630, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &3780360064903191391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2759320120925805001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2898804579094987628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1917,6 +2178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7485331410427040191}
   - component: {fileID: 8207932006056832273}
+  - component: {fileID: 46458398345045475}
   m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: Ship
@@ -1952,6 +2214,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.87, y: 0.3, z: 6.23}
   m_Center: {x: 0, y: 0, z: 0.3}
+--- !u!114 &46458398345045475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898804579094987628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2920862027470115592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,6 +2237,7 @@ GameObject:
   - component: {fileID: 4343699759229522540}
   - component: {fileID: 1277692082010505185}
   - component: {fileID: 7387502377226688704}
+  - component: {fileID: 5999508372078270195}
   m_Layer: 0
   m_Name: StylShip_SailBack
   m_TagString: Ship
@@ -2035,6 +2310,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5999508372078270195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2920862027470115592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3041839633669949079
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,6 +2334,7 @@ GameObject:
   - component: {fileID: 6464481334233275309}
   - component: {fileID: 5902159036674912239}
   - component: {fileID: 5692997807919504958}
+  - component: {fileID: 2498591862323380710}
   m_Layer: 3
   m_Name: StylShip_FloorFront
   m_TagString: Ship
@@ -2133,6 +2421,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1812696683151265330, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &2498591862323380710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041839633669949079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3108237220470798318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8621338515697444894}
   - component: {fileID: 3979568997848148906}
+  - component: {fileID: 9045356271983717969}
   m_Layer: 0
   m_Name: Colliders (7)
   m_TagString: Untagged
@@ -2178,6 +2479,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9045356271983717969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108237220470798318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3387964463891570665
 GameObject:
   m_ObjectHideFlags: 0
@@ -2190,6 +2503,7 @@ GameObject:
   - component: {fileID: 1331355201926513050}
   - component: {fileID: 3195273777953852202}
   - component: {fileID: 3387964463891570664}
+  - component: {fileID: 942533226301681725}
   m_Layer: 0
   m_Name: StylShip_Anchor
   m_TagString: Ship
@@ -2275,6 +2589,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8623457, y: 2.7815523, z: 1.095534}
   m_Center: {x: 0.06199737, y: 0.6289091, z: -0.022426307}
+--- !u!114 &942533226301681725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387964463891570665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3427160027820343259
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,6 +2614,7 @@ GameObject:
   - component: {fileID: 871241536992451268}
   - component: {fileID: 4873476643145749751}
   - component: {fileID: 5978870886104997543}
+  - component: {fileID: 5044673668963973561}
   m_Layer: 0
   m_Name: StylShip_MastBack
   m_TagString: Ship
@@ -2388,6 +2715,18 @@ CapsuleCollider:
   m_Height: 30.333328
   m_Direction: 1
   m_Center: {x: -0.04, y: -0.0000009536743, z: 0}
+--- !u!114 &5044673668963973561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3427160027820343259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3534563618880300922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2400,6 +2739,7 @@ GameObject:
   - component: {fileID: 7689920408097631987}
   - component: {fileID: 8714484314733865397}
   - component: {fileID: 1119343229899003628}
+  - component: {fileID: 7095422623103810639}
   m_Layer: 0
   m_Name: StylShip_MastMid
   m_TagString: Ship
@@ -2486,6 +2826,18 @@ CapsuleCollider:
   m_Height: 36.39181
   m_Direction: 1
   m_Center: {x: -0.0000011920929, y: 6.490456, z: -0.08057666}
+--- !u!114 &7095422623103810639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534563618880300922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3924068029415121855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,6 +2848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5705431067167464322}
   - component: {fileID: 7163871267194825648}
+  - component: {fileID: 5385147379714117286}
   m_Layer: 0
   m_Name: Colliders (3)
   m_TagString: Untagged
@@ -2531,6 +2884,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5385147379714117286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3924068029415121855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4307221370779811871
 GameObject:
   m_ObjectHideFlags: 0
@@ -2541,6 +2906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1329259661059149019}
   - component: {fileID: 3692457567473812311}
+  - component: {fileID: 6525895821223586887}
   m_Layer: 0
   m_Name: Colliders (6)
   m_TagString: Untagged
@@ -2576,6 +2942,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6525895821223586887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4307221370779811871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4425808406198326946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,6 +2995,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593342779199285429}
   - component: {fileID: 4009133235556510511}
+  - component: {fileID: 1504795641918783213}
   m_Layer: 0
   m_Name: Colliders (5)
   m_TagString: Untagged
@@ -2652,6 +3031,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1504795641918783213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4719092726873427206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5090973677652786460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2664,6 +3055,7 @@ GameObject:
   - component: {fileID: 6869097041319970954}
   - component: {fileID: 3782282715480458774}
   - component: {fileID: 7646711873556840872}
+  - component: {fileID: 8099354716505556593}
   m_Layer: 0
   m_Name: StylShip_Rudder
   m_TagString: Ship
@@ -2749,6 +3141,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.42646447, y: 4.17366, z: 1.8081442}
   m_Center: {x: 0.000000029802322, y: -1.5068502, z: -0.8863209}
+--- !u!114 &8099354716505556593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5090973677652786460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5122267693156413599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2759,6 +3163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6834572293539353627}
   - component: {fileID: 1261825272397806350}
+  - component: {fileID: 4629923654294484794}
   m_Layer: 0
   m_Name: GameObject (2)
   m_TagString: Untagged
@@ -2794,6 +3199,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4629923654294484794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5122267693156413599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5197371405118184829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,6 +3221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6033498808039487705}
   - component: {fileID: 8532549609574886755}
+  - component: {fileID: 5496834689599425871}
   m_Layer: 0
   m_Name: GameObject (2)
   m_TagString: Ship
@@ -2839,6 +3257,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.87, y: 0.3, z: 1.12}
   m_Center: {x: 0, y: 0, z: 0.3}
+--- !u!114 &5496834689599425871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197371405118184829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5261940332052335907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,6 +3279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7769468227603456330}
   - component: {fileID: 8255821960485698047}
+  - component: {fileID: 7580704453994421105}
   m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -2884,6 +3315,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7580704453994421105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5261940332052335907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5291413500533069570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2897,6 +3340,7 @@ GameObject:
   - component: {fileID: 8139416738986886364}
   - component: {fileID: 3333512139465000176}
   - component: {fileID: 2368676152826264185}
+  - component: {fileID: 4423549372832261628}
   m_Layer: 0
   m_Name: StylShip_MastFront
   m_TagString: Ship
@@ -2998,6 +3442,18 @@ CapsuleCollider:
   m_Height: 28.396751
   m_Direction: 1
   m_Center: {x: -0.0041918755, y: 0.0000019073486, z: -0.0075328946}
+--- !u!114 &4423549372832261628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5291413500533069570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5374907174262721564
 GameObject:
   m_ObjectHideFlags: 0
@@ -3009,6 +3465,7 @@ GameObject:
   - component: {fileID: 4915196254976350382}
   - component: {fileID: 4529039363207905977}
   - component: {fileID: 3555444580586159261}
+  - component: {fileID: 4270771096863525235}
   m_Layer: 3
   m_Name: StylShip_StairsTop
   m_TagString: Ship
@@ -3081,6 +3538,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4270771096863525235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5374907174262721564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5495836508651363745
 GameObject:
   m_ObjectHideFlags: 0
@@ -3126,6 +3595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  spawnType: 0
   _NetworkTeamID: 0
 --- !u!1 &5581485922226321494
 GameObject:
@@ -3137,6 +3607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8692801274172979180}
   - component: {fileID: 8768442664111586113}
+  - component: {fileID: 4322828593223059495}
   m_Layer: 0
   m_Name: Colliders (11)
   m_TagString: Untagged
@@ -3172,6 +3643,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4322828593223059495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581485922226321494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5705396125048974477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3183,6 +3666,7 @@ GameObject:
   - component: {fileID: 980265398195139858}
   - component: {fileID: 4187171493878513922}
   - component: {fileID: 2255980064550361771}
+  - component: {fileID: 5040953504954589678}
   m_Layer: 0
   m_Name: StylShip_WireFront
   m_TagString: Ship
@@ -3255,6 +3739,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5040953504954589678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705396125048974477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5759767383775138736
 GameObject:
   m_ObjectHideFlags: 0
@@ -3267,6 +3763,7 @@ GameObject:
   - component: {fileID: 3297315878728533406}
   - component: {fileID: 7622327486194395404}
   - component: {fileID: 378342512045098932}
+  - component: {fileID: 4854727496933209528}
   m_Layer: 0
   m_Name: StylShip_WheelStand
   m_TagString: Ship
@@ -3353,6 +3850,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8971191428082997840, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &4854727496933209528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759767383775138736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5797026427273764772
 GameObject:
   m_ObjectHideFlags: 0
@@ -3363,6 +3872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 636424287814848459}
   - component: {fileID: 1565253005475405619}
+  - component: {fileID: 3262695551422668899}
   m_Layer: 0
   m_Name: Colliders (15)
   m_TagString: Untagged
@@ -3398,6 +3908,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3262695551422668899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5797026427273764772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5984756695529304051
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,6 +3930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1669735961889981212}
   - component: {fileID: 5929877112255857106}
+  - component: {fileID: 6086115452076372311}
   m_Layer: 0
   m_Name: Colliders (16)
   m_TagString: Untagged
@@ -3443,6 +3966,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6086115452076372311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984756695529304051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6158144657924354989
 GameObject:
   m_ObjectHideFlags: 0
@@ -3453,6 +3988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5113763102845487644}
   - component: {fileID: 1310577046322158750}
+  - component: {fileID: 8348684290880539801}
   m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
@@ -3488,6 +4024,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8348684290880539801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6158144657924354989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6357408720673029540
 GameObject:
   m_ObjectHideFlags: 0
@@ -3498,6 +4046,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6979337533778939905}
   - component: {fileID: 101668197103367092}
+  - component: {fileID: 4702785682133831516}
   m_Layer: 0
   m_Name: Colliders (1)
   m_TagString: Untagged
@@ -3533,6 +4082,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4702785682133831516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6357408720673029540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6412017999926284277
 GameObject:
   m_ObjectHideFlags: 0
@@ -3543,6 +4104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8831058491627077341}
   - component: {fileID: 3828455912286125287}
+  - component: {fileID: 3410935936749170829}
   m_Layer: 0
   m_Name: Colliders (10)
   m_TagString: Untagged
@@ -3578,6 +4140,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3410935936749170829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6412017999926284277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6635420096091195578
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,6 +4163,7 @@ GameObject:
   - component: {fileID: 612687321433449149}
   - component: {fileID: 7267396067668273404}
   - component: {fileID: 2278412271157986388}
+  - component: {fileID: 1674121836583170074}
   m_Layer: 0
   m_Name: StylShip_WireBack
   m_TagString: Ship
@@ -3661,6 +4236,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1674121836583170074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6635420096091195578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6788601666349265742
 GameObject:
   m_ObjectHideFlags: 0
@@ -3671,6 +4258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6221468452879561510}
   - component: {fileID: 5571318034314186494}
+  - component: {fileID: 7650774286486952792}
   m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
@@ -3706,6 +4294,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7650774286486952792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788601666349265742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6839396873211336477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3718,6 +4318,7 @@ GameObject:
   - component: {fileID: 152722893984433838}
   - component: {fileID: 2990672010855162200}
   - component: {fileID: 7969735570668879297}
+  - component: {fileID: 4850715835280986506}
   m_Layer: 0
   m_Name: StylShip_Flag1
   m_TagString: Ship
@@ -3804,6 +4405,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.46113753, y: 1.28439, z: 3.7960062}
   m_Center: {x: 0.0024809837, y: -0.00000017881393, z: -0.0000007748604}
+--- !u!114 &4850715835280986506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6839396873211336477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6880755324633937617
 GameObject:
   m_ObjectHideFlags: 0
@@ -3815,6 +4428,7 @@ GameObject:
   - component: {fileID: 5399932972480656094}
   - component: {fileID: 8638187972314197980}
   - component: {fileID: 510480007694404077}
+  - component: {fileID: 8428365567511705903}
   m_Layer: 0
   m_Name: StylShip_SailMid2
   m_TagString: Ship
@@ -3887,6 +4501,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8428365567511705903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6880755324633937617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6995265916604816405
 GameObject:
   m_ObjectHideFlags: 0
@@ -3897,6 +4523,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9157237249845501171}
   - component: {fileID: 8429833871899602319}
+  - component: {fileID: 8605668092404281395}
   m_Layer: 0
   m_Name: Colliders (14)
   m_TagString: Untagged
@@ -3932,6 +4559,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8605668092404281395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6995265916604816405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7059406653413853264
 GameObject:
   m_ObjectHideFlags: 0
@@ -3944,6 +4583,7 @@ GameObject:
   - component: {fileID: 1373509557326583710}
   - component: {fileID: 7270459582973568855}
   - component: {fileID: 3779940866835410027}
+  - component: {fileID: 9137785073301151212}
   m_Layer: 0
   m_Name: StylShip_Windows
   m_TagString: Ship
@@ -4030,6 +4670,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7857795701897817562, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &9137785073301151212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7059406653413853264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7066076163917438849
 GameObject:
   m_ObjectHideFlags: 0
@@ -4042,6 +4694,7 @@ GameObject:
   - component: {fileID: 7407242250131202490}
   - component: {fileID: 6959781157853568997}
   - component: {fileID: 732768800968064786}
+  - component: {fileID: 8575054057776950288}
   m_Layer: 3
   m_Name: StylShip_FloorBackBottom
   m_TagString: Ship
@@ -4128,6 +4781,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 9107313499199153204, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &8575054057776950288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7066076163917438849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7146767061564216889
 GameObject:
   m_ObjectHideFlags: 0
@@ -4140,6 +4805,7 @@ GameObject:
   - component: {fileID: 80677023356816842}
   - component: {fileID: 1403416907943162655}
   - component: {fileID: 4605612444398379173}
+  - component: {fileID: 2312519043311934791}
   m_Layer: 0
   m_Name: StylShip_FloorBackTop
   m_TagString: Ship
@@ -4226,6 +4892,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8716432681323688561, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &2312519043311934791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7146767061564216889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7537253375262159047
 GameObject:
   m_ObjectHideFlags: 0
@@ -4236,6 +4914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8280386106667708902}
   - component: {fileID: 277077898864307482}
+  - component: {fileID: 6267759215639929050}
   m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
@@ -4271,6 +4950,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6267759215639929050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537253375262159047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7548051630263274820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4284,6 +4975,7 @@ GameObject:
   - component: {fileID: 1484480651623440642}
   - component: {fileID: 125354301550392066}
   - component: {fileID: 7548051630263274827}
+  - component: {fileID: 9051242895664894193}
   m_Layer: 7
   m_Name: StylShip_Wheel
   m_TagString: Untagged
@@ -4383,6 +5075,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 794517197198059409}
+--- !u!114 &9051242895664894193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548051630263274820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7641035006595720603
 GameObject:
   m_ObjectHideFlags: 0
@@ -4395,6 +5099,7 @@ GameObject:
   - component: {fileID: 8410362757131934418}
   - component: {fileID: 4211423371687387138}
   - component: {fileID: 6517740861484036176}
+  - component: {fileID: 1568103721281139932}
   m_Layer: 3
   m_Name: StylShip_FloorMid
   m_TagString: Ship
@@ -4480,6 +5185,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.17037, y: 0.5709201, z: 15.84494}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1568103721281139932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641035006595720603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7779210180118348349
 GameObject:
   m_ObjectHideFlags: 0
@@ -4492,6 +5209,7 @@ GameObject:
   - component: {fileID: 7386844943883810071}
   - component: {fileID: 3073281958535417113}
   - component: {fileID: 7270532702379095171}
+  - component: {fileID: 1675831824594175308}
   m_Layer: 0
   m_Name: StylShip_FencingBack
   m_TagString: Ship
@@ -4578,6 +5296,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5656563828197337604, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &1675831824594175308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7779210180118348349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7805428894860367623
 GameObject:
   m_ObjectHideFlags: 0
@@ -4589,6 +5319,7 @@ GameObject:
   - component: {fileID: 3600214451311033025}
   - component: {fileID: 3192994454490111683}
   - component: {fileID: 1138057046114595510}
+  - component: {fileID: 8827714083866864410}
   m_Layer: 0
   m_Name: StylShip_WireMid
   m_TagString: Ship
@@ -4661,6 +5392,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8827714083866864410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7805428894860367623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7905342897345845219
 GameObject:
   m_ObjectHideFlags: 0
@@ -4739,6 +5482,7 @@ GameObject:
   - component: {fileID: 6769647592106389145}
   - component: {fileID: 4104042644800597756}
   - component: {fileID: 3474760624767065115}
+  - component: {fileID: 8190460464678955728}
   m_Layer: 0
   m_Name: StylShip_Door2
   m_TagString: Ship
@@ -4824,6 +5568,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7789924, y: 3.3887968, z: 0.55}
   m_Center: {x: -0.8113849, y: 0, z: -0.000000048428774}
+--- !u!114 &8190460464678955728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7988984623102411206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8322639189055452291
 GameObject:
   m_ObjectHideFlags: 0
@@ -4834,6 +5590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2022141255621157199}
   - component: {fileID: 6620891662727956799}
+  - component: {fileID: 3528379770780875143}
   m_Layer: 0
   m_Name: Colliders (2)
   m_TagString: Untagged
@@ -4869,6 +5626,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3528379770780875143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8322639189055452291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8361173982810874216
 GameObject:
   m_ObjectHideFlags: 0
@@ -4880,6 +5649,7 @@ GameObject:
   - component: {fileID: 8397317917213803446}
   - component: {fileID: 188001940581092244}
   - component: {fileID: 1556206605572274405}
+  - component: {fileID: 8783268725147233873}
   m_Layer: 0
   m_Name: StylShip_Support
   m_TagString: Ship
@@ -4952,6 +5722,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8783268725147233873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8361173982810874216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8391493056174006623
 GameObject:
   m_ObjectHideFlags: 0
@@ -4964,6 +5746,7 @@ GameObject:
   - component: {fileID: 5994739603355410890}
   - component: {fileID: 277653357520801265}
   - component: {fileID: 1127095235736086929}
+  - component: {fileID: 8415224880039827281}
   m_Layer: 3
   m_Name: StylShip_Prow
   m_TagString: Ship
@@ -5050,6 +5833,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6238642671063899804, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &8415224880039827281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8391493056174006623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8543615236350249478
 GameObject:
   m_ObjectHideFlags: 0
@@ -5061,6 +5856,7 @@ GameObject:
   - component: {fileID: 8251197395793875364}
   - component: {fileID: 3512032168690283041}
   - component: {fileID: 4283681729386447127}
+  - component: {fileID: 6570097166226412841}
   m_Layer: 0
   m_Name: StylShip_StairsBot
   m_TagString: Ship
@@ -5133,6 +5929,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6570097166226412841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543615236350249478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8792917972591001010
 GameObject:
   m_ObjectHideFlags: 0
@@ -5144,6 +5952,7 @@ GameObject:
   - component: {fileID: 2261594320263188417}
   - component: {fileID: 7081024214388703885}
   - component: {fileID: 3476601890829968381}
+  - component: {fileID: 2854887900516192741}
   m_Layer: 0
   m_Name: StylShip_SailMid1
   m_TagString: Ship
@@ -5216,6 +6025,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2854887900516192741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792917972591001010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9112613781933976382
 GameObject:
   m_ObjectHideFlags: 0
@@ -5260,6 +6081,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5946038059107857396}
   - component: {fileID: 5072476834735548892}
+  - component: {fileID: 7029500421193586007}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -5295,3 +6117,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7029500421193586007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9159140910284413265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e470925d5543294283e0002d9a86c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

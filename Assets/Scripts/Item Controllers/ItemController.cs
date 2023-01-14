@@ -16,13 +16,11 @@ public abstract class ItemController : MonoBehaviour
     public Item Item { get; private set; }
     public NetworkPlayer Player { get; private set; }
 
-    public ItemListData ItemListData;
     
-    public void Init(NetworkPlayer player, Item item, ref ItemListData itemListData)
+    public void Init(NetworkPlayer player, Item item)
     {
         Item = item;
         Player = player;
-        ItemListData = itemListData;
     }
 
     public abstract void Equip();

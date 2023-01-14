@@ -16,6 +16,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/CharacterEquippableWeapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Base/UIComponent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Gameplay/SpawnSelectionMenu.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Player/PlayerUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Player/ScreenDamageMenu.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -84,6 +86,7 @@
       <updated>1673411566701</updated>
       <workItem from="1673411574786" duration="7547000" />
       <workItem from="1673572354718" duration="13317000" />
+      <workItem from="1673641410459" duration="18883000" />
     </task>
     <servers />
   </component>

@@ -16,9 +16,13 @@ public class DamageNotifier : MonoBehaviour
         Instance = this;
     }
 
-    public void OnDamageEntity(Vector3 pos, float damage)
+    public void OnDamageEntity(Transform target, Vector3 pos, float damage)
     {
-        GameObject g =  Instantiate(hitMarkerAnimator, pos, quaternion.identity);
+        Vector3 normal = Vector3.Cross(target.position, pos);
+
+        GameObject g = Instantiate(hitMarkerAnimator, pos, Quaternion.LookRotation(normal));
+        g.transform.LookAt(target);
+        
         
         Destroy(g, 4.0f);
     }

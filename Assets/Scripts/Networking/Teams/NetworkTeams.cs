@@ -21,6 +21,9 @@ public struct NetworkTeam : INetworkStruct
     }
 }
 
+/// <summary>
+/// this class handles team functionality like setting up, adding/removing players.
+/// </summary>
 public class NetworkTeams : ContextBehaviour
 {
     [SerializeField] private int teamAmount = 4;
@@ -28,21 +31,12 @@ public class NetworkTeams : ContextBehaviour
 
     [Networked, Capacity(16)] 
     public NetworkLinkedList<NetworkTeam> Teams { get; } = new();
-
-    private TeamUIItem[] _teamUi = new TeamUIItem[4];
     
     public void OnEnable()
     {
         Context.Teams = this;
     }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _teamUi = GetComponentsInChildren<TeamUIItem>();
-    }
-
+    
     public override void Spawned()
     {
         if (!HasStateAuthority)
@@ -99,9 +93,27 @@ public class NetworkTeams : ContextBehaviour
         else
         {
             teamID = Teams[teamIndex].TeamID;
-            UpdateTeamProperties(teamIndex, player.PlayerName.ToString());
+            UpdateTeamPlayerCount(teamIndex);
         }
 
+        player.SetStat(StatTypes.TeamID, teamID);
+    }
+    
+    public void AddToTeam(Player player, out ISpawnPoint spawnPoint, int teamIndex = -1)
+    {
+        byte teamID = 0;
+        
+        if (autoFillTeams)
+        {
+            teamID = GetBestTeam();
+        }
+        else
+        {
+            teamID = Teams[teamIndex].TeamID;
+            UpdateTeamPlayerCount(teamIndex);
+        }
+
+        spawnPoint = FindObjectOfType<NetworkSpawnHandler>().GetRandomPlayerSpawnPoint(teamID);
         player.SetStat(StatTypes.TeamID, teamID);
     }
 
@@ -122,7 +134,7 @@ public class NetworkTeams : ContextBehaviour
         return 0;
     }
 
-    private void UpdateTeamProperties(int teamIndex, string playerName)
+    private void UpdateTeamPlayerCount(int teamIndex)
     {
         NetworkTeam team = Teams[teamIndex];
         team.PlayerCount++;
