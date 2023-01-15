@@ -23,6 +23,7 @@ public class PlayerInteractionHandler : MonoBehaviour
     public UnityEvent<IInteractable> onButtonInteractStop = new();
 
     private bool _sentLookAtEvent;
+    private bool _isInteracting;
     private IInteractable _currentInteractable;
 
     private NetworkPlayer _networkPlayer;
@@ -40,6 +41,11 @@ public class PlayerInteractionHandler : MonoBehaviour
     private void Update()
     {
         if (!CanInteract)
+        {
+            return;
+        }
+
+        if (_isInteracting)
         {
             return;
         }
@@ -93,6 +99,8 @@ public class PlayerInteractionHandler : MonoBehaviour
         
         bool success = _currentInteractable.ButtonInteract(NetworkPlayer.Local, out ButtonInteractionData interactionData);
 
+        _isInteracting = success;
+        
         if (success)
         {
             interactUI.SetActive(false);
@@ -142,7 +150,8 @@ public class PlayerInteractionHandler : MonoBehaviour
         _currentInteractable.StopLookAtInteract();
         onButtonInteractStop?.Invoke(_currentInteractable);
         _currentInteractable.StopButtonInteract(out ButtonInteractionData interactionData);
-        
+
+        _isInteracting = false;
         if (interactionData.StopMovement)
         {
             _networkPlayer.Movement.CanMove = false;

@@ -52,11 +52,4 @@ public class Cannon : NetworkBehaviour, IInteractable
             EnableMovement = true
         };
     }
-
-    
-
-    private void SetupCannon()
-    {
-     //   cannonCamera.gameObject.SetActive(true);
-    }
 }

@@ -130,11 +130,21 @@ public class PlayerNetworkMovement : ContextBehaviour
         {
             RequestedState = PlayerStates.ShipController;
         }
+
+        if (interactable.ID == "Cannon")
+        {
+            RequestedState = PlayerStates.CannonController;
+        }
     }
 
     public void OnButtonStopInteract(IInteractable interactable)
     {
         if (interactable.ID == "ShipWheel")
+        {
+            RequestedState = PlayerStates.PlayerController;
+        }
+        
+        if (interactable.ID == "Cannon")
         {
             RequestedState = PlayerStates.PlayerController;
         }

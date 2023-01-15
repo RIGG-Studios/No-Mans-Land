@@ -10,6 +10,7 @@ public class CameraLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float lookSmooth;
     [SerializeField] private float maxLookAngleY;
+    [SerializeField] private float maxLookAngleX;
 
     
     private Vector2 _lookRotation;
@@ -60,13 +61,15 @@ public class CameraLook : MonoBehaviour
         float nextHorizontal = _lookX * Time.deltaTime * mouseSensitivity;
         float nextVertical = _lookY * Time.deltaTime * mouseSensitivity;
 
+        RawLookX = nextHorizontal;
+        RawLookY = nextVertical;
+        
+        
         _lookRotation.x += nextHorizontal;
         _lookRotation.y += nextVertical;
-
+        
         _lookRotation.y = Mathf.Clamp(_lookRotation.y, -maxLookAngleY, maxLookAngleY);
-
-        RawLookX = _lookRotation.x;
-        RawLookY = _lookRotation.y;
+        
         
         Quaternion camTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.y + (0), Vector3.left);
         Quaternion bodyTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.x + (0), Vector3.up);
