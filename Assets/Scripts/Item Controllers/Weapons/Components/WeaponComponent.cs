@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class WeaponComponent : InputBase
 {
-    protected bool IsSetup;
+    protected NetworkPlayer Player;
     protected ModularWeapon Weapon;
-
-
     protected Animator Animator;
 
-    public override void Awake()
-    {
-        base.Awake();
-
-        Weapon = GetComponent<ModularWeapon>();
-    }
+    public virtual bool IsBusy => false;
 
     public virtual void OnEquip() {}
     public virtual void OnHide() { }
     
-    public void Init(ModularWeapon weapon, Animator animator)
+    public virtual void ProcessInput(NetworkInputData input, ref ItemDesires desires) { }
+    public virtual void FixedUpdateNetwork(NetworkInputData input, ItemDesires desires) { }
+    public virtual void OnRender() { }
+
+    
+    public void Init(NetworkPlayer player, ModularWeapon weapon, Animator animator)
     {
+        Player = player;
+        Weapon = weapon;
         Animator = animator;
-        IsSetup = true;
     }
 }

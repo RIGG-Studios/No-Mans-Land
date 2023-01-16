@@ -23,11 +23,11 @@ public interface IInventory
 {
     bool IsFull { get; }
     
-    void AddItem(int itemID, int slotID = 0, int stack = 1);
+    void AddItem(int itemID, int slotID = 0, int stack = 1, bool networked = false);
     void RemoveItem(int itemID);
 
     void OnSlotReset(Slot slot);
-    void UpdateItems(Item item, int newSlotID);
+    void UpdateItems(int oldSlotID, int newSlotID);
 
     bool FindItem(int itemID, out ItemListData itemData);
 }

@@ -69,7 +69,7 @@ public abstract class NetworkInventory : ContextBehaviour, IInventory
         }
     }
     
-    public void AddItem(int itemID, int slotID = -1, int stack = 1)
+    public void AddItem(int itemID, int slotID = -1, int stack = 1, bool networked = false)
     {
         Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] :  SlotHandler.GetNextSlot();
 
@@ -133,9 +133,9 @@ public abstract class NetworkInventory : ContextBehaviour, IInventory
         throw new NotImplementedException();
     }
 
-    public void UpdateItems(Item item, int newSlotID)
+    public void UpdateItems(int item, int newSlotID)
     {
-        RequestUpdateItems(item.itemID, newSlotID);
+     //   RequestUpdateItems(item.itemID, newSlotID);
     }
 
     protected virtual void RequestUpdateItems(int itemID, int newSlotID) { }

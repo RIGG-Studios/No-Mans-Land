@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class ModularWeapon : BaseWeapon
 {
-    public Item item;
-    
     public IAimer Aimer { get; private set; }
     public IAttacker Attacker { get; private set; }
     public IRecoil CameraRecoil { get; private set; }
@@ -17,6 +15,7 @@ public class ModularWeapon : BaseWeapon
     
     
     private Animator _weaponAnimator;
+    private NetworkPlayer _player;
     private bool _test;
 
     public void SetAttacker(IAttacker attacker)
@@ -89,19 +88,59 @@ public class ModularWeapon : BaseWeapon
     {
         base.Awake();
         _weaponAnimator = GetComponentInChildren<Animator>();
-
+        _player = transform.root.GetComponent<NetworkPlayer>();
         if (_weaponAnimator == null)
         {
             Debug.Log("Couldn't find Animator");
         }
         
         _weaponComponents = GetComponents<WeaponComponent>();
+    }
 
+    public override void Spawned()
+    {
         foreach (WeaponComponent component in _weaponComponents)
         {
-            component.Init(this, _weaponAnimator);
+            component.Init(_player, this, _weaponAnimator);
         }
     }
+
+    public bool IsBusy()
+    {
+        for (int i = 0; i < _weaponComponents.Length; i++)
+        {
+            if (_weaponComponents[i].IsBusy)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public override void ProcessInput(NetworkInputData input)
+    {
+        ItemDesires desires = default;
+
+        for (int i = 0; i < _weaponComponents.Length; i++)
+        {
+            _weaponComponents[i].ProcessInput(input, ref desires);
+        }
+        
+        for (int i = 0; i < _weaponComponents.Length; i++)
+        {
+            _weaponComponents[i].FixedUpdateNetwork(input, desires);
+        }
+    }
+
+    public override void OnRender()
+    {
+        for (int i = 0; i < _weaponComponents.Length; i++)
+        {
+            _weaponComponents[i].OnRender();
+        }
+    }
+
 
     public override void Equip()
     {

@@ -34,8 +34,6 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
     
     private static void OnDeadChanged(Changed<PlayerHealth> changed)
     {
-        Debug.Log($"{Time.time} OnStateChanged isDead {changed.Behaviour.IsDead}");
-
         bool isDeadCurrent = changed.Behaviour.IsDead;
 
         changed.LoadOld();
@@ -80,9 +78,16 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
 
     public override bool Damage(HitData hitData)
     {
-        RPC_Damage(hitData.Damage);
-        onDamageTaken.Invoke(hitData);
+        Health -= (byte)hitData.Damage;
+        Debug.Log($"{Time.time} {transform.name} took damage got {Health} left ");
 
+        if (Health <= 0)
+        {
+            Debug.Log($"{Time.time} {transform.name} died");
+            Health = 0;
+            IsDead = true;
+        }
+        
         return true;
     }
 
@@ -103,20 +108,7 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         }
     }
     
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_Damage(float damage)
-    {
-        Health -= (byte)damage;
-        Debug.Log($"{Time.time} {transform.name} took damage got {Health} left ");
-
-        if (Health <= 0)
-        {
-            Debug.Log($"{Time.time} {transform.name} died");
-            Health = 0;
-            IsDead = true;
-        }
-    }
+    
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_Heal(float healAmount)

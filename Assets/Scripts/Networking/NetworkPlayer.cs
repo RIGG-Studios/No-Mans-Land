@@ -31,11 +31,13 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     public PlayerInventory Inventory => inventory;
     public PlayerAttacker Attack => attacker;
     public PlayerHealth Health => health;
-
     public PlayerUI UI => ui;
     
     [HideInInspector]
     public Player Owner;
+
+
+    private IInputProccesor[] _inputProcessors;
 
     
     public override void Spawned()
@@ -48,6 +50,8 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
             FindObjectOfType<GenerateQuadTree>().AssignPlayer(transform);
 
         }
+
+        _inputProcessors = GetComponents<IInputProccesor>();
 
         if (Object.HasStateAuthority)
         {
@@ -88,6 +92,19 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         else
         {
             onLocalPlayerInit?.Invoke();
+        }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!GetInput<NetworkInputData>(out var input))
+        {
+            return;
+        }
+
+        for (int i = 0; i < _inputProcessors.Length; i++)
+        {
+            _inputProcessors[i].ProcessInput(input);
         }
     }
 

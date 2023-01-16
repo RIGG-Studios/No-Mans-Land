@@ -75,11 +75,6 @@ public static class NetworkDamageHandler
     private static HitData ProcessHit(ref HitData hitData)
     {
         bool success = hitData.Victim.ProcessHit(ref hitData);
-
-        if (success)
-        {
-            Debug.Log("Succesfully damaged player");
-        }
         
         return hitData;
     }

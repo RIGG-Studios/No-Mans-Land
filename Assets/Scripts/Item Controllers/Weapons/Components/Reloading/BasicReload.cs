@@ -36,7 +36,7 @@ public class BasicReload : WeaponComponent, IReloader
 
     public override void OnEquip()
     {
-        if (CurrentAmmo <= 0 && Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
+        if (CurrentAmmo <= 0 && NetworkPlayer.Local.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
         {
             reloadText.SetActive(true);
         }
@@ -54,7 +54,7 @@ public class BasicReload : WeaponComponent, IReloader
     {
         DecrementCurrentAmmo();
 
-        if (CurrentAmmo <= 0 && Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
+        if (CurrentAmmo <= 0 && NetworkPlayer.Local.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
         {
             reloadText.SetActive(true);
         }
@@ -104,7 +104,7 @@ public class BasicReload : WeaponComponent, IReloader
 
     private IEnumerator IE_Reload()
     {
-        if (!Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
+        if (!NetworkPlayer.Local.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
         {
             yield break;
         }
@@ -124,7 +124,7 @@ public class BasicReload : WeaponComponent, IReloader
             ammoNeeded = itemData.Stack;
         }
         
-        Weapon.Player.Inventory.UpdateItemStack(ref itemData, ammoNeeded);
+        NetworkPlayer.Local.Inventory.UpdateItemStack(itemData, ammoNeeded);
         CurrentAmmo += ammoNeeded;
         
         if (CurrentAmmo > 0)

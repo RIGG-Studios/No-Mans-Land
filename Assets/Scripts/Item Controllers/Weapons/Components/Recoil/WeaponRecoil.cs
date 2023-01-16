@@ -30,10 +30,16 @@ public class WeaponRecoil : WeaponComponent, IRecoil
         Weapon.SetWeaponRecoil(this);
     }
     
-
+    public override void FixedUpdateNetwork(NetworkInputData input, ItemDesires desires)
+    {
+        if (desires.HasFired)
+        {
+            DoRecoil();
+        }
+    }
+    
     public void DoRecoil()
     {
-        Debug.Log("recoil : " + Weapon.Player.Object.HasInputAuthority);
         _recoil1Pos += new Vector3(recoilRotation.x, Random.Range(-recoilRotation.y, recoilRotation.y), 
             Random.Range(-recoilRotation.z, recoilRotation.z));
 

@@ -32,7 +32,7 @@ public class PlayerAttacker : NetworkBehaviour
         {
             return;
         }
-        
+
         NetworkButtons pressed = input.Buttons.GetPressed(ButtonsPrevious);
 
         ButtonsPrevious = input.Buttons;
@@ -40,7 +40,7 @@ public class PlayerAttacker : NetworkBehaviour
         
         if (pressed.IsSet(PlayerButtons.Fire) && !IsAttacking)
         {
-            Attack();
+        //    Attack();
         }
     }
 
@@ -52,6 +52,7 @@ public class PlayerAttacker : NetworkBehaviour
             return;
         }
         
+        Debug.Log(_player.Inventory.EquippedItem);
         if (Object.HasInputAuthority && _player.Inventory.EquippedItem != null)
         {
             _player.Inventory.EquippedItem.Attack();
