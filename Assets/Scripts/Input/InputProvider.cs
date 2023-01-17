@@ -55,14 +55,12 @@ public class InputProvider : InputBase
         
         _moveDir = InputActions.Player.Move.ReadValue<Vector2>();
         _isSprintPressed = InputActions.Player.Run.IsPressed();
-        
-        ItemControllerState frameState = NetworkPlayer.Local.Inventory.GetEquippedItemState();
-        
-        _isReloading = frameState.IsReloading;
+
+
+        _isReloading = InputActions.Player.Reload.IsPressed();
         _isAiming = InputActions.Player.Aim.IsPressed();
 
-        _currentState = NetworkPlayer.Local.Movement.RequestedState;
-      //  _currentWeaponID = NetworkPlayer.Local.Inventory.RequestedEquippedItem;
+
     }
 
     public override void OnEnable()
@@ -114,15 +112,17 @@ public class InputProvider : InputBase
         }
 
         tickInput.LookForward = _player.Camera.PlayerRotation;
+        tickInput.LookVertical = _player.Camera.CameraRotation;
+
         tickInput.RawLookX = _player.Camera.RawLookX;
         tickInput.RawLookY = _player.Camera.RawLookY; 
         tickInput.IsAiming = _isAiming;
         tickInput.IsReloading = _isReloading;
-        tickInput.CurrentState = _currentState;
         tickInput.CurrentWeaponID = _currentWeaponID;
 
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
         tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);
+        tickInput.Buttons.Set(PlayerButtons.Reload, _isReloading);
         
 
         tickInput.Buttons.Set(PlayerButtons.Jump, _isJumpPressed);

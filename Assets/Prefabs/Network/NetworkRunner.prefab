@@ -87,4 +87,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b97494c7e01e24ebb59033cf177fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0

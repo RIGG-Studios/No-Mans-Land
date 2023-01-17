@@ -3,8 +3,6 @@ using UnityEngine;
 public interface IReloader
 {
     int CurrentAmmo { get; }
-    int ReserveAmmo { get; }
-
     bool IsReloading { get; }
 
 

@@ -87,7 +87,7 @@ public abstract class NetworkInventory : ContextBehaviour, IInventory
             return;
         }
 
-        ItemListData inventoryItem = new ItemListData(itemID, slot.ID, 1);
+        ItemListData inventoryItem = new ItemListData(Items.Count+1,itemID, slot.ID, 1);
         
         slot.InitItem(item, ref inventoryItem);
         

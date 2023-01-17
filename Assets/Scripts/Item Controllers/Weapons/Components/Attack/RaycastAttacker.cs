@@ -39,52 +39,59 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         _fireTicks = (int)Math.Ceiling(fireTime / (double)Runner.DeltaTime);
     }
 
-    public override void ProcessInput(NetworkInputData input, ref ItemDesires desires)
+    public override void ProcessInput(WeaponContext context, ref ItemDesires desires)
     {
-        if (Weapon.IsBusy() || !fireCooldown.ExpiredOrNotRunning(Runner))
+        Debug.Log(fireCooldown.ExpiredOrNotRunning(Runner));
+        if (Weapon.IsBusy() || !fireCooldown.ExpiredOrNotRunning(Runner) || !desires.HasAmmo)
         {
             return;
         }
         
-        if (input.Buttons.IsSet(PlayerButtons.Fire))
+        if (context.Input.Buttons.IsSet(PlayerButtons.Fire))
         {
             desires.HasFired = true;
         }
     }
 
-    public override void FixedUpdateNetwork(NetworkInputData input, ItemDesires desires)
+    public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
     {
         if (!desires.HasFired)
         {
             return;
         }
 
+
         fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks);
-        
-        
+
+        Debug.Log("shooting on: " + Object.HasStateAuthority);
+
         if (Object.HasInputAuthority)
         {
             FireEffects();
-
         }
-        
-        LagCompensatedHit hitInfo =
-            HitScanHandler.RegisterHitScan(Runner, Object, Player.Camera.transform, raycastLength, attackableLayers);
 
-        if (hitInfo.Hitbox == null && hitInfo.Collider == null || !Object.HasStateAuthority)
+        if (Object.HasStateAuthority)
         {
-            return;
-        }
-        
-        
-        Vector3 dir = (hitInfo.Point - Player.Camera.transform.position).normalized;
 
-        HitData hitData =
-            NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage, HitFeedbackTypes.AnimatedDamageText);
+            Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
+                Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
+            
+            Debug.DrawRay(context.FirePosition, context.FireDirection * raycastLength, Color.blue, 5.0f);
+            if (hitInfo.Hitbox == null && hitInfo.Collider == null)
+            {
+                return;
+            }
 
-        if (hitData.Action != HitAction.None)
-        {
-            //local effects
+            {
+
+                Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
+
+                HitData hitData =
+                    NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage,
+                        HitFeedbackTypes.AnimatedDamageText);
+            }
+
+            Weapon.OnFired();
         }
     }
 

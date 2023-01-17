@@ -124,13 +124,16 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         Movement.CanMove = !state;
         Camera.CanLook = !state;
 
-        if (state)
+        if (Object.HasInputAuthority)
         {
-            Context.Input.RequestCursorRelease();
-        }
-        else
-        {
-            Context.Input.RequestCursorLock();
+            if (state)
+            {
+                Context.Input.RequestCursorRelease();
+            }
+            else
+            {
+                Context.Input.RequestCursorLock();
+            }
         }
     }
 }

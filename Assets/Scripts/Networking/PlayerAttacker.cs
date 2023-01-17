@@ -65,24 +65,7 @@ public class PlayerAttacker : NetworkBehaviour
 
     public void HitScanAttack(float damage, float length)
     {
-        LagCompensatedHit hitInfo =
-            HitScanHandler.RegisterHitScan(Runner, Object, _player.Camera.transform, length, attackableLayers);
 
-        if (hitInfo.Hitbox == null && hitInfo.Collider == null)
-        {
-            return;
-        }
-        
-        
-        Vector3 dir = (hitInfo.Point - _player.Camera.transform.position).normalized;
-
-        HitData hitData =
-            NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage, HitFeedbackTypes.AnimatedDamageText);
-
-        if (hitData.Action != HitAction.None)
-        {
-            //local effects
-        }
     }
 
     private void ResetAttack() => IsAttacking = false;

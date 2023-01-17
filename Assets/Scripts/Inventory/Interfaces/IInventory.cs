@@ -6,12 +6,14 @@ using UnityEngine;
 [System.Serializable]
 public struct ItemListData : INetworkStruct
 {
+    public int ID;
     public int ItemID;
     public int SlotID;
     public int Stack;
 
-    public ItemListData(int itemID, int slotID, int stack)
+    public ItemListData(int id, int itemID, int slotID, int stack)
     {
+        ID = id;
         ItemID = itemID;
         SlotID = slotID;
         Stack = stack;

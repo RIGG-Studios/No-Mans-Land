@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 public class ModularWeapon : BaseWeapon
@@ -13,9 +14,11 @@ public class ModularWeapon : BaseWeapon
 
     private WeaponComponent[] _weaponComponents;
     
+    [Networked]
+    private int lastFireTick { get; set; }
     
-    private Animator _weaponAnimator;
-    private NetworkPlayer _player;
+    private int _lastVisibleFireTick;
+    
     private bool _test;
 
     public void SetAttacker(IAttacker attacker)
@@ -46,11 +49,7 @@ public class ModularWeapon : BaseWeapon
         }
         
         CameraRecoil = recoil;
-
-        if (Attacker != null)
-        {
-            Attacker.onAttack += CameraRecoil.DoRecoil;
-        }
+        
     }
 
     public void SetWeaponRecoil(IRecoil recoil)
@@ -61,16 +60,7 @@ public class ModularWeapon : BaseWeapon
         }
         
         WeaponRecoil = recoil;
-
-        if (Attacker != null)
-        {
-            Attacker.onAttack += WeaponRecoil.DoRecoil;
-        }
-
-        if (Aimer != null)
-        {
-            Aimer.onAim += WeaponRecoil.OnAimStateChanged;
-        }
+        
     }
 
     public void SetReloader(IReloader reloader)
@@ -87,22 +77,24 @@ public class ModularWeapon : BaseWeapon
     protected override void Awake()
     {
         base.Awake();
-        _weaponAnimator = GetComponentInChildren<Animator>();
-        _player = transform.root.GetComponent<NetworkPlayer>();
-        if (_weaponAnimator == null)
+        Animator = GetComponentInChildren<Animator>();
+        
+        if (Animator == null)
         {
             Debug.Log("Couldn't find Animator");
         }
-        
-        _weaponComponents = GetComponents<WeaponComponent>();
     }
 
     public override void Spawned()
     {
+        _weaponComponents = GetComponents<WeaponComponent>();
+
         foreach (WeaponComponent component in _weaponComponents)
         {
-            component.Init(_player, this, _weaponAnimator);
+            component.Init(Animator);
         }
+
+        _lastVisibleFireTick = lastFireTick;
     }
 
     public bool IsBusy()
@@ -118,27 +110,34 @@ public class ModularWeapon : BaseWeapon
         return false;
     }
 
-    public override void ProcessInput(NetworkInputData input)
+    public override void ProcessInput(WeaponContext context)
     {
         ItemDesires desires = default;
 
         for (int i = 0; i < _weaponComponents.Length; i++)
         {
-            _weaponComponents[i].ProcessInput(input, ref desires);
+            _weaponComponents[i].ProcessInput(context, ref desires);
         }
         
         for (int i = 0; i < _weaponComponents.Length; i++)
         {
-            _weaponComponents[i].FixedUpdateNetwork(input, desires);
+            _weaponComponents[i].FixedUpdateNetwork(context, desires);
         }
     }
 
-    public override void OnRender()
+    public override void Render()
     {
+        ItemDesires desires = default;
+
+        desires.HasFired = _lastVisibleFireTick < lastFireTick &&
+                           lastFireTick > Runner.Tick - (int)(Runner.Simulation.Config.TickRate * 0.5f);
+
         for (int i = 0; i < _weaponComponents.Length; i++)
         {
-            _weaponComponents[i].OnRender();
+            _weaponComponents[i].OnRender(desires);
         }
+
+        _lastVisibleFireTick = lastFireTick;
     }
 
 
@@ -160,6 +159,11 @@ public class ModularWeapon : BaseWeapon
         }
         
         Attacker.Attack();
+    }
+
+    public void OnFired()
+    {
+        lastFireTick = Runner.Tick;
     }
 
     public override ItemControllerState GetState()

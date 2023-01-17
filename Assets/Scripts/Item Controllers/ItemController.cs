@@ -1,3 +1,4 @@
+using System.Numerics;
 using Fusion;
 
 public struct ItemControllerState
@@ -22,6 +23,7 @@ public struct ItemDesires
 public abstract class ItemController : ContextBehaviour
 {
     public bool IsReady { get; set; }
+    public NetworkPlayer Player { get; set; }
 
     public Item item;
     
@@ -38,9 +40,7 @@ public abstract class ItemController : ContextBehaviour
         return default;
     }
 
-    public virtual void ProcessInput(NetworkInputData input) { }
-    public virtual void OnRender() { }
-
+    public virtual void ProcessInput(WeaponContext context) { }
     public virtual void Equip() { IsReady = true;}
     public virtual void Hide() { IsReady = false;}
 

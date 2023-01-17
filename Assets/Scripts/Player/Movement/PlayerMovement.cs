@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     
     [Header("Other")]
     [SerializeField] private float gravity = 10f;
+    [SerializeField] private Transform cameraTransform;
     [SerializeField] private float groundCheckDist = 0.4f;
 
     private Rigidbody _rigidbody;

@@ -95,7 +95,6 @@ public class NetworkSpawnHandler : ContextBehaviour
             if (teamID == ShipSpawnPoints[i].TeamID)
             {
                 spawnPoints.Add(ShipSpawnPoints[i]);
-                Debug.Log(spawnPoints.Count);
             }
         }
 

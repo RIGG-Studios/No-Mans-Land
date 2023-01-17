@@ -27,14 +27,14 @@ public class ProceduralAim : WeaponComponent, IAimer
         Weapon.SetAimer(this);
     }
 
-    public override void ProcessInput(NetworkInputData input, ref ItemDesires desires)
+    public override void ProcessInput(WeaponContext context, ref ItemDesires desires)
     {
-        bool aiming = input.IsAiming;
+        bool aiming = context.Input.IsAiming;
 
         desires.Aim = aiming;
     }
 
-    public override void FixedUpdateNetwork(NetworkInputData input, ItemDesires desires)
+    public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
     {
         IsAiming = desires.Aim;
         

@@ -1,15 +1,22 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
+
+public class WeaponContext
+{
+    public NetworkInputData Input;
+
+    public Vector3 FireDirection;
+    public Vector3 FirePosition;
+}
 
 public class PlayerInventory : LocalInventory, IInputProccesor
 {
     public bool IsSwitching { get; private set; }
 
     [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private Transform fireTransform;
     [SerializeField] private Transform weaponsRoot;
 
     public UnityEvent<bool> onInventoryToggled;
@@ -37,6 +44,10 @@ public class PlayerInventory : LocalInventory, IInputProccesor
 
     private NetworkPlayer _player;
 
+
+    private WeaponContext _context = new WeaponContext();
+    
+    
     protected override void Awake()
     {
         base.Awake();
@@ -72,6 +83,7 @@ public class PlayerInventory : LocalInventory, IInputProccesor
             itemController.transform.SetParent(weaponsRoot, false);
             itemController.Init(i);
             itemController.gameObject.SetActive(false);
+            itemController.Player = _player;
         
             Weapons.Add(itemController);
         }
@@ -85,11 +97,22 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         }
         
         IsOpen = !IsOpen;
+        
+        _player.Movement.CanMove = !IsOpen;
+        _player.Camera.CanLook = !IsOpen;
 
         if (Object.HasInputAuthority)
         {
             inventoryUI.SetActive(IsOpen);
-            onInventoryToggled?.Invoke(IsOpen);
+
+            if (IsOpen)
+            {
+                Context.Input.RequestCursorRelease();
+            }
+            else
+            {
+                Context.Input.RequestCursorLock();
+            }
         }
     }
     
@@ -99,8 +122,6 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         {
             return;
         }
-        
-        Debug.Log(Object.HasStateAuthority);
         
         ItemController itemController = FindItemController(itemID);
 
@@ -140,6 +161,16 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     public override void Render()
     {
         EquippedItem.transform.SetParent(weaponsRoot, false);
+
+        foreach (ItemController wpn in Weapons)
+        {
+            if (wpn.Player != null)
+            {
+                continue;
+            }
+
+            wpn.Player = _player;
+        }
     }
 
     public override void OnSlotReset(Slot slot)
@@ -213,10 +244,8 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     
     private ItemController FindItemController(int itemID)
     {
-        Debug.Log(itemID);
         for (int i = 0; i < Weapons.Count; i++)
         {
-            Debug.Log(Weapons[i].item.itemID);
             if (itemID == Weapons[i].item.itemID)
             {
                 return Weapons[i];
@@ -263,7 +292,11 @@ public class PlayerInventory : LocalInventory, IInputProccesor
 
         if (EquippedItem != null)
         {
-            EquippedItem.ProcessInput(input);
+            _context.Input = input;
+            _context.FireDirection = (input.LookForward * input.LookVertical) * Vector3.forward;
+            _context.FirePosition = fireTransform.position;
+
+            EquippedItem.ProcessInput(_context);
         }
     }
 }
