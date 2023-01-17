@@ -20,8 +20,11 @@ public class NetworkPlayer : NetworkBehaviour
      public PlayerInteractionHandler Interaction { get; private set; } 
      public PlayerMovementHandler Movement { get; private set; }
      public CameraLook Camera { get; private set; }
+    [Networked] public int token { get; set; }//Token for remote players
 
-     private void Awake()
+    public NetworkString<_16> nickName { get; set; }
+
+    private void Awake()
     {
         Interaction = GetComponent<PlayerInteractionHandler>();
         Movement = GetComponent<PlayerMovementHandler>();
