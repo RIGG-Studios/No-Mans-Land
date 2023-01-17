@@ -6,6 +6,14 @@ public enum PlayerButtons
     Jump,
     Sprint,
     Fire,
+    Aim,
+    Reload,
+    Slot1,
+    Slot2,
+    Slot3,
+    Slot4,
+    Slot5,
+    ToggleInventory
 }
 
 public enum PlayerStates : byte
@@ -21,7 +29,8 @@ public struct NetworkInputData : INetworkInput
 
     public Vector2 MovementInput;
     public Quaternion LookForward;
-    public Quaternion VerticalLook;
+    public Quaternion LookVertical;
+
     
     public NetworkBool IsAiming;
     public NetworkBool IsReloading;

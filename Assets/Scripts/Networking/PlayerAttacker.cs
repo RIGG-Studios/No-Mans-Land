@@ -32,7 +32,7 @@ public class PlayerAttacker : NetworkBehaviour
         {
             return;
         }
-        
+
         NetworkButtons pressed = input.Buttons.GetPressed(ButtonsPrevious);
 
         ButtonsPrevious = input.Buttons;
@@ -40,7 +40,7 @@ public class PlayerAttacker : NetworkBehaviour
         
         if (pressed.IsSet(PlayerButtons.Fire) && !IsAttacking)
         {
-            Attack();
+        //    Attack();
         }
     }
 
@@ -52,6 +52,7 @@ public class PlayerAttacker : NetworkBehaviour
             return;
         }
         
+        Debug.Log(_player.Inventory.EquippedItem);
         if (Object.HasInputAuthority && _player.Inventory.EquippedItem != null)
         {
             _player.Inventory.EquippedItem.Attack();
@@ -64,24 +65,7 @@ public class PlayerAttacker : NetworkBehaviour
 
     public void HitScanAttack(float damage, float length)
     {
-        LagCompensatedHit hitInfo =
-            HitScanHandler.RegisterHitScan(Runner, Object, _player.Camera.transform, length, attackableLayers);
 
-        if (hitInfo.Hitbox == null && hitInfo.Collider == null)
-        {
-            return;
-        }
-        
-        
-        Vector3 dir = (hitInfo.Point - _player.Camera.transform.position).normalized;
-
-        HitData hitData =
-            NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage, HitFeedbackTypes.AnimatedDamageText);
-
-        if (hitData.Action != HitAction.None)
-        {
-            //local effects
-        }
     }
 
     private void ResetAttack() => IsAttacking = false;

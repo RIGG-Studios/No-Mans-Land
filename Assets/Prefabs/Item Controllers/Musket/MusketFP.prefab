@@ -409,7 +409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 24.900024, y: 9.8}
+  m_AnchoredPosition: {x: 24.900024, y: 9.799988}
   m_SizeDelta: {x: 39.401917, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1596910000229173207
@@ -464,14 +464,15 @@ GameObject:
   m_Component:
   - component: {fileID: 4702532966088945606}
   - component: {fileID: 101346005750778065}
+  - component: {fileID: 7663052468127582923}
   - component: {fileID: 1710554550619452643}
   - component: {fileID: 5178440982009832456}
   - component: {fileID: 622994084827546250}
   - component: {fileID: 7495035238150224634}
   - component: {fileID: 2801603322541944034}
   - component: {fileID: 1766645888650401998}
-  - component: {fileID: 7663052468127582923}
   - component: {fileID: 6370366418045858797}
+  - component: {fileID: 2220991232557056156}
   m_Layer: 6
   m_Name: MusketFP
   m_TagString: Untagged
@@ -508,17 +509,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4467efe8f23dd244d9ed794fb5af5887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemListData:
-    ItemID: 0
-    SlotID: 0
-    Stack: 0
+  _interpolationDataSource: 0
+  item: {fileID: 11400000, guid: d6fefae0cf8048345b86ee74f215060f, type: 2}
+  _ID: 0
   equipAnimationData:
     name: Hide
     clip: {fileID: 7400000, guid: 6bb7c9c624c8d5b41bfc12659973b41e, type: 2}
   hideAnimationData:
     name: Equip
     clip: {fileID: 7400000, guid: ad03159082c6a8e4baad148bcaf72301, type: 2}
-  item: {fileID: 11400000, guid: d6fefae0cf8048345b86ee74f215060f, type: 2}
+--- !u!114 &7663052468127582923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072611267142044377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b70023c4822624db93180b2052bb3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  maxCurrentAmmo: 6
+  reloadText: {fileID: 2382919339169624508}
+  ammoText: {fileID: 3339385687534514115}
+  reloadAnimationData:
+    name: Reload
+    clip: {fileID: 7400000, guid: 7e1165428b580a446882de8e9e7de146, type: 2}
+  ammoItem: {fileID: 11400000, guid: d6fab1af0f699b349afc4295e4a1afc5, type: 2}
+  _CurrentAmmo: 0
+  _IsReloading: 0
 --- !u!114 &1710554550619452643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,12 +553,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  fireRate: 50000000
   raycastLength: 100
+  damage: 20
+  attackableLayers:
+    serializedVersion: 2
+    m_Bits: 2049
   muzzleFlash:
   - {fileID: 4136227918373543040}
   - {fileID: 4135932997867327000}
   - {fileID: 4136361518256345858}
-  damage: 20
 --- !u!114 &5178440982009832456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,6 +579,7 @@ MonoBehaviour:
   aimTransform: {fileID: 2752318422191595603}
   aimSpeed: 5
   aimPos: {x: -0.087, y: 0.084, z: -0.088}
+  _IsAiming: 0
 --- !u!114 &622994084827546250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,27 +648,6 @@ MonoBehaviour:
   itemLength: 1.5
   blockedPos: {x: 0, y: -0.023, z: -0.21}
   blockedRot: {x: 23.156, y: -61.707, z: 33.604}
---- !u!114 &7663052468127582923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8072611267142044377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93b70023c4822624db93180b2052bb3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  autoReload: 1
-  maxCurrentAmmo: 6
-  reloadText: {fileID: 2382919339169624508}
-  ammoText: {fileID: 3339385687534514115}
-  reloadAnimationData:
-    name: Reload
-    clip: {fileID: 7400000, guid: 7e1165428b580a446882de8e9e7de146, type: 2}
-  ammoItem: {fileID: 11400000, guid: d6fab1af0f699b349afc4295e4a1afc5, type: 2}
 --- !u!114 &6370366418045858797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,6 +665,36 @@ MonoBehaviour:
   recoilY: 1.2
   recoilSmoothness: 6
   maxRecoilY: 2
+--- !u!114 &2220991232557056156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072611267142044377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 977ab58d113bc1947b5f37ee7a50889d
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 101346005750778065}
+  - {fileID: 7663052468127582923}
+  - {fileID: 1710554550619452643}
+  - {fileID: 5178440982009832456}
+  - {fileID: 622994084827546250}
+  - {fileID: 2801603322541944034}
+  - {fileID: 6370366418045858797}
+  SimulationBehaviours: []
 --- !u!1001 &3291070629076472252
 PrefabInstance:
   m_ObjectHideFlags: 0

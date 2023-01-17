@@ -1029,8 +1029,8 @@ MonoBehaviour:
   SphereRadius: 0
   BoxExtents: {x: 0.5, y: 1, z: 0.5}
   Offset: {x: 0, y: 0, z: 0}
-  Root: {fileID: 4111844027948265564}
-  GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  Root: {fileID: 8212501764084205232}
+  GizmosColor: {r: 0.07678461, g: 1, b: 0, a: 1}
 --- !u!1 &1509187590541231210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,16 +1116,15 @@ GameObject:
   - component: {fileID: 405607105689438971}
   - component: {fileID: 3421363453046290868}
   - component: {fileID: 3134399232989235859}
-  - component: {fileID: 2881207283708791840}
   - component: {fileID: 2113765977}
   - component: {fileID: 2676349010370680657}
-  - component: {fileID: 4111844027948265564}
   - component: {fileID: 5968819807260933364}
   - component: {fileID: 3460570078531062315}
   - component: {fileID: 6321791394010194454}
   - component: {fileID: 67780509746397124}
   - component: {fileID: 3367286985697117507}
   - component: {fileID: 4944068395436352298}
+  - component: {fileID: 8212501764084205232}
   m_Layer: 6
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -1170,8 +1169,6 @@ MonoBehaviour:
   - {fileID: 6880502451465274540}
   - {fileID: 405607105689438971}
   - {fileID: 3421363453046290868}
-  - {fileID: 3134399232989235859}
-  - {fileID: 2881207283708791840}
   remoteGameObjectsDisable:
   - {fileID: 82060555539084502}
   - {fileID: 8056894814738391696}
@@ -1226,14 +1223,13 @@ MonoBehaviour:
   - {fileID: 1678779374052586985}
   - {fileID: 405607105689438971}
   - {fileID: 3134399232989235859}
-  - {fileID: 2881207283708791840}
   - {fileID: 2113765977}
   - {fileID: 2676349010370680657}
-  - {fileID: 4111844027948265564}
   - {fileID: 5968819807260933364}
   - {fileID: 3460570078531062315}
   - {fileID: 67780509746397124}
   - {fileID: 3367286985697117507}
+  - {fileID: 8212501764084205232}
   - {fileID: 3698441954151704457}
   SimulationBehaviours: []
 --- !u!54 &6467673482923859489
@@ -1386,23 +1382,14 @@ MonoBehaviour:
     startingItems: []
   onItemAdded:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2113765977}
-        m_TargetAssemblyTypeName: PlayerItemControllerHandler, Assembly-CSharp
-        m_MethodName: OnItemAdded
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onItemRemoved:
     m_PersistentCalls:
       m_Calls: []
+  _Items: []
   inventoryUI: {fileID: 82060555390769572}
+  fireTransform: {fileID: 8389939585149380230}
+  weaponsRoot: {fileID: 2440542176383257896}
   onInventoryToggled:
     m_PersistentCalls:
       m_Calls:
@@ -1434,19 +1421,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _EquippedItemID: 0
---- !u!114 &2881207283708791840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1546747480105808753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ac032a88d77ac46ae4fe9314320b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _IsOpen:
+    _value: 0
+  _CanUse: 0
+  _Weapons: []
 --- !u!114 &2113765977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1460,8 +1438,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  itemHolder: {fileID: 2440542176383257896}
-  itemControllers: []
 --- !u!114 &2676349010370680657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1494,25 +1470,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4111844027948265564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1546747480105808753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  Config: 1
-  BroadRadius: 1.2247449
-  Offset: {x: 0, y: 0, z: 0}
-  GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  Hitboxes:
-  - {fileID: 4385399820646090875}
 --- !u!114 &5968819807260933364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1585,6 +1542,7 @@ MonoBehaviour:
   sprintFOV: 110
   climbSpeed: 5
   gravity: 1.6
+  cameraTransform: {fileID: 8389939585149380230}
   groundCheckDist: 0.4
 --- !u!114 &67780509746397124
 MonoBehaviour:
@@ -1629,6 +1587,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551c0bf15e65ddb49be364a1ddca04e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8212501764084205232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546747480105808753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Config: 1
+  BroadRadius: 1.2247449
+  Offset: {x: 0, y: 0, z: 0}
+  GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Hitboxes:
+  - {fileID: 4385399820646090875}
 --- !u!1 &1671487997009177103
 GameObject:
   m_ObjectHideFlags: 0
@@ -2139,6 +2116,7 @@ MonoBehaviour:
   mouseSensitivity: 8
   lookSmooth: 1
   maxLookAngleY: 65
+  maxLookAngleX: 0
 --- !u!114 &3698441954151704457
 MonoBehaviour:
   m_ObjectHideFlags: 0

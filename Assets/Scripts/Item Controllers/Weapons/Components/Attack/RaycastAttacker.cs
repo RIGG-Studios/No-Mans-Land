@@ -7,22 +7,20 @@ using UnityEngine.Events;
 
 public class RaycastAttacker : WeaponComponent, IAttacker
 {
+    [SerializeField] private float fireRate;
     [SerializeField] private float raycastLength;
-    [SerializeField] private ParticleSystem[] muzzleFlash;
     [SerializeField] private float damage;
+    [SerializeField] private LayerMask attackableLayers;
+    [SerializeField] private ParticleSystem[] muzzleFlash;
 
     public event Action onAttack;
     
     private readonly int _fire = Animator.StringToHash("Fire");
 
-    private FPTerrainBlocker _blocker;
-
-    public override void Awake()
-    {
-        base.Awake();
-
-        _blocker = GetComponent<FPTerrainBlocker>();
-    }
+    private int _fireTicks;
+    
+    [Networked]
+    private TickTimer fireCooldown { get; set; }
     
     public override void OnEnable()
     {
@@ -31,24 +29,75 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         Weapon.SetAttacker(this);
     }
 
+    public override bool IsBusy => !fireCooldown.ExpiredOrNotRunning(Runner);
+
+    public override void Spawned()
+    {
+        base.Spawned();
+        
+        float fireTime = 60f / fireRate;
+        _fireTicks = (int)Math.Ceiling(fireTime / (double)Runner.DeltaTime);
+    }
+
+    public override void ProcessInput(WeaponContext context, ref ItemDesires desires)
+    {
+        Debug.Log(fireCooldown.ExpiredOrNotRunning(Runner));
+        if (Weapon.IsBusy() || !fireCooldown.ExpiredOrNotRunning(Runner) || !desires.HasAmmo)
+        {
+            return;
+        }
+        
+        if (context.Input.Buttons.IsSet(PlayerButtons.Fire))
+        {
+            desires.HasFired = true;
+        }
+    }
+
+    public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
+    {
+        if (!desires.HasFired)
+        {
+            return;
+        }
+
+
+        fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks);
+
+        Debug.Log("shooting on: " + Object.HasStateAuthority);
+
+        if (Object.HasInputAuthority)
+        {
+            FireEffects();
+        }
+
+        if (Object.HasStateAuthority)
+        {
+
+            Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
+                Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
+            
+            Debug.DrawRay(context.FirePosition, context.FireDirection * raycastLength, Color.blue, 5.0f);
+            if (hitInfo.Hitbox == null && hitInfo.Collider == null)
+            {
+                return;
+            }
+
+            {
+
+                Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
+
+                HitData hitData =
+                    NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage,
+                        HitFeedbackTypes.AnimatedDamageText);
+            }
+
+            Weapon.OnFired();
+        }
+    }
+
     public void Attack()
     {
-        if (Weapon.Reloader is {CurrentAmmo: <= 0})
-        {
-            return;
-        }
-
-        if (Weapon.Reloader is {IsReloading: true})
-        {
-            return;
-        }
-
-        if (_blocker.IsBlocked)
-        {
-            return;
-        }
-
-        Weapon.Player.Attack.HitScanAttack(damage, raycastLength);
+        NetworkPlayer.Local.Attack.HitScanAttack(damage, raycastLength);
         onAttack?.Invoke();
         
         FireEffects();

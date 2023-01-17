@@ -1,3 +1,4 @@
+using Fusion;
 using UnityEngine;
 
 public class CameraLook : MonoBehaviour
@@ -45,7 +46,7 @@ public class CameraLook : MonoBehaviour
         _fov = _defaultFOV;
         CanLook = true;
     }
-
+    
     private void LateUpdate()
     {
         if (!CanLook)

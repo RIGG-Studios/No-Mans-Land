@@ -1,4 +1,5 @@
 using System;
+using Fusion;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,6 +11,7 @@ public class ProceduralAim : WeaponComponent, IAimer
     [SerializeField] private Vector3 aimPos;
 
 
+    [Networked]
     public bool IsAiming { get; private set; }
     
     public IAimer.AimTypes AimType { get; private set; }
@@ -24,6 +26,24 @@ public class ProceduralAim : WeaponComponent, IAimer
         
         Weapon.SetAimer(this);
     }
+
+    public override void ProcessInput(WeaponContext context, ref ItemDesires desires)
+    {
+        bool aiming = context.Input.IsAiming;
+
+        desires.Aim = aiming;
+    }
+
+    public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
+    {
+        IsAiming = desires.Aim;
+        
+        Vector3 pos = !IsAiming ? _defaultAimPos : aimPos;
+        Quaternion rot = !IsAiming ? _defaultAimRot : quaternion.identity;
+
+        aimTransform.localPosition = Vector3.Lerp(aimTransform.localPosition, pos, Runner.DeltaTime * aimSpeed);
+        aimTransform.localRotation = Quaternion.Lerp(aimTransform.localRotation, rot, Runner.DeltaTime * aimSpeed);
+    }
     
     
     public override void Awake()
@@ -32,22 +52,11 @@ public class ProceduralAim : WeaponComponent, IAimer
 
         _defaultAimPos = aimTransform.localPosition;
         _defaultAimRot = aimTransform.localRotation;
-
-        InputActions.Player.Aim.performed += ctx => ToggleAim();
     }
     
-    private void Update()
-    {
-        Vector3 pos = !IsAiming ? _defaultAimPos : aimPos;
-        Quaternion rot = !IsAiming ? _defaultAimRot : quaternion.identity;
-
-        aimTransform.localPosition = Vector3.Lerp(aimTransform.localPosition, pos, Time.deltaTime * aimSpeed);
-        aimTransform.localRotation = Quaternion.Lerp(aimTransform.localRotation, rot, Time.deltaTime * aimSpeed);
-    }
-
     public void ToggleAim()
     {
-        IsAiming = !IsAiming;
-        onAim?.Invoke(IsAiming);
+    //    IsAiming = !IsAiming;
+    //    onAim?.Invoke(IsAiming);
     }
 }

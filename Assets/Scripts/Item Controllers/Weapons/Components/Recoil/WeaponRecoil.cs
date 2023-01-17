@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 public class WeaponRecoil : WeaponComponent, IRecoil
@@ -31,9 +32,17 @@ public class WeaponRecoil : WeaponComponent, IRecoil
     }
     
 
+    public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
+    {
+        if (Object.HasInputAuthority && desires.HasFired && Runner.IsForward)
+        {
+            DoRecoil();
+        }
+    }
+
     public void DoRecoil()
     {
-        Debug.Log("recoil : " + Weapon.Player.Object.HasInputAuthority);
+        Debug.Log("recoil");
         _recoil1Pos += new Vector3(recoilRotation.x, Random.Range(-recoilRotation.y, recoilRotation.y), 
             Random.Range(-recoilRotation.z, recoilRotation.z));
 

@@ -24,6 +24,14 @@ public class CameraRecoil : WeaponComponent, IRecoil
         
         Weapon.SetCameraRecoil(this);
     }
+
+    public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
+    {
+        if (Object.HasInputAuthority && desires.HasFired)
+        {
+            DoRecoil();
+        }
+    }
     
     public void DoRecoil()
     {
@@ -41,7 +49,7 @@ public class CameraRecoil : WeaponComponent, IRecoil
             float y = (1.0f * _recoilY) / recoilSmoothness;
             float x = 1.0f * Random.Range(-_recoilX, _recoilX) / recoilSmoothness;
 
-            Weapon.Player.Camera.UpdateRecoil(x, y);
+            NetworkPlayer.Local.Camera.UpdateRecoil(x, y);
             _recoilStep += 1;
         }
         else

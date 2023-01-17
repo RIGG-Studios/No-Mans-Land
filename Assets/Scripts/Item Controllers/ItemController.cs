@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Numerics;
+using Fusion;
 
 public struct ItemControllerState
 {
@@ -11,27 +10,41 @@ public struct ItemControllerState
     public bool isHiding;
 }
 
-public abstract class ItemController : MonoBehaviour
+public struct ItemDesires
 {
-    public Item Item { get; private set; }
-    public NetworkPlayer Player { get; private set; }
+    public bool Fire;
+    public bool Reload;
+    public bool Aim;
 
+    public bool HasAmmo;
+    public bool HasFired;
+}
+
+public abstract class ItemController : ContextBehaviour
+{
+    public bool IsReady { get; set; }
+    public NetworkPlayer Player { get; set; }
+
+    public Item item;
     
-    public void Init(NetworkPlayer player, Item item)
+    [Networked]
+    public int ID { get; set; }
+
+    public void Init(int id)
     {
-        Item = item;
-        Player = player;
+        ID = id;
     }
-
-    public abstract void Equip();
-    public abstract void Hide();
-
-    public virtual void Attack() { }
 
     public virtual ItemControllerState GetState()
     {
         return default;
     }
+
+    public virtual void ProcessInput(WeaponContext context) { }
+    public virtual void Equip() { IsReady = true;}
+    public virtual void Hide() { IsReady = false;}
+
+    public virtual void Attack() { }
 
     public abstract float GetEquipTime();
     public abstract float GetHideTime();

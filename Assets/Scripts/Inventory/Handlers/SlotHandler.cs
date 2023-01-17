@@ -121,10 +121,7 @@ public class SlotHandler
             newSlot.Inventory.AddItem(item.itemID, slotID);
             return;
         }
-        
-        newSlot.InitItem(item, ref oldSlot.InventoryItem);
-        oldSlot.InventoryItem.SlotID = newSlot.ID;
-        oldSlot.Reset(); 
-        _inventory.UpdateItems(item, newSlot.ID);
+
+        _inventory.UpdateItems(oldSlot.ID, newSlot.ID);
     }
 }

@@ -26,6 +26,6 @@ public class EdibleItemController : BaseWeapon
 
     private void Heal()
     {
-        Player.Health.Heal(healAmount);
+        NetworkPlayer.Local.Health.Heal(healAmount);
     }
 }

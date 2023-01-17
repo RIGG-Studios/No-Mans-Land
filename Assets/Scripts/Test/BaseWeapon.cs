@@ -28,10 +28,27 @@ public class BaseWeapon : ItemController
         Animator = GetComponentInChildren<Animator>();
     }
 
-    public override void Equip() => StartCoroutine(IE_Equip());
-    public override void Hide() => StartCoroutine(IE_Hide());
-    
-    
+    public override void Equip()
+    {
+        base.Equip();
+
+        if (Object.HasInputAuthority)
+        {
+            StartCoroutine(IE_Equip());
+        }
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+
+        if (Object.HasInputAuthority)
+        {
+            StartCoroutine(IE_Hide());
+        }
+    }
+
+
     public override float GetEquipTime() => equipAnimationData.ClipLength;
     public override float GetHideTime() => hideAnimationData.ClipLength;
     

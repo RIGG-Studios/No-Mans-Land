@@ -60,7 +60,10 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
 
     public virtual void Reset()
     {
-        SlotReset?.Invoke(this);
+        if (HasItem)
+        {
+            SlotReset?.Invoke(this);
+        }
 
         HasItem = false;
 

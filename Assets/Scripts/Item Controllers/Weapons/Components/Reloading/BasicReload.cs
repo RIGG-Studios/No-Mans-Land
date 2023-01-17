@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class BasicReload : WeaponComponent, IReloader
 {
-    [SerializeField] private bool autoReload;
     [SerializeField] private int maxCurrentAmmo;
     [SerializeField] private GameObject reloadText;
     [SerializeField] private Text ammoText;
@@ -17,26 +16,67 @@ public class BasicReload : WeaponComponent, IReloader
     
     private static readonly int ReloadHash = Animator.StringToHash("Reload");
 
+    
+    [Networked]
     public int CurrentAmmo { get; set; }
-    public int ReserveAmmo { get; set; }
+    
+    [Networked]
     public bool IsReloading { get; set; }
 
 
-    public override void Awake()
+   // public virtual bool IsBusy => IsReloading;
+    
+    public override void Spawned()
     {
-        base.Awake();
+        if (Object.HasInputAuthority)
+        {
+            ammoText.enabled = true;
+            ammoText.text = CurrentAmmo + "/" + maxCurrentAmmo;
+        }
+        else
+        {
+            ammoText.enabled = false;
+            reloadText.SetActive(false);
+        }
 
         CurrentAmmo = maxCurrentAmmo;
+    }
+
+    public override void ProcessInput(WeaponContext context, ref ItemDesires desires)
+    {
+        if (Weapon.IsBusy())
+        {
+            return;
+        }
         
-        ammoText.enabled = true;
-        ammoText.text = CurrentAmmo + "/" + maxCurrentAmmo;
+        bool hasAmmo = Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData);
+        bool canReload = CurrentAmmo < maxCurrentAmmo;
         
-        InputActions.Player.Reload.performed += ctx => Reload();
+        desires.HasAmmo = CurrentAmmo > 0;
+        desires.Reload = hasAmmo && context.Input.Buttons.IsSet(PlayerButtons.Reload) && canReload;
+    }
+
+    public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
+    {
+        if (desires.HasFired)
+        {
+            DecrementCurrentAmmo();
+        }
+
+        if (desires.Reload)
+        {
+            Reload();
+        }
     }
 
     public override void OnEquip()
     {
-        if (CurrentAmmo <= 0 && Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
+        
+        if (CurrentAmmo <= 0 && NetworkPlayer.Local.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
         {
             reloadText.SetActive(true);
         }
@@ -46,6 +86,11 @@ public class BasicReload : WeaponComponent, IReloader
 
     public override void OnHide()
     {
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
+        
         reloadText.SetActive(false);
         ammoText.enabled = false;
     }
@@ -54,7 +99,7 @@ public class BasicReload : WeaponComponent, IReloader
     {
         DecrementCurrentAmmo();
 
-        if (CurrentAmmo <= 0 && Weapon.Player.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
+        if (CurrentAmmo <= 0 && NetworkPlayer.Local.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData))
         {
             reloadText.SetActive(true);
         }
@@ -94,12 +139,7 @@ public class BasicReload : WeaponComponent, IReloader
             return;
         }
 
-        if (CurrentAmmo >= maxCurrentAmmo)
-        {
-            return;
-        }
-
-        StartCoroutine(IE_Reload());
+        Weapon.Player.StartCoroutine(IE_Reload());
     }
 
     private IEnumerator IE_Reload()
@@ -109,12 +149,14 @@ public class BasicReload : WeaponComponent, IReloader
             yield break;
         }
 
-        reloadText.SetActive(false);
-
+        if (Object.HasInputAuthority)
+        {
+            reloadText.SetActive(false);
+            Animator.SetTrigger(ReloadHash);
+        }
+        
         IsReloading = true;
-
-        Animator.SetTrigger(ReloadHash);
-
+        
         yield return new WaitForSeconds(reloadAnimationData.ClipLength);
 
         int ammoNeeded = maxCurrentAmmo - CurrentAmmo;
@@ -124,17 +166,21 @@ public class BasicReload : WeaponComponent, IReloader
             ammoNeeded = itemData.Stack;
         }
         
-        Weapon.Player.Inventory.UpdateItemStack(ref itemData, ammoNeeded);
+        Weapon.Player.Inventory.UpdateItemStack(itemData, ammoNeeded);
         CurrentAmmo += ammoNeeded;
-        
-        if (CurrentAmmo > 0)
+
+        if (Object.HasInputAuthority)
         {
-            ammoText.enabled = true;
-            ammoText.text = CurrentAmmo + "/" + maxCurrentAmmo;
-        }
-        else
-        {
-            reloadText.SetActive(true);
+            if (CurrentAmmo > 0)
+            {
+                ammoText.enabled = true;
+                ammoText.text = CurrentAmmo + "/" + maxCurrentAmmo;
+            }
+            else
+            {
+
+                reloadText.SetActive(true);
+            }
         }
 
         IsReloading = false;

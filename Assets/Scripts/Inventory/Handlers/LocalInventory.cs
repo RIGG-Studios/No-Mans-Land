@@ -1,18 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-public class LocalItemData
-{
-    public int SlotID;
-    public int Stack;
-    
-    public Item Item;
-    public ItemController ItemController;
-}
 
 public class LocalInventory : ContextBehaviour, IInventory
 {
@@ -23,8 +15,11 @@ public class LocalInventory : ContextBehaviour, IInventory
 
     protected SlotHandler SlotHandler;
 
-    public List<ItemListData> Items { get; private set; } = new();
 
+    [Networked(OnChanged = nameof(OnInventoryUpdated), OnChangedTargets = OnChangedTargets.InputAuthority), Capacity(25)]
+    public NetworkLinkedList<ItemListData> Items { get; }
+
+    private bool _skipRefresh = true;
 
     [Serializable]
     public class LocInventoryContainer
@@ -74,19 +69,142 @@ public class LocalInventory : ContextBehaviour, IInventory
         SlotHandler = new SlotHandler(this, slots.ToArray());
     }
 
-    public virtual void Start()
+    /// <summary>
+    /// in this method we need to find out which slots changed, and only update them
+    /// </summary>
+    /// <param name="changed"></param>
+    private static void OnInventoryUpdated(Changed<LocalInventory> changed)
     {
+        /*/
+        Debug.Log("inventory update");
+        changed.LoadOld();
+        ItemListData[] oldItems = changed.Behaviour.Items.ToArray();
+        
+        changed.LoadNew();
+        ItemListData[] newItems = changed.Behaviour.Items.ToArray();
+
+        List<Slot> oldSlots = new();
+        List<Slot> newSlots = new();
+
+        for (int i = 0; i < oldItems.Length; i++)
+        {
+            for (int z = 0; z < newItems.Length; z++)
+            {
+                if (oldItems[i].ID == newItems[z].ID && oldItems[i].SlotID != newItems[z].SlotID)
+                {
+                    oldSlots.Add(changed.Behaviour.SlotHandler.FindSlotByID(oldItems[i].SlotID));
+                    newSlots.Add(changed.Behaviour.SlotHandler.FindSlotByID(newItems[z].SlotID));
+                }
+            }
+        }
+        
+        /*/
+        changed.Behaviour.OnInventoryUpdated();
+    }
+    
+    protected virtual void OnInventoryUpdated()
+    {
+        if (Object.HasInputAuthority)
+        {
+            RefreshInventory();
+        }
+    }
+
+    private void RefreshInventory()
+    {
+        SlotHandler.ResetSlots();
+
+        
+        for (int i = 0; i < Items.Count; i++)
+        {
+            for (int z = 0; z < SlotHandler.Slots.Length; z++)
+            {
+                if (Items[i].SlotID == SlotHandler.Slots[z].ID)
+                {
+                    Item item = Context.ItemDatabase.FindItem(Items[i].ItemID);
+                    ItemListData itemData = Items[i];
+                    
+                    SlotHandler.Slots[z].InitItem(item, ref itemData);
+                }
+            }
+        }
+    }
+    
+    private void RefrehshInventory(Slot[] oldSlots, Slot[] newSlots)
+    {
+        for (int i = 0; i < oldSlots.Length; i++)
+        {
+            oldSlots[i].Reset();
+        }
+        
+        for (int i = 0; i < newSlots.Length; i++)
+        {
+            for (int z = 0; z < Items.Count; z++)
+            {
+                if (Items[z].SlotID == SlotHandler.FindSlotByID(newSlots[i].ID).ID)
+                {
+                    Item item = Context.ItemDatabase.FindItem(Items[z].ItemID);
+                    ItemListData itemData = Items[z];
+
+                    SlotHandler.Slots[Items[z].SlotID].InitItem(item, ref itemData);
+                }
+            }
+        }
+    }
+    
+    public override void Spawned()
+    {
+        InitSlots();
+
+        if (!Object.HasStateAuthority)
+        {
+            return;
+        }
+        
         for (int i = 0; i < inventories.Length; i++)
         {
             for (int z = 0; z < inventories[i].startingItems.Length; z++)
             {
-                AddItem(inventories[i].startingItems[z].itemID, -1, inventories[i].startingItems[z].maxStack);
+                AddItem(inventories[i].startingItems[z].itemID, -1, inventories[i].startingItems[z].maxStack, false);
             }
         }
     }
     
 
-    public virtual void AddItem(int itemID, int slotID = -1, int stack = 1)
+    public virtual void AddItem(int itemID, int slotID = -1, int stack = 1, bool networked = true)
+    {
+        if (networked)
+        {
+            RPC_AddItem(itemID, slotID, stack);
+        }
+        else
+        {
+            Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] : SlotHandler.GetNextSlot();
+
+            if (slot == null)
+            {
+                Debug.Log("Couldn't find slot, inventory is full or there was an error finding it");
+                return;
+            }
+
+            Item item = Context.ItemDatabase.FindItem(itemID);
+
+            if (item == null)
+            {
+                Debug.Log("Error finding item with ID: " + itemID);
+                return;
+            }
+
+            ItemListData inventoryItem = new ItemListData(Items.Count+1, itemID, slot.ID, stack);
+            slot.InitItem(item, ref inventoryItem);
+            slot.HasItem = true;
+
+            Items.Add(inventoryItem);
+        }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_AddItem(int itemID, int slotID, int stack)
     {
         Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] :  SlotHandler.GetNextSlot();
 
@@ -104,11 +222,10 @@ public class LocalInventory : ContextBehaviour, IInventory
             return;
         }
 
-        ItemListData inventoryItem = new ItemListData(itemID, slot.ID, stack);
-        
-        slot.InitItem(item, ref inventoryItem);
+        ItemListData inventoryItem = new ItemListData(Items.Count+1, itemID, slot.ID, stack);
+
+        slot.HasItem = true;
         Items.Add(inventoryItem);
-            onItemAdded?.Invoke(inventoryItem);
     }
 
     public virtual void RemoveItem(int itemID)
@@ -133,21 +250,28 @@ public class LocalInventory : ContextBehaviour, IInventory
     {
     }
 
-    public void UpdateItems(Item item, int newSlotID)
+    public void UpdateItems(int oldSlotID, int newSlotID)
+    {
+        RPC_RequestUpdateInventory(oldSlotID, newSlotID);
+    }
+
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_RequestUpdateInventory(int oldSlotID, int newSlotID)
     {
         for (int i = 0; i < Items.Count; i++)
         {
-            if (item.itemID == Items[i].ItemID)
+            if (oldSlotID == Items[i].SlotID)
             {
                 var inventoryItem = Items[i];
                 inventoryItem.SlotID = newSlotID;
-                Items[i] = inventoryItem;
+                Items.Set(i, inventoryItem);
             }
         }
     }
 
 
-    public void UpdateItemStack(ref ItemListData itemData, int amount = 1)
+    public void UpdateItemStack(ItemListData itemData, int amount = 1)
     {
         Slot slot = SlotHandler.FindSlotByID(itemData.SlotID);
 
@@ -163,10 +287,11 @@ public class LocalInventory : ContextBehaviour, IInventory
             {
                 ItemListData itm = Items[i];
                 itm.Stack -= amount;
-                
-                Items[i] = itm;
+
+                Items.Set(i, itm);
                 slot.UpdateItemStackText(Items[i].Stack);
 
+                _skipRefresh = false;
                 if (itm.Stack <= 0)
                 {
                     RemoveItem(itm.ItemID);
