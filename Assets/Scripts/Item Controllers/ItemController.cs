@@ -26,7 +26,8 @@ public abstract class ItemController : ContextBehaviour
     public NetworkPlayer Player { get; set; }
 
     public Item item;
-    
+    public float crossHairSize;
+
     [Networked]
     public int ID { get; set; }
 
@@ -35,11 +36,14 @@ public abstract class ItemController : ContextBehaviour
         ID = id;
     }
 
+    
+    
     public virtual ItemControllerState GetState()
     {
         return default;
     }
 
+    public abstract T GetService<T>() where T : WeaponComponent;
     public virtual void ProcessInput(WeaponContext context) { }
     public virtual void Equip() { IsReady = true;}
     public virtual void Hide() { IsReady = false;}

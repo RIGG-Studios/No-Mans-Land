@@ -40,7 +40,7 @@ public class ModularWeaponEditor : Editor
         EditorGUILayout.LabelField("Item Settings", EditorStyles.boldLabel);
 
         _modularGun.item = (Item)EditorGUILayout.ObjectField("Item", _modularGun.item, typeof(Item), true);
-        
+        _modularGun.crossHairSize = EditorGUILayout.FloatField("Crosshair Size", _modularGun.crossHairSize);
         EditorGUILayout.Space(30);
         EditorGUILayout.LabelField("Weapon Default Components", EditorStyles.boldLabel);
         
@@ -53,6 +53,8 @@ public class ModularWeaponEditor : Editor
         ShowModuleDetails(typeof(IRecoil), _addRecoilLabel);
         EditorGUILayout.Space();
         ShowModuleDetails(typeof(IReloader), _addReloadLabel);
+        
+        EditorUtility.SetDirty(_modularGun);
     }
     
     void AddModule(object o)

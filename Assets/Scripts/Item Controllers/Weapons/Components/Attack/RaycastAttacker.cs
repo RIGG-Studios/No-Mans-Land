@@ -41,7 +41,6 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
     public override void ProcessInput(WeaponContext context, ref ItemDesires desires)
     {
-        Debug.Log(fireCooldown.ExpiredOrNotRunning(Runner));
         if (Weapon.IsBusy() || !fireCooldown.ExpiredOrNotRunning(Runner) || !desires.HasAmmo)
         {
             return;
@@ -62,37 +61,40 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
 
         fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks);
-
-        Debug.Log("shooting on: " + Object.HasStateAuthority);
-
+        
         if (Object.HasInputAuthority)
         {
             FireEffects();
         }
 
+
+        Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
+            Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
+            
+        
+        if (hitInfo.Hitbox == null && hitInfo.Collider == null)
+        {
+            return;
+        }
+
+        if (hitInfo.Hitbox != null)
+        {
+            if (hitInfo.Hitbox.Root.GetComponent<INetworkDamagable>() != null && Object.HasInputAuthority)
+            {
+                Weapon.Player.HitMarker.ShowCrosshair();
+            }
+        }
+
         if (Object.HasStateAuthority)
         {
+            Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
 
-            Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
-                Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
-            
-            Debug.DrawRay(context.FirePosition, context.FireDirection * raycastLength, Color.blue, 5.0f);
-            if (hitInfo.Hitbox == null && hitInfo.Collider == null)
-            {
-                return;
-            }
-
-            {
-
-                Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
-
-                HitData hitData =
-                    NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage,
-                        HitFeedbackTypes.AnimatedDamageText);
-            }
-
-            Weapon.OnFired();
+            HitData hitData =
+                NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage,
+                    HitFeedbackTypes.AnimatedDamageText);
         }
+
+        Weapon.OnFired();
     }
 
     public void Attack()

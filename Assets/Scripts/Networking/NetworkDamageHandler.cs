@@ -77,8 +77,6 @@ public static class NetworkDamageHandler
     {
         bool success = hitData.Victim.ProcessHit(ref hitData);
         
-        Debug.Log("damage sent");
-
         return hitData;
     }
 
@@ -86,7 +84,6 @@ public static class NetworkDamageHandler
     {
         if (hitbox != null)
         {
-            Debug.Log("hit hitbox");
             return hitbox.Root.GetComponent<INetworkDamagable>();
         }
 

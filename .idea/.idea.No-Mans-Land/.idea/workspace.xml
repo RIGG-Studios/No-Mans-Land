@@ -8,6 +8,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Crosshair.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/EmptyItemController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/IInputProccesor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interpolation/InterpolationTransitions.cs" root0="FORCE_HIGHLIGHTING" />
@@ -91,7 +92,7 @@
       <workItem from="1673818133506" duration="1192000" />
       <workItem from="1673846936129" duration="16604000" />
       <workItem from="1673898576453" duration="23946000" />
-      <workItem from="1673984673610" duration="934000" />
+      <workItem from="1673984673610" duration="7420000" />
     </task>
     <servers />
   </component>

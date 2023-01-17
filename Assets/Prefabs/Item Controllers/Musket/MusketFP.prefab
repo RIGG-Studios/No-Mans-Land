@@ -511,6 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   item: {fileID: 11400000, guid: d6fefae0cf8048345b86ee74f215060f, type: 2}
+  crossHairSize: 0.5
   _ID: 0
   equipAnimationData:
     name: Hide

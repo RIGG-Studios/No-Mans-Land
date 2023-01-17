@@ -119,6 +119,7 @@ public class InputProvider : InputBase
         tickInput.IsAiming = _isAiming;
         tickInput.IsReloading = _isReloading;
         tickInput.CurrentWeaponID = _currentWeaponID;
+        tickInput.CurrentState = _player.Movement.RequestedState;
 
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
         tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);

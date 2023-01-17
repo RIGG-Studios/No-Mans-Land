@@ -67,6 +67,9 @@ public class PlayerNetworkMovement : ContextBehaviour
     {
         if (!CanMove)
         {
+            IsMoving = false;
+            IsSprinting = false;
+            _movementHandler.ToggleSprint(IsSprinting);
             return;
         }
         
@@ -129,6 +132,7 @@ public class PlayerNetworkMovement : ContextBehaviour
         if (interactable.ID == "ShipWheel")
         {
             RequestedState = PlayerStates.ShipController;
+            Debug.Log(RequestedState);
         }
 
         if (interactable.ID == "Cannon")

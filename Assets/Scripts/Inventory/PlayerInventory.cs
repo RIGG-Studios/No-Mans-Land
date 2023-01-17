@@ -14,20 +14,20 @@ public class WeaponContext
 public class PlayerInventory : LocalInventory, IInputProccesor
 {
     public bool IsSwitching { get; private set; }
+    
+    public UnityEvent<bool> onInventoryToggled;
+    public UnityEvent<int> onItemsChanged;
 
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private Transform fireTransform;
     [SerializeField] private Transform weaponsRoot;
-
-    public UnityEvent<bool> onInventoryToggled;
-    public UnityEvent<int> onItemsChanged;
 
 
     public ItemController EquippedItem => Weapons[EquippedItemID];
     
     
 
-    [Networked(OnChanged = nameof(OnEquippedItemChanged))]
+    [Networked(OnChanged = nameof(OnEquippedItemChanged), OnChangedTargets = OnChangedTargets.All)]
     public int EquippedItemID { get; set; }
     
     [Networked, HideInInspector]

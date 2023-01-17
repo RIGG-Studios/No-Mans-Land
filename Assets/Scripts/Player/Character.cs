@@ -11,10 +11,12 @@ public class Character : ContextBehaviour
     private List<CharacterEquippableItem> _tpItems = new();
 
     private CharacterEquippableItem _currentItem;
+    private NetworkPlayer _player;
     private int _currentTpID;
     
     private void Start()
     {
+        _player = GetComponent<NetworkPlayer>();
         Item[] items = Context.ItemDatabase.GetEquippableItems();
 
         for (int i = 0; i < items.Length; i++)
@@ -35,7 +37,7 @@ public class Character : ContextBehaviour
     }
 
     public void OnItemsChanged(int newID)
-    { 
+    {
         if (Object.HasInputAuthority)
         {
             return;
@@ -48,7 +50,9 @@ public class Character : ContextBehaviour
             current.gameObject.SetActive(false);
         }
 
-        CharacterEquippableItem next = FindEquippableItem(newID);
+        int newItemID = _player.Inventory.EquippedItem.item.itemID;
+        
+        CharacterEquippableItem next = FindEquippableItem(newItemID);
 
         if (next != null)
         {
@@ -56,32 +60,7 @@ public class Character : ContextBehaviour
             next.gameObject.SetActive(true);
         }
 
-        _currentTpID = newID;
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-        if (!GetInput(out NetworkInputData input))
-        {
-            return;
-        }
-
-        if (input.CurrentWeaponID != _currentTpID)
-        {
-            OnItemsChanged(input.CurrentWeaponID);
-        }
-
-        _currentTpID = input.CurrentWeaponID;
-    }
-
-    public void OnAttack()
-    {
-        if (_currentItem == null)
-        {
-            return;
-        }
-        
-        _currentItem.OnAttack();
+        _currentTpID =  newItemID;
     }
 
     private CharacterEquippableItem FindEquippableItem(int id)

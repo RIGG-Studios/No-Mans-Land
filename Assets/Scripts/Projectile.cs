@@ -43,9 +43,12 @@ public class Projectile : NetworkBehaviour
           //  Debug.Log(hitColliders[i].gameObject.name);
             if (hitColliders[i].TryGetComponent(out ShipVitalPoint vitalPoint))
             {
-               // vitalPoint.Damage("", 20f);
-               DamageNotifier.Instance.OnDamageEntity(_startTransform, transform.position, 20f);
-               Runner.Despawn(Object);
+                if (Object.HasInputAuthority)
+                {
+                    DamageNotifier.Instance.OnDamageEntity(_startTransform, transform.position, 20f);
+                }
+
+                Runner.Despawn(Object);
                return;
             }
             i++;

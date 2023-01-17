@@ -74,6 +74,19 @@ public class ModularWeapon : BaseWeapon
         }
     }
 
+    public override T GetService<T>()
+    {
+        for (int i = 0, count = _weaponComponents.Length; i < count; i++)
+        {
+            if (_weaponComponents[i] is T service)
+                return service;
+        }
+        
+        return null;
+    }
+
+    
+
     protected override void Awake()
     {
         base.Awake();

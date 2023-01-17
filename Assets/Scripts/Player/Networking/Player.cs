@@ -70,8 +70,6 @@ public class Player : ContextBehaviour
 
     private static void OnStateChanged(Changed<Player> changed)
     {
-        Debug.Log($"{Time.time} OnStateChanged State {changed.Behaviour.State}");
-        
         if (!changed.Behaviour.Object.HasInputAuthority)
         {
             return;

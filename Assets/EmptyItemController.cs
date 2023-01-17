@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EmptyItemController : ItemController
 {
+    public override T GetService<T>()
+    {
+        return null;
+    }
+
     public override void Equip()
     {
     }

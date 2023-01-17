@@ -28,6 +28,11 @@ public class BaseWeapon : ItemController
         Animator = GetComponentInChildren<Animator>();
     }
 
+    public override T GetService<T>()
+    {
+        return null;
+    }
+
     public override void Equip()
     {
         base.Equip();
