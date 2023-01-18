@@ -47,9 +47,9 @@ public class Projectile : NetworkBehaviour
                 {
                     DamageNotifier.Instance.OnDamageEntity(_startTransform, transform.position, 20f);
                 }
-
-                Runner.Despawn(Object);
-               return;
+                
+                Runner.Despawn(Object); 
+                return;
             }
             i++;
         }

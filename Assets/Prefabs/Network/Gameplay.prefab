@@ -3168,6 +3168,7 @@ GameObject:
   - component: {fileID: 6427642131293243795}
   - component: {fileID: 2926668079268535786}
   - component: {fileID: 6425412639238764499}
+  - component: {fileID: 4687445028361368873}
   m_Layer: 0
   m_Name: Gameplay
   m_TagString: Untagged
@@ -3234,6 +3235,7 @@ MonoBehaviour:
   - {fileID: 6427642131293243795}
   - {fileID: 2926668079268535786}
   - {fileID: 6425412639238764499}
+  - {fileID: 4687445028361368873}
   SimulationBehaviours: []
 --- !u!114 &6427642131293243795
 MonoBehaviour:
@@ -3281,3 +3283,20 @@ MonoBehaviour:
     type: 3}
   _Ships:
     _items: []
+--- !u!114 &4687445028361368873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095482506300068366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ed30a884e108a449f726f2d8893690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  impacts:
+  - tag: Impact
+    impactPrefab: {fileID: 161238178945949681, guid: a562a1afa1241cb48a48f7ca2c9560f6,
+      type: 3}

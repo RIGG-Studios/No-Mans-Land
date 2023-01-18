@@ -71,7 +71,12 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
         Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
             Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
-            
+        
+        if (Object.HasStateAuthority && hitInfo.GameObject != null)
+        {
+            ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
+        }
+        
         
         if (hitInfo.Hitbox == null && hitInfo.Collider == null)
         {
@@ -90,7 +95,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
         HitData hitData =
             NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage);
-
+        
 
         if (hitData.IsFatal && Object.HasInputAuthority)
         {
