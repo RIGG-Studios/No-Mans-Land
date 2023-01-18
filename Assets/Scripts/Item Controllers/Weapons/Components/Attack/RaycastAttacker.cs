@@ -58,9 +58,10 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         {
             return;
         }
-
-
-        fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks);
+        
+        
+        
+        fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks / 2);
         
         if (Object.HasInputAuthority)
         {
@@ -84,16 +85,19 @@ public class RaycastAttacker : WeaponComponent, IAttacker
                 Weapon.Player.HitMarker.ShowCrosshair();
             }
         }
+        
+        Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
 
-        if (Object.HasStateAuthority)
+        HitData hitData =
+            NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage);
+
+
+        if (hitData.IsFatal && Object.HasInputAuthority)
         {
-            Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
-
-            HitData hitData =
-                NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage,
-                    HitFeedbackTypes.AnimatedDamageText);
+            Weapon.Player.UI.ShowKillNotifcation(hitData.VictimUsername.ToString());
         }
-
+        
+        
         Weapon.OnFired();
     }
 

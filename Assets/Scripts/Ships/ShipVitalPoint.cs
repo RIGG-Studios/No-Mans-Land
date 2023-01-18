@@ -12,8 +12,10 @@ public class ShipVitalPoint : MonoBehaviour, INetworkDamagable
 
     public bool IsActive { get; }
     public PlayerRef OwnerRef { get; }
-    
-    
+
+
+    public NetworkPlayer Owner { get; }
+
     public bool ProcessHit(ref HitData hit)
     {
         throw new System.NotImplementedException();

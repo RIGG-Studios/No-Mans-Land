@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    [SerializeField] private Animator killNotifcationAnimator;
+    [SerializeField] private Text killNotificationUsernameText;
+
     private UIComponent[] _uiComponents;
     private UIComponent _openedMenu;
 
@@ -26,6 +30,12 @@ public class PlayerUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void ShowKillNotifcation(string userName)
+    {
+        killNotificationUsernameText.text = userName;
+        killNotifcationAnimator.SetTrigger("Show");
     }
 
     public void EnableMenu(string id)
