@@ -33,10 +33,9 @@ public class Crosshair : SimulationBehaviour
         ItemController currentWeapon = NetworkPlayer.Local.Inventory.EquippedItem;
         
         _currentSize = _walkSize * currentWeapon.crossHairSize;
-        
-       if(disableOnSize) crossHair.SetActive(
-           (currentWeapon.crossHairSize > 0 || !NetworkPlayer.Local.Inventory.IsOpen) &&
-           NetworkPlayer.Local.Movement.CurrentState == PlayerStates.PlayerController);
+
+        if (disableOnSize)
+            crossHair.SetActive(currentWeapon.crossHairSize > 0 || !NetworkPlayer.Local.Inventory.IsOpen);
 
         if (!NetworkPlayer.Local.Movement.IsMoving)
         {

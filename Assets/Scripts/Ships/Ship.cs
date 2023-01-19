@@ -14,6 +14,8 @@ public class Ship : NetworkBehaviour
     public byte TeamID { get; set; }
 
     [SerializeField] private Transform rudderTransform;
+    [SerializeField] private Transform targetCameraTransform;
+    [SerializeField] private Transform cameraTransform;
 
     public Transform RudderTransform => rudderTransform;
     
@@ -32,6 +34,20 @@ public class Ship : NetworkBehaviour
         {
             spawnPoint.OverrideTeam(TeamID);
             spawnPoint.Init();
+        }
+    }
+    
+    public override void FixedUpdateNetwork()
+    {
+        if (!GetInput(out NetworkInputData input))
+        {
+            return;
+        }
+
+        if (Object.HasInputAuthority)
+        {
+            cameraTransform.gameObject.SetActive(true);
+            NetworkPlayer.Local.Camera.gameObject.SetActive(false);
         }
     }
     
@@ -54,5 +70,14 @@ public class Ship : NetworkBehaviour
     private static void HasPilotChanged(Changed<Ship> changed)
     {
         
+    }
+
+    public void ResetLocal()
+    {
+        if (Object.HasInputAuthority)
+        {
+            cameraTransform.gameObject.SetActive(false);
+            NetworkPlayer.Local.Camera.gameObject.SetActive(true);
+        }
     }
 }

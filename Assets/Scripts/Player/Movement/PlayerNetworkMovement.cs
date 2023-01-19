@@ -102,6 +102,10 @@ public class PlayerNetworkMovement : ContextBehaviour
             {
                 Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.UnderWater);
             }
+            else if (Object.HasInputAuthority && _player.Camera.transform.position.y > 0.0f)
+            {
+                Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.Default);
+            }
             
             _movementHandler.MoveSwim(input, Runner.DeltaTime);
         }

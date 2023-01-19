@@ -43,6 +43,7 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
 
     public void StopButtonInteract(out ButtonInteractionData interactionData)
     {
+        Ship.ResetLocal();
         Ship.RPC_RequestResetPilot();
 
         interactionData = new ButtonInteractionData()
@@ -51,8 +52,4 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
         };
     }
 
-    public void StopButtonInteract()
-    {
-        Ship.RPC_RequestResetPilot();
-    }
 }
