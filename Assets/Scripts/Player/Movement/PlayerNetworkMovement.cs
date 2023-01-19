@@ -132,12 +132,13 @@ public class PlayerNetworkMovement : ContextBehaviour
         if (interactable.ID == "ShipWheel")
         {
             RequestedState = PlayerStates.ShipController;
-            Debug.Log(RequestedState);
+            NetworkPlayer.Local.Inventory.HideCurrentItem();
         }
 
         if (interactable.ID == "Cannon")
         {
             RequestedState = PlayerStates.CannonController;
+            NetworkPlayer.Local.Inventory.HideCurrentItem();
         }
     }
 

@@ -173,4 +173,49 @@ public class Player : ContextBehaviour
                 return;
         }
     }
+
+    public void IncrementStat(StatTypes type, int value)
+    {
+        switch (type)
+        {
+            case StatTypes.Deaths:
+                Stats.Deaths += (short)value;
+                return;
+            
+            case StatTypes.Kills:
+                Stats.Kills += (short)value;
+                return;
+            
+            
+            case StatTypes.Score:
+                Stats.Score += (short)value;
+                return;
+            
+            case StatTypes.TeamID:
+                Stats.TeamID += (byte)value;
+                return;
+        }
+    }
+    
+    public void DecrementStat(StatTypes type, int value)
+    {
+        switch (type)
+        {
+            case StatTypes.Deaths:
+                Stats.Deaths -= (short)value;
+                return;
+            
+            case StatTypes.Kills:
+                Stats.Kills -= (short)value;
+                return;
+
+            case StatTypes.Score:
+                Stats.Score -= (short)value;
+                return;
+            
+            case StatTypes.TeamID:
+                Stats.TeamID -= (byte)value;
+                return;
+        }
+    }
 }
