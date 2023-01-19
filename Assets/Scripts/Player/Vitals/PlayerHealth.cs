@@ -83,8 +83,14 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
 
     public override bool Heal(float amount)
     {
-        RPC_Heal(amount);
-
+        Debug.Log($"{Time.time} {transform.name} got healed, got {Health} left ");
+        
+        Health += (byte)amount;
+        
+        if (Health > 100)
+        {
+            Health = 100;
+        }
         return true;
     }
 
@@ -98,19 +104,6 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         }
     }
     
-    
-    
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_Heal(float healAmount)
-    {
-        Debug.Log($"{Time.time} {transform.name} got healed, got {Health} left ");
-        Health += (byte)healAmount;
-        
-        if (Health > 100)
-        {
-            Health = 100;
-        }
-    }
     
     public bool ProcessHit(ref HitData hit)
     {

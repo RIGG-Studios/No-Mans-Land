@@ -52,6 +52,11 @@ public static class NetworkDamageHandler
             return default;
         }
 
+        if (attackerRef == networkDamagable.Owner.Object.InputAuthority)
+        {
+            return default;
+        }
+
         HitData hitData = new HitData()
         {
             Action = hitAction,

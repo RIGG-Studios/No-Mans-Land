@@ -7,19 +7,29 @@ using UnityEngine;
 public class PlayerNetworkMovement : ContextBehaviour
 {
     private PlayerMovement _movementHandler;
+    private NetworkPlayer _player;
 
     [Networked]
     private NetworkButtons ButtonsPrevious { get; set; }
     
     [Networked]
-    public bool IsSprinting { get; set; }
+    public NetworkBool IsSprinting { get; set; }
     
     [Networked]
-    public bool IsMoving { get; set; }
+    public NetworkBool IsMoving { get; set; }
     
     [Networked]
-    public bool CanMove { get; set; }
+    public NetworkBool CanMove { get; set; }
     
+    [Networked]
+    public NetworkBool IsGrounded { get; set; }
+    
+    [Networked]
+    public NetworkBool InLadderTrigger { get; set; }
+    
+    [Networked]
+    public NetworkBool IsSwimming { get; set; }
+
     [Networked]
     public PlayerStates CurrentState { get; set; }
     
@@ -28,11 +38,14 @@ public class PlayerNetworkMovement : ContextBehaviour
     public float Vertical { get; private set; }
     public float Horizontal { get; private set; }
     
+    
+    
     protected override void Awake()
     {
         base.Awake();
         
         _movementHandler = GetComponent<PlayerMovement>();
+        _player = GetComponent<NetworkPlayer>();
     }
 
     public override void FixedUpdateNetwork()
@@ -77,10 +90,32 @@ public class PlayerNetworkMovement : ContextBehaviour
         NetworkButtons released = input.Buttons.GetReleased(ButtonsPrevious);
         
         ButtonsPrevious = input.Buttons;
-        
-        _movementHandler.Move(input, Runner.DeltaTime);
+
+        if (InLadderTrigger)
+        {
+            Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.Default);
+            _movementHandler.MoveLadder(input, Runner.DeltaTime);
+        }
+        else if (IsSwimming)
+        {
+            if (Object.HasInputAuthority && _player.Camera.transform.position.y < 0.0f)
+            {
+                Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.UnderWater);
+            }
+            
+            _movementHandler.MoveSwim(input, Runner.DeltaTime);
+        }
+        else
+        {
+            Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.Default);
+            _movementHandler.Move(input, Runner.DeltaTime);
+        }
+
         _movementHandler.UpdateCameraRotation(input);
+        
         IsMoving = input.MovementInput != Vector2.zero;
+        IsSwimming = (_player.Camera.transform.position.y < 0.5f);
+        IsGrounded = CheckForGround();
         
         if (pressed.IsSet(PlayerButtons.Sprint) && !input.IsAiming && !input.IsReloading)
         {
@@ -100,7 +135,7 @@ public class PlayerNetworkMovement : ContextBehaviour
             _movementHandler.ToggleSprint(IsSprinting);
         }
         
-        if (pressed.IsSet(PlayerButtons.Jump) && !input.IsAiming && !input.IsReloading)
+        if (pressed.IsSet(PlayerButtons.Jump) && !input.IsAiming && !input.IsReloading && IsGrounded)
         {
             _movementHandler.Jump();
         }
@@ -120,6 +155,27 @@ public class PlayerNetworkMovement : ContextBehaviour
     private void CannonMovement(NetworkInputData input)
     {
         
+    }
+
+    private bool CheckForGround()
+    {
+        return Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 2.0f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (Object.HasStateAuthority && other.GetComponent<Ladder>() != null)
+        {
+            InLadderTrigger = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (Object.HasStateAuthority && other.GetComponent<Ladder>() != null)
+        {
+            InLadderTrigger = false;
+        }
     }
 
     public void OnButtonInteract(IInteractable interactable)

@@ -3279,7 +3279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  shipPrefab: {fileID: 794517197198059439, guid: 93ab4ecefa2a6874d9ca5bd2a270deb9,
+  shipPrefab: {fileID: 3604247825852076780, guid: ff5d9932bdebcbb4bb02b6cacdb0053b,
     type: 3}
   _Ships:
     _items: []
@@ -3296,7 +3296,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  impacts:
-  - tag: Impact
-    impactPrefab: {fileID: 161238178945949681, guid: a562a1afa1241cb48a48f7ca2c9560f6,
-      type: 3}
+  impacts: []

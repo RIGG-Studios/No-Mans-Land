@@ -94,7 +94,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
 
         HitData hitData =
-            NetworkDamageHandler.ProcessHit(Runner.LocalPlayer, dir, hitInfo, damage, HitAction.Damage);
+            NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
         
 
         if (hitData.IsFatal && Object.HasInputAuthority)

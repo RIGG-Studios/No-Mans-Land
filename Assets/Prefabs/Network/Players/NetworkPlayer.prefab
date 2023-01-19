@@ -970,7 +970,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4071512495883104271
 Transform:
   m_ObjectHideFlags: 0
@@ -1633,6 +1633,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 494e25b20d073144bb20c5a370bc2e87, type: 2}
     - {fileID: 11400000, guid: d6fefae0cf8048345b86ee74f215060f, type: 2}
     - {fileID: 11400000, guid: d6fab1af0f699b349afc4295e4a1afc5, type: 2}
+    - {fileID: 11400000, guid: a49740cb397894347aaed7f04a067b16, type: 2}
   - id: 1
     size: 5
     grid: {fileID: 82060553988153109}
@@ -1644,21 +1645,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _Items: []
-  onInventoryToggled:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3179884598373680720}
-        m_TargetAssemblyTypeName: NetworkPlayer, Assembly-CSharp
-        m_MethodName: OnInventoryToggled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   onItemsChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1766,6 +1752,8 @@ MonoBehaviour:
   sprintSpeed: 10
   sprintFOV: 110
   climbSpeed: 5
+  swimSpeed: 3
+  swimDrag: 35
   gravity: 1.6
   cameraTransform: {fileID: 8389939585149380230}
   groundCheckDist: 0.4
@@ -1782,9 +1770,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _IsSprinting: 0
-  _IsMoving: 0
-  _CanMove: 0
+  _IsSprinting:
+    _value: 0
+  _IsMoving:
+    _value: 0
+  _CanMove:
+    _value: 0
+  _IsGrounded:
+    _value: 0
+  _InLadderTrigger:
+    _value: 0
+  _IsSwimming:
+    _value: 0
   _CurrentState: 0
 --- !u!114 &3367286985697117507
 MonoBehaviour:

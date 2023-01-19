@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     
     [Header("Climbing")]
     [SerializeField] private float climbSpeed = 5f;
+
+    [SerializeField] private float swimSpeed;
+    [SerializeField] private float swimDrag;
     
     [Header("Other")]
     [SerializeField] private float gravity = 10f;
@@ -27,15 +30,19 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _slopeNormal;
 
     private float _currentSpeed;
+    private float _defaultDrag;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _currentSpeed = movementSpeed;
+        _defaultDrag = _rigidbody.drag;
     }
 
     public void Move(NetworkInputData input, float runnerTime)
     {
+        _rigidbody.useGravity = true;
+        _rigidbody.drag = _defaultDrag;
         Vector2 movementInput = input.MovementInput.normalized;
 
         _rigidbody.AddForce(Physics.gravity * gravity, ForceMode.Force);
@@ -51,6 +58,35 @@ public class PlayerMovement : MonoBehaviour
                           (forward * movementInput.y + transform.right * movementInput.x) * _currentSpeed *
                           runnerTime;
             
+        _rigidbody.MovePosition(nextPos);
+    }
+
+    public void MoveLadder(NetworkInputData input, float runnerTime)
+    {
+        _rigidbody.useGravity = false;
+        
+        Vector2 movementInput = input.MovementInput.normalized;
+
+        Vector3 forward = transform.up;
+
+        Vector3 nextPos = transform.position +
+                          (forward * movementInput.y + transform.right * movementInput.x) * _currentSpeed *
+                          runnerTime;
+        
+        _rigidbody.MovePosition(nextPos);
+    }
+    
+    public void MoveSwim(NetworkInputData input, float runnerTime)
+    {
+        _rigidbody.useGravity = false;
+        _rigidbody.drag = swimDrag;
+
+        Vector3 forward = (input.LookForward * input.LookVertical) * Vector3.forward;
+        
+        Vector3 nextPos = transform.position +
+                          (forward * input.MovementInput.y + transform.right * input.MovementInput.x) * swimSpeed *
+                          runnerTime;
+        
         _rigidbody.MovePosition(nextPos);
     }
 

@@ -37,5 +37,7 @@ public class ShipPhysicsHandler : NetworkBehaviour
             _rigidbody.AddForceAtPosition(input.MovementInput.x * -_ship.RudderTransform.right * rotationSpeed,
                 _ship.RudderTransform.position, ForceMode.Force);
         }
+        
+       // Debug.Log(_rigidbody.velocity);
     }
 }
