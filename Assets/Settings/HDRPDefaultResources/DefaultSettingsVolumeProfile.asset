@@ -340,7 +340,7 @@ MonoBehaviour:
   active: 1
   sunFlaresIntensity:
     m_OverrideState: 1
-    m_Value: 0.07
+    m_Value: 0.016
   sunFlaresOcclusionSpeed:
     m_OverrideState: 1
     m_Value: 50
