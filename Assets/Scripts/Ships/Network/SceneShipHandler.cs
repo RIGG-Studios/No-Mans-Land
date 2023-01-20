@@ -8,11 +8,6 @@ public class SceneShipHandler : ContextBehaviour
     [Networked, Capacity(16)] 
     public NetworkDictionary<int, NetworkObject> Ships { get; } = new();
     
-    public override void Spawned()
-    {
-        Context.Ships = this;
-    }
-    
     public void RequestShip(int teamID, PlayerRef inputAuthority, out NetworkObject ship)
     {
         if (!HasStateAuthority)

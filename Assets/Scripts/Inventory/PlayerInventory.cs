@@ -15,7 +15,6 @@ public class PlayerInventory : LocalInventory, IInputProccesor
 {
     public bool IsSwitching { get; private set; }
     
-    public UnityEvent<bool> onInventoryToggled;
     public UnityEvent<int> onItemsChanged;
 
     [SerializeField] private GameObject inventoryUI;
@@ -206,7 +205,7 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         }
     }
 
-    private void HideCurrentItem()
+    public void HideCurrentItem()
     {
         StartCoroutine(IE_HideCurrentItem());
     }
@@ -257,6 +256,11 @@ public class PlayerInventory : LocalInventory, IInputProccesor
 
     public void ProcessInput(NetworkInputData input)
     {
+        if (_player.Movement.CurrentState != PlayerStates.PlayerController)
+        {
+            return;
+        }
+        
         NetworkButtons pressed = input.Buttons.GetPressed(ButtonsPrevious);
         NetworkButtons released = input.Buttons.GetReleased(ButtonsPrevious);
 

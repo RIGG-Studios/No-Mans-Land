@@ -14,6 +14,7 @@ namespace NoMansLand.Scene
         public SceneInput Input;
         public SceneCamera Camera;
         public SceneUI UI;
+        public ScenePostProcessing PostProcessing;
         public ItemDatabase ItemDatabase;
         
         //Gameplay
@@ -21,9 +22,6 @@ namespace NoMansLand.Scene
         [HideInInspector]
         public NetworkTeams Teams;
         
-        [HideInInspector]
-        public SceneShipHandler Ships;
-
         [HideInInspector]
         public Gameplay Gameplay;
         

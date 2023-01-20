@@ -10,50 +10,49 @@ public enum HitAction : byte
     Heal
 }
 
-public enum HitFeedbackTypes : byte
+public enum HitTypes : byte
 {
-    None,
-    AnimatedHitMarker,
-    AnimatedDamageText
+    Player,
+    Ship,
+    Other
 }
 
 public struct HitData
 {
     public HitAction Action;
-    public HitFeedbackTypes Feedback;
     public float Damage;
     public Vector3 Position;
     public Vector3 Direction;
     public Vector3 Normal;
+    public bool IsFatal;
 
-    public PlayerRef AttackerRef;
     public INetworkDamagable Victim;
-}
 
-public interface INetworkInstigator
-{
-    PlayerRef OwnerRef { get; }
+    public PlayerRef Attacker;
+    public NetworkString<_16> VictimUsername;
 
-    void HitPerformed(HitData hit);
 }
 
 public interface INetworkDamagable
 {
-    bool IsActive { get; }
-
-    PlayerRef OwnerRef { get; }
+    NetworkPlayer Owner { get; }
     
     bool ProcessHit(ref HitData hit);
 }
 
 public static class NetworkDamageHandler 
 {
-    public static HitData ProcessHit(PlayerRef attackerRef, Vector3 direction, LagCompensatedHit hit, float damage, HitAction hitAction, HitFeedbackTypes feedbackType)
+    public static HitData ProcessHit(PlayerRef attackerRef, Vector3 direction, LagCompensatedHit hit, float damage, HitAction hitAction)
     {
         INetworkDamagable networkDamagable = GetDamageTarget(hit.Hitbox, hit.Collider);
 
         
         if (networkDamagable == null)
+        {
+            return default;
+        }
+
+        if (attackerRef == networkDamagable.Owner.Object.InputAuthority)
         {
             return default;
         }
@@ -65,9 +64,9 @@ public static class NetworkDamageHandler
             Direction = direction,
             Position = hit.Point,
             Normal = hit.Normal,
-            Feedback = feedbackType,
             Victim = networkDamagable,
-            AttackerRef = attackerRef
+            Attacker = attackerRef,
+            VictimUsername = networkDamagable.Owner.Owner.PlayerName
         };
 
         return ProcessHit(ref hitData);
@@ -89,7 +88,6 @@ public static class NetworkDamageHandler
 
         if (collider != null)
         {
-            Debug.Log(collider.transform.root.gameObject.name);
             return collider.transform.root.GetComponent<INetworkDamagable>();
         }
 

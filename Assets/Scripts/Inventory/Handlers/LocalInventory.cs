@@ -75,7 +75,6 @@ public class LocalInventory : ContextBehaviour, IInventory
     /// <param name="changed"></param>
     private static void OnInventoryUpdated(Changed<LocalInventory> changed)
     {
-        /*/
         Debug.Log("inventory update");
         changed.LoadOld();
         ItemListData[] oldItems = changed.Behaviour.Items.ToArray();
@@ -83,36 +82,39 @@ public class LocalInventory : ContextBehaviour, IInventory
         changed.LoadNew();
         ItemListData[] newItems = changed.Behaviour.Items.ToArray();
 
-        List<Slot> oldSlots = new();
-        List<Slot> newSlots = new();
+        List<ItemListData> changedSlots = new();
+
 
         for (int i = 0; i < oldItems.Length; i++)
         {
             for (int z = 0; z < newItems.Length; z++)
             {
-                if (oldItems[i].ID == newItems[z].ID && oldItems[i].SlotID != newItems[z].SlotID)
+                if (oldItems[i].ID == newItems[z].ID && (oldItems[i].SlotID != newItems[z].SlotID))
                 {
-                    oldSlots.Add(changed.Behaviour.SlotHandler.FindSlotByID(oldItems[i].SlotID));
-                    newSlots.Add(changed.Behaviour.SlotHandler.FindSlotByID(newItems[z].SlotID));
+                    changedSlots.Add(newItems[i]);
+                    changedSlots.Add(oldItems[i]);
                 }
             }
         }
-        
-        /*/
-        changed.Behaviour.OnInventoryUpdated();
+
+        changed.Behaviour.RefreshInventory(changedSlots.ToArray());
     }
     
     protected virtual void OnInventoryUpdated()
     {
         if (Object.HasInputAuthority)
         {
-            RefreshInventory();
+        //    RefreshInventory();
         }
     }
 
-    private void RefreshInventory()
+    private void RefreshInventory(ItemListData[] changedItems)
     {
-        SlotHandler.ResetSlots();
+        for (int i = 0; i < changedItems.Length; i++)
+        {
+            Slot slot = SlotHandler.FindSlotByID(changedItems[i].SlotID);
+            slot.Reset();
+        }
 
         
         for (int i = 0; i < Items.Count; i++)

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
-public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDamagable
+public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
 {
     [Networked(OnChanged = nameof(OnDeadChanged))]
     public NetworkBool IsDead { get; private set; }
@@ -19,15 +19,15 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
     
     public UnityEvent<HitData> onDamageTaken;
     public UnityEvent onDeath;
-
-
+    
     private const byte StartingHealth = 100;
-
-    public bool IsActive => true;
-    public PlayerRef OwnerRef => Object.InputAuthority;
+    
+    
+    public NetworkPlayer Owner { get; set; }
 
     private void Start()
     {
+        Owner = GetComponent<NetworkPlayer>();
         Health = StartingHealth;
     }
 
@@ -41,18 +41,7 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         if (isDeadCurrent)
             changed.Behaviour.OnDeath();
     }
-
-    private void Update()
-    {
-        if (Object.HasInputAuthority)
-        {
-            if (Keyboard.current.yKey.wasPressedThisFrame)
-            {
-                Damage(new HitData() { Damage = 10 });
-            }
-        }
-    }
-
+    
     private void OnDeath()
     {
         if (Object.HasStateAuthority)
@@ -76,13 +65,14 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
         }
     }
 
-    public override bool Damage(HitData hitData)
+    public override bool Damage(ref HitData hitData)
     {
         Health -= (byte)hitData.Damage;
         Debug.Log($"{Time.time} {transform.name} took damage got {Health} left ");
 
         if (Health <= 0)
         {
+            hitData.IsFatal = true;
             Debug.Log($"{Time.time} {transform.name} died");
             Health = 0;
             IsDead = true;
@@ -93,8 +83,14 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
 
     public override bool Heal(float amount)
     {
-        RPC_Heal(amount);
-
+        Debug.Log($"{Time.time} {transform.name} got healed, got {Health} left ");
+        
+        Health += (byte)amount;
+        
+        if (Health > 100)
+        {
+            Health = 100;
+        }
         return true;
     }
 
@@ -109,22 +105,9 @@ public class PlayerHealth : NetworkHealthHandler, INetworkInstigator, INetworkDa
     }
     
     
-    
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_Heal(float healAmount)
-    {
-        Debug.Log($"{Time.time} {transform.name} got healed, got {Health} left ");
-        Health += (byte)healAmount;
-        
-        if (Health > 100)
-        {
-            Health = 100;
-        }
-    }
-
     public bool ProcessHit(ref HitData hit)
     {
-        return Damage(hit);
+        return Damage(ref hit);
     }
 
     public void HitPerformed(HitData hit)
