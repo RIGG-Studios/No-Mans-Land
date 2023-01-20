@@ -16,6 +16,7 @@ namespace NoMansLand.Scene
         public SceneUI UI;
         public ScenePostProcessing PostProcessing;
         public ItemDatabase ItemDatabase;
+        public GameConfig Config;
         
         //Gameplay
 

@@ -1158,8 +1158,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  movementSpeed: 640
-  maxMovementSpeed: 900
+  movementSpeed: 1750
+  maxMovementSpeed: 3000
   rotationSpeed: 175
 --- !u!1 &3867082071068746468
 GameObject:
