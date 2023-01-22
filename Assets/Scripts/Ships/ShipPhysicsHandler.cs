@@ -11,33 +11,59 @@ public class ShipPhysicsHandler : NetworkBehaviour
     [SerializeField] private float rotationSpeed;
     
     private Rigidbody _rigidbody;
+    private Floater[] _floaters;
     private Ship _ship;
 
+    [Networked] 
+    public NetworkBool CanMove { get; set; }
+    
+    [Networked]
+    private float forwardInput { get; set; }
+
+    [Networked]
+    private float horizontalInput { get; set; }
 
     private void Awake()
     {
         _ship = GetComponent<Ship>();
         _rigidbody = GetComponent<Rigidbody>();
+        _floaters = GetComponentsInChildren<Floater>();
     }
 
+    public override void Spawned()
+    {
+        CanMove = true;
+    }
 
     public override void FixedUpdateNetwork()
     {
-        if (!GetInput(out NetworkInputData input))
+        if (!GetInput(out NetworkInputData input) || !CanMove)
         {
             return;
         }
-
-        float verticalInput = Mathf.Clamp(input.MovementInput.y, 0.0f, maxMovementSpeed);
         
-        _rigidbody.AddForce(transform.forward * verticalInput * movementSpeed, ForceMode.Force);
+        
+        forwardInput = Mathf.Clamp(input.MovementInput.y, 0.0f, maxMovementSpeed);
+        horizontalInput = input.MovementInput.x;
+        
+        _rigidbody.AddForce(transform.forward * forwardInput * movementSpeed, ForceMode.Force);
 
-        if (verticalInput > 0)
+        _rigidbody.AddForceAtPosition(horizontalInput * -_ship.RudderTransform.right * rotationSpeed,
+            _ship.RudderTransform.position, ForceMode.Force);
+    }
+
+    public void AddForce(Vector3 velocity)
+    {
+        _rigidbody.AddForce(velocity, ForceMode.Force);
+    }
+
+    public void ReleaseGravity()
+    {
+        CanMove = false;
+
+        foreach (Floater f in _floaters)
         {
-            _rigidbody.AddForceAtPosition(input.MovementInput.x * -_ship.RudderTransform.right * rotationSpeed,
-                _ship.RudderTransform.position, ForceMode.Force);
+            f.gameObject.SetActive(false);
         }
-        
-       // Debug.Log(_rigidbody.velocity);
     }
 }

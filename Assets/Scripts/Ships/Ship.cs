@@ -19,13 +19,6 @@ public class Ship : NetworkBehaviour
 
     public Transform RudderTransform => rudderTransform;
     
-    private ShipPhysicsHandler _shipPhysics;
-
-    private void Awake()
-    {
-        _shipPhysics = GetComponent<ShipPhysicsHandler>();
-    }
-
     public void Init(byte id)
     {
         TeamID = id;
@@ -37,21 +30,6 @@ public class Ship : NetworkBehaviour
         }
     }
     
-    public override void FixedUpdateNetwork()
-    {
-        if (!GetInput(out NetworkInputData input))
-        {
-            return;
-        }
-
-        if (Object.HasInputAuthority)
-        {
-            cameraTransform.gameObject.SetActive(true);
-            NetworkPlayer.Local.Camera.gameObject.SetActive(false);
-        }
-    }
-    
-
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_RequestPilotChange(PlayerRef playerRef)
     {
@@ -70,14 +48,5 @@ public class Ship : NetworkBehaviour
     private static void HasPilotChanged(Changed<Ship> changed)
     {
         
-    }
-
-    public void ResetLocal()
-    {
-        if (Object.HasInputAuthority)
-        {
-            cameraTransform.gameObject.SetActive(false);
-            NetworkPlayer.Local.Camera.gameObject.SetActive(true);
-        }
     }
 }

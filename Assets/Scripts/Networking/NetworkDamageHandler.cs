@@ -71,6 +71,26 @@ public static class NetworkDamageHandler
 
         return ProcessHit(ref hitData);
     }
+    
+    public static HitData ProcessHit(PlayerRef attackerRef, Vector3 direction, Vector3 position, float damage, HitAction hitAction, INetworkDamagable networkDamagable)
+    {
+        if (networkDamagable == null)
+        {
+            return default;
+        }
+
+        HitData hitData = new HitData()
+        {
+            Action = hitAction,
+            Damage = damage,
+            Direction = direction,
+            Position = position,
+            Victim = networkDamagable,
+            Attacker = attackerRef,
+        };
+
+        return ProcessHit(ref hitData);
+    }
 
     private static HitData ProcessHit(ref HitData hitData)
     {

@@ -59,8 +59,6 @@ public class RaycastAttacker : WeaponComponent, IAttacker
             return;
         }
         
-        
-        
         fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks / 2);
         
         if (Object.HasInputAuthority)

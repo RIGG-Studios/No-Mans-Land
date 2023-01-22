@@ -340,13 +340,13 @@ MonoBehaviour:
   active: 1
   sunFlaresIntensity:
     m_OverrideState: 1
-    m_Value: 0.016
+    m_Value: 0.02
   sunFlaresOcclusionSpeed:
     m_OverrideState: 1
     m_Value: 50
   sunFlaresCloudsOcclusion:
     m_OverrideState: 1
-    m_Value: 0.414
+    m_Value: 1
   sunFlaresRaycastOcclusion:
     m_OverrideState: 1
     m_Value: 0
@@ -400,10 +400,10 @@ MonoBehaviour:
     m_Value: 0.01581
   sunFlaresSunIntensity:
     m_OverrideState: 1
-    m_Value: 0.079
+    m_Value: 0.034
   sunFlaresSunDiskSize:
     m_OverrideState: 1
-    m_Value: 0.093
+    m_Value: 0.097
   sunFlaresSunRayDiffractionThreshold:
     m_OverrideState: 1
     m_Value: 0.13
@@ -987,7 +987,7 @@ MonoBehaviour:
     m_Value: 1
   shadows:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   shadowResolution:
     m_OverrideState: 1
     m_Value: 256

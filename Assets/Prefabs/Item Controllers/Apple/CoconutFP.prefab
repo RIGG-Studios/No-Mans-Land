@@ -143,7 +143,7 @@ MonoBehaviour:
   hideAnimationData:
     name: Hide
     clip: {fileID: 7400000, guid: 8c3e514842339c34c86b39edfbc2fa3c, type: 2}
-  healAmount: 0
+  healAmount: 20
   eatAnimationData:
     name: Eat
     clip: {fileID: 7400000, guid: dd0d8911bf85f424fa6550fc49699029, type: 2}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,26 +8,49 @@ public class ScenePostProcessing : SceneComponent
 {
     [SerializeField] private Volume defaultVolume;
     [SerializeField] private Volume underWaterVolume;
+    [SerializeField] private Volume telescopeVolume;
 
 
     public enum PostProcessingTypes
     {
         Default,
-        UnderWater
+        UnderWater,
+        Telescope
     }
 
     public void EnablePostProcessing(PostProcessingTypes type)
     {
-        if (type == PostProcessingTypes.Default)
+        switch (type)
         {
-            defaultVolume.gameObject.SetActive(true);
-            underWaterVolume.gameObject.SetActive(false);
+            case PostProcessingTypes.Default:
+                defaultVolume.gameObject.SetActive(true);
+                return;
+            
+            case PostProcessingTypes.Telescope:
+                telescopeVolume.gameObject.SetActive(true);
+                return;
+            
+            case PostProcessingTypes.UnderWater:
+                underWaterVolume.gameObject.SetActive(true);
+                return;
         }
+    }
 
-        if (type == PostProcessingTypes.UnderWater)
+    public void DisablePostProcessing(PostProcessingTypes type)
+    {
+        switch (type)
         {
-            defaultVolume.gameObject.SetActive(false);
-            underWaterVolume.gameObject.SetActive(true);
+            case PostProcessingTypes.Default:
+                defaultVolume.gameObject.SetActive(false);
+                return;
+            
+            case PostProcessingTypes.Telescope:
+                telescopeVolume.gameObject.SetActive(false);
+                return;
+            
+            case PostProcessingTypes.UnderWater:
+                underWaterVolume.gameObject.SetActive(false);
+                return;
         }
     }
 }

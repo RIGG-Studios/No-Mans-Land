@@ -30,7 +30,7 @@ public class EdibleItemController : BaseWeapon
         Player.Inventory.UpdateItemStack(itemData, 1);
         if (Object.HasStateAuthority)
         {
-            StartCoroutine(IE_DelayHeal());
+            Player.StartCoroutine(IE_DelayHeal());
         }
     }
 

@@ -124,7 +124,6 @@ public class InputProvider : InputBase
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
         tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);
         tickInput.Buttons.Set(PlayerButtons.Reload, _isReloading);
-        
 
         tickInput.Buttons.Set(PlayerButtons.Jump, _isJumpPressed);
         tickInput.Buttons.Set(PlayerButtons.Slot1, _slot1Pressed);

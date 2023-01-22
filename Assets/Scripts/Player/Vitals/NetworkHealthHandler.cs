@@ -9,6 +9,7 @@ public abstract class NetworkHealthHandler : ContextBehaviour
     public byte Health { get; set; }
     
     protected virtual void OnHealthReduced() { }
+    protected virtual void OnHealthIncreased() { }
 
     public abstract bool Damage(ref HitData hitData);
     public abstract bool Heal(float amount);
@@ -25,6 +26,11 @@ public abstract class NetworkHealthHandler : ContextBehaviour
         if (newHP < oldHP)
         {
             changed.Behaviour.OnHealthReduced();
+        }
+
+        if (oldHP < newHP)
+        {
+            changed.Behaviour.OnHealthIncreased();
         }
     }
 

@@ -28,6 +28,15 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
     private void Start()
     {
         Owner = GetComponent<NetworkPlayer>();
+    }
+
+    public override void Spawned()
+    {
+        if (!Object.HasStateAuthority)
+        {
+            return;
+        }
+        
         Health = StartingHealth;
     }
 
@@ -40,6 +49,14 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         
         if (isDeadCurrent)
             changed.Behaviour.OnDeath();
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (Object.HasInputAuthority)
+        {
+            healthText.text = string.Format("<color={0}>+</color> {1}", "red", Health);
+        }
     }
     
     private void OnDeath()
@@ -70,7 +87,7 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         Health -= (byte)hitData.Damage;
         Debug.Log($"{Time.time} {transform.name} took damage got {Health} left ");
 
-        if (Health <= 0)
+        if (Health <= 0 && Object.HasStateAuthority)
         {
             hitData.IsFatal = true;
             Debug.Log($"{Time.time} {transform.name} died");
@@ -100,11 +117,10 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         if (Object.HasInputAuthority)
         {
             NetworkPlayer.Local.UI.EnableMenu("DamageMenu");
-            healthText.text = string.Format("<color={0}>+</color> {1}", "red", Health - 10f);
         }
     }
-    
-    
+
+
     public bool ProcessHit(ref HitData hit)
     {
         return Damage(ref hit);

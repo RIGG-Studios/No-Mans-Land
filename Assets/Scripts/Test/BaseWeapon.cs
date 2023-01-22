@@ -23,8 +23,9 @@ public class BaseWeapon : ItemController
 
     protected Animator Animator;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Animator = GetComponentInChildren<Animator>();
     }
 

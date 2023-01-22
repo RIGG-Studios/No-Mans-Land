@@ -117,10 +117,12 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     
     private void SelectSlot(int i)
     {
+        Debug.Log(i);
         if (!CheckSlots(i, out int itemID))
         {
             return;
         }
+
         
         ItemController itemController = FindItemController(itemID);
 
@@ -196,7 +198,6 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         {
             nextController.gameObject.SetActive(true);
             nextController.Equip();
-            EquippedItemID = nextController.ID;
         }
         
         if (Object.HasStateAuthority)
@@ -232,6 +233,7 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         yield return new WaitForSeconds(hideTime);
 
         EquippedItem.gameObject.SetActive(false);
+        Debug.Log(EquippedItem.gameObject.name);
         nextController.gameObject.SetActive(true);
         nextController.Equip();
         
@@ -274,22 +276,22 @@ public class PlayerInventory : LocalInventory, IInputProccesor
             SelectSlot(15);
         }
         
-        if (pressed.IsSet(PlayerButtons.Slot1))
+        if (pressed.IsSet(PlayerButtons.Slot2))
         {
             SelectSlot(16);
         }
         
-        if (pressed.IsSet(PlayerButtons.Slot1))
+        if (pressed.IsSet(PlayerButtons.Slot3))
         {
             SelectSlot(17);
         }
         
-        if (pressed.IsSet(PlayerButtons.Slot1))
+        if (pressed.IsSet(PlayerButtons.Slot4))
         {
             SelectSlot(18);
         }
         
-        if (pressed.IsSet(PlayerButtons.Slot1))
+        if (pressed.IsSet(PlayerButtons.Slot5))
         {
             SelectSlot(19);
         }

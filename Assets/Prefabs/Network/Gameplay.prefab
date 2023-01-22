@@ -3264,7 +3264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  teamAmount: 1
+  teamAmount: 2
   autoFillTeams: 1
 --- !u!114 &6425412639238764499
 MonoBehaviour:
