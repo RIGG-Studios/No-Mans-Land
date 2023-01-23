@@ -61,9 +61,19 @@ public class ShipPhysicsHandler : NetworkBehaviour
     {
         CanMove = false;
 
-        foreach (Floater f in _floaters)
+        for (int i = 0; i < 1; i++)
         {
-            f.gameObject.SetActive(false);
+            _floaters[i].gameObject.SetActive(false);
+        }
+        
+        Invoke(nameof(ReleaseAllGravity), 12.0f);
+    }
+
+    private void ReleaseAllGravity()
+    {
+        for (int i = 0; i < _floaters.Length; i++)
+        {
+            _floaters[i].gameObject.SetActive(false);
         }
     }
 }

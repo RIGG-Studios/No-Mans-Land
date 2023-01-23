@@ -29,6 +29,9 @@ public class CannonController : NetworkBehaviour
     
     [Networked]
     private float yaw { get; set; }
+    
+    [Networked]
+    private TickTimer fireCooldown { get; set; }
 
     [SerializeField] private Projectile projectile;
     [SerializeField] private Transform shootPoint;
@@ -64,11 +67,10 @@ public class CannonController : NetworkBehaviour
         
         ButtonsPrevious = input.Buttons;
 
-        if (pressed.IsSet(PlayerButtons.Fire))
+        if (pressed.IsSet(PlayerButtons.Fire) && fireCooldown.ExpiredOrNotRunning(Runner))
         {
-            NextFire = Runner.DeltaTime + 1f / fireRate;
-
-           Projectile projectileInstance = Runner.Spawn(projectile, shootPoint.position + shootPoint.forward,
+            fireCooldown = TickTimer.CreateFromSeconds(Runner, fireRate);
+            Projectile projectileInstance = Runner.Spawn(projectile, shootPoint.position + shootPoint.forward,
                 Quaternion.LookRotation(shootPoint.forward), Object.InputAuthority);
            
            projectileInstance.Init(shootPoint,shootPoint.forward * cannonBallVelocity, 10f);

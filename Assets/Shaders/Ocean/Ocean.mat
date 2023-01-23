@@ -170,8 +170,8 @@ Material:
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CrestFalloff: 6.36
-    - _CrestOffset: 0
-    - _CrestSize: 4.63
+    - _CrestOffset: -6.77
+    - _CrestSize: 0
     - _Crest_Falloff: 2.66
     - _Crest_Offset: -1
     - _Crest_Size: 0.34
@@ -202,13 +202,13 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _ExtraExpersion: 0.76
+    - _ExtraExpersion: 0.36
     - _Extra_Expersion: -1.43
     - _FoamBands: 5
-    - _FoamEdgeHardness: 0.56
-    - _FoamFalloff: 1.06
-    - _FoamRemoval: 0.22
-    - _FoamWidth: 4.9
+    - _FoamEdgeHardness: 1.83
+    - _FoamFalloff: 0.7
+    - _FoamRemoval: 0.11
+    - _FoamWidth: 4.73
     - _Foam_Bands: 5
     - _Foam_Edge_Hardness: 1.5
     - _Foam_Falloff: 2.28
@@ -217,7 +217,7 @@ Material:
     - _Frequency: 0.1
     - _Frequency_1: 0.1
     - _Frequency_2: 0.4
-    - _GameTime: 20.808
+    - _GameTime: 52.326004
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0

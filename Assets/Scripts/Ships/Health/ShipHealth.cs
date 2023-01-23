@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 public class ShipHealth : NetworkHealthHandler
 {
     [SerializeField] private ShipPhysicsHandler physicsHandler;
     
     private const byte StartingHealth = 100;
-    
+
     public override void Spawned()
     {
         if (!Object.HasStateAuthority)
@@ -19,7 +20,6 @@ public class ShipHealth : NetworkHealthHandler
         Health = StartingHealth;
     }
 
-    
     public override bool Damage(ref HitData hitData)
     {
         Health -= (byte)hitData.Damage;
