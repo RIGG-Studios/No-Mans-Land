@@ -93,32 +93,21 @@ public class PlayerNetworkMovement : ContextBehaviour
 
         if (InLadderTrigger)
         {
-            Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.Default);
             _movementHandler.MoveLadder(input, Runner.DeltaTime);
         }
         else if (IsSwimming)
         {
-            if (Object.HasInputAuthority && _player.Camera.transform.position.y < 0.0f)
-            {
-                Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.UnderWater);
-            }
-            else if (Object.HasInputAuthority && _player.Camera.transform.position.y > 0.0f)
-            {
-                Context.PostProcessing.DisablePostProcessing(ScenePostProcessing.PostProcessingTypes.UnderWater);
-            }
-            
             _movementHandler.MoveSwim(input, Runner.DeltaTime);
         }
         else
         {
-            Context.PostProcessing.EnablePostProcessing(ScenePostProcessing.PostProcessingTypes.Default);
             _movementHandler.Move(input, Runner.DeltaTime);
         }
 
         _movementHandler.UpdateCameraRotation(input);
         
         IsMoving = input.MovementInput != Vector2.zero;
-        IsSwimming = (_player.Camera.transform.position.y < 0.5f);
+        IsSwimming = (_player.Camera.transform.position.y < Ocean.Instance.GetWaterHeightAtPosition(_player.Camera.transform.position) + 0.5f);
         IsGrounded = CheckForGround();
         
         if (pressed.IsSet(PlayerButtons.Sprint) && !input.IsAiming && !input.IsReloading)

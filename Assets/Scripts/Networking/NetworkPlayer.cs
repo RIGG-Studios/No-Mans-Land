@@ -50,8 +50,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
             Local = this;
             Context.Input.RequestCursorLock();
             Context.Camera.Disable();
-            FindObjectOfType<GenerateQuadTree>().AssignPlayer(transform);
-
         }
 
         _inputProcessors = GetComponents<IInputProccesor>();

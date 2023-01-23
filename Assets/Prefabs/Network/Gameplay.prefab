@@ -3165,7 +3165,6 @@ GameObject:
   - component: {fileID: 3777486071969417920}
   - component: {fileID: 1722330100034976009}
   - component: {fileID: 1164755079560625501}
-  - component: {fileID: 6427642131293243795}
   - component: {fileID: 2926668079268535786}
   - component: {fileID: 6425412639238764499}
   - component: {fileID: 4687445028361368873}
@@ -3232,25 +3231,10 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 1722330100034976009}
-  - {fileID: 6427642131293243795}
   - {fileID: 2926668079268535786}
   - {fileID: 6425412639238764499}
   - {fileID: 4687445028361368873}
   SimulationBehaviours: []
---- !u!114 &6427642131293243795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1095482506300068366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c96a1fc65a4f63489691f0c938202f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  _Time: 0
 --- !u!114 &2926668079268535786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3264,7 +3248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  teamAmount: 2
+  teamAmount: 1
   autoFillTeams: 1
 --- !u!114 &6425412639238764499
 MonoBehaviour:

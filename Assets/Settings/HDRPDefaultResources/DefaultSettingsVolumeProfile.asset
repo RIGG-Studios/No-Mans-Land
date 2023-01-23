@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766a6bc7d591043b9865e4af66711148, type: 3}
   m_Name: SunFlares
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   sunFlaresIntensity:
     m_OverrideState: 1
     m_Value: 0.02

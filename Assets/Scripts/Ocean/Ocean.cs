@@ -1,181 +1,127 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 
-public class Ocean : MonoBehaviour
+public class Ocean : NetworkBehaviour
 {
-    [Header("Shaders")]
-    public ComputeShader initialSpectrum;
-    public ComputeShader fourierComponents;
-    public ComputeShader butterflyPrecompute; 
-    public ComputeShader butterflyOperations;
-    public ComputeShader inversionAndPermutation;
-    public ComputeShader foldingMapCompute;
+    public static Ocean Instance;
+
+    [Header("MATERIAL SETTINGS")] 
     
-    [Header("Ocean Parameters")]
-    public Vector2 windDirection;
-    public float windSpeed;
-    public float windInfluence;
-    public float amplitude;
-    [Range(0, 1)]
-    public float foamAmount;
-    public float choppiness;
-    public int resolution;
-    public float smallestLength;
+    [SerializeField] private Material oceanMaterial;
+    [SerializeField] private float waveTiling;
 
-    //Gaussian random numbers
-    [HideInInspector]
-    public Texture2D zeta;
+    [Header("SHADER SETTINGS")]
+        
+    [SerializeField] private bool executeInEditor = true;
+    [SerializeField] private OceanPresets oceanPreset;
+    
+    
+    private const string ShallowWaterColorID = "_Color01";
+    private const string DeepWaterColorID = "_Color02";
+    private const string FoamColorID = "_FoamColor";
+    private const string ExtraDispersionID = "_ExtraExpersion";
+    private const string FoamEdgeHardnessID = "_FoamEdgeHardness";
+    private const string CrestSizeID = "_CrestSize";
+    private const string CrestOffsetID = "_CrestOffset";
+    private const string FoamFalloffID = "_FoamFalloff";
+    private const string FoamWidthID = "_FoamWidth";
+    private const string FoamRemovalID = "_FoamRemoval";
+    private const string FoamBandsID = "_FoamBands";
+    
+    private OceanPresets _oceanPreset;
 
-    //Textures used to perform the 2D iFFT
-    private RenderTexture _butterfly;
-
+    
+    [Networked]
+    public float Time { get; set; }
+    
     private void Awake()
     {
-        zeta = new Texture2D(resolution, resolution, GraphicsFormat.R16G16B16A16_SFloat, TextureCreationFlags.None);
-        
-        //Compute gaussian random numbers
-        for (int i = 0; i < resolution; i++)
-        {
-            for (int j = 0; j < resolution; j++)
-            {
-                Vector2 randomGaussian = NextGaussian();
-                zeta.SetPixel(i, j, new Color(randomGaussian.x, randomGaussian.y, 0));
-            }
-        }
-
-        zeta.Apply();
-
-        _butterfly = new RenderTexture((int)Mathf.Log(resolution, 2), resolution, 0, GraphicsFormat.R16G16B16A16_SFloat);
-        _butterfly.enableRandomWrite = true;
-
-        //Precompute butterfly texture with twiddle factors and indices
-        butterflyPrecompute.SetInt("oceanResolution", resolution);
-        butterflyPrecompute.SetTexture(0, "butterfly", _butterfly);
-        butterflyPrecompute.Dispatch(0, (int)Mathf.Log(resolution, 2), resolution, 1);
+        Instance = this;
     }
 
-    public void ComputeInitialSpectrum(ref Cascade cascade)
+    public Material GetOceanMat()
     {
-        initialSpectrum.SetTexture(0, "h0", cascade.h0);
-        initialSpectrum.SetFloat("lengthScale", cascade.lengthScale);
-        initialSpectrum.SetFloat("smallestLength", smallestLength);
-        initialSpectrum.SetFloat("largestK", cascade.largestWaveNumber);
-        initialSpectrum.SetInt("oceanResolution", resolution);
-        
-        initialSpectrum.SetFloat("windSpeed", windSpeed);
-        initialSpectrum.SetFloats("windDirection", windDirection.normalized.x, windDirection.normalized.y);
-        initialSpectrum.SetFloat("windInfluence", windInfluence);
-        initialSpectrum.SetFloat("amplitude", amplitude * 1000);
-        initialSpectrum.SetTexture(0, "zeta", zeta);
-        
-        initialSpectrum.Dispatch(0, resolution, resolution, 1);
+        return oceanMaterial;
     }
 
-    public void ComputeFourierComponents(ref Cascade[] cascades, float time)
+
+    private void OnValidate()
     {
-        fourierComponents.SetInt("oceanResolution", resolution);
-        fourierComponents.SetFloat("choppiness", choppiness);
-        fourierComponents.SetFloat("time", time);
-        
-        for (int i = 0; i < cascades.Length; i++)
+        if (!executeInEditor)
+            return;
+
+        UpdateShaderProperties();
+    }
+
+    public void UpdateShaderProperties()
+    {
+        if (oceanMaterial == null)
+            return;
+
+
+        //waves
+        foreach (WaveSettings wave in oceanPreset.waves.waves)
         {
-            fourierComponents.SetTexture(0, "h0", cascades[i].h0);
-            fourierComponents.SetTexture(0, "hk", cascades[i].hk);
-            fourierComponents.SetTexture(0, "hk2", cascades[i].hk2);
-            fourierComponents.SetTexture(0, "nk", cascades[i].nk);
-            fourierComponents.SetFloat("lengthScale", cascades[i].lengthScale);
-            
-            fourierComponents.Dispatch(0, resolution, resolution, 1);
+            oceanMaterial.SetFloat(wave.amplitudeID, wave.amplitude);
+            oceanMaterial.SetFloat(wave.steepnessID, wave.steepness);
+            oceanMaterial.SetFloat(wave.frequencyID, wave.frequency);
+            oceanMaterial.SetFloat(wave.speedID, wave.speed);
+            oceanMaterial.SetVector(wave.directionID, wave.direction);
         }
+        
+        //colors
+        oceanMaterial.SetColor(ShallowWaterColorID,  oceanPreset.shallowColor);
+        oceanMaterial.SetColor(DeepWaterColorID,  oceanPreset.deepColor);
+        oceanMaterial.SetColor(FoamColorID,  oceanPreset.foamColor);
+        
+        //wave foam
+        oceanMaterial.SetFloat(ExtraDispersionID, oceanPreset.extraDispersion);
+        oceanMaterial.SetFloat(FoamEdgeHardnessID, oceanPreset.edgeHardness);
+        oceanMaterial.SetFloat(CrestSizeID, oceanPreset.crestSize);
+        oceanMaterial.SetFloat(CrestOffsetID, oceanPreset.crestOffset);
+        
+        //edge foam
+        oceanMaterial.SetFloat(FoamFalloffID, oceanPreset.foamFallOff);
+        oceanMaterial.SetFloat(FoamWidthID, oceanPreset.foamWidth);
+        oceanMaterial.SetFloat(FoamRemovalID, oceanPreset.foamRemoval);
+        oceanMaterial.SetFloat(FoamBandsID, oceanPreset.foamBands);
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        Time += Runner.DeltaTime;
+        oceanMaterial.SetFloat("_GameTime", Time);
+    }
+
+
+    public float GetWaterHeightAtPosition(Vector3 pos)
+    {
+        float y = 0.0f;
+        foreach (WaveSettings wave in oceanPreset.waves.waves)
+        {
+            y += CalculateWaveHeight(pos, wave);
+        }
+
+        return y * waveTiling;
+    }
+
+    private float CalculateWaveHeight(Vector3 pos, WaveSettings waveSettings)
+    {
+        Vector2 dir = waveSettings.direction.normalized;
+        Vector2 negatedDir = -1 * dir;
+
+        Vector2 frequencyDir = negatedDir * waveSettings.frequency;
+
+        float dot = Vector2.Dot(new Vector2(pos.x, pos.z), frequencyDir);
+        float time = Time * waveSettings.speed;
+        float total = dot + time;
+        float amp = waveSettings.amplitude * waveSettings.steepness;
+
+        return Mathf.Cos(total) * (amp * waveSettings.direction.y);
     }
     
-    public void ComputeHeightNormalFoldingMap(ref Cascade[] cascades, float lengthScale)
-    {
-        inversionAndPermutation.SetInt("oceanResolution", resolution);
-        
-        butterflyOperations.SetTexture(0, "pingPongOut", cascades[0].pingPong);
-        butterflyOperations.SetTexture(0, "pingPongOut1", cascades[1].pingPong);
-        butterflyOperations.SetTexture(0, "pingPongOut2", cascades[2].pingPong);
-        
-        butterflyOperations.SetTexture(0, "butterfly", _butterfly);
-
-        for (int i = 0; i < 3; i++)
-        {
-            RenderTexture spectralTexture = i switch
-            {
-                0 => cascades[0].hk,
-                1 => cascades[0].hk2,
-                _ => cascades[0].nk
-            };
-            
-            RenderTexture spectralTexture1 = i switch
-            {
-                0 => cascades[1].hk,
-                1 => cascades[1].hk2,
-                _ => cascades[1].nk
-            };
-            
-            RenderTexture spectralTexture2 = i switch
-            {
-                0 => cascades[2].hk,
-                1 => cascades[2].hk2,
-                _ => cascades[2].nk
-            };
-            
-            butterflyOperations.SetTexture(0, "pingPongIn", spectralTexture);
-            butterflyOperations.SetTexture(0, "pingPongIn1", spectralTexture1);
-            butterflyOperations.SetTexture(0, "pingPongIn2", spectralTexture2);
-
-            int pingPong = 0;
-            butterflyOperations.SetInt("direction", 0);
-            for (int j = 0; j < (int)Mathf.Log(resolution, 2); j++)
-            {
-                butterflyOperations.SetInt("stage", j);
-                butterflyOperations.SetInt("pingPong", pingPong);
-                butterflyOperations.Dispatch(0, resolution, resolution, 1);
-                pingPong = (pingPong + 1) % 2;
-            }
-        
-            butterflyOperations.SetInt("direction", 1);
-            for (int k = 0; k < (int)Mathf.Log(resolution, 2); k++)
-            {
-                butterflyOperations.SetInt("stage", k);
-                butterflyOperations.SetInt("pingPong", pingPong);
-                butterflyOperations.Dispatch(0, resolution, resolution, 1);
-                pingPong = (pingPong + 1) % 2;
-            }
-
-            inversionAndPermutation.SetInt("pingPong", pingPong);
-            inversionAndPermutation.SetInt("operationIndex", i);
-            
-            inversionAndPermutation.SetTexture(0, "heightMap", cascades[0].heightMap);
-            inversionAndPermutation.SetTexture(0, "normalMap", cascades[0].normalMap);
-            inversionAndPermutation.SetTexture(0, "pingPongOut", cascades[0].pingPong);
-            inversionAndPermutation.SetTexture(0, "pingPongIn",  spectralTexture);
-            inversionAndPermutation.Dispatch(0, resolution, resolution, 1);
-        }
-        
-        foldingMapCompute.SetTexture(0, "heightMap", cascades[0].heightMap);
-        foldingMapCompute.SetTexture(0, "foldingMap", cascades[0].foldingMap);
-        foldingMapCompute.SetFloat("stepSize", lengthScale/resolution);
-        foldingMapCompute.SetFloat("oceanResolution", resolution);
-        foldingMapCompute.SetFloat("foamAmount", foamAmount);
-        
-        foldingMapCompute.Dispatch(0, resolution, resolution, 1);
-    }
-
-    //From stack overflow I think, just generates random numbers that follow a normal distribution
-    private Vector2 NextGaussian() {
-        float v1, v2, s;
-        do {
-            v1 = 2.0f * Random.Range(0f,1f) - 1.0f;
-            v2 = 2.0f * Random.Range(0f,1f) - 1.0f;
-            s = v1 * v1 + v2 * v2;
-        } while (s >= 1.0f || s == 0f);
-
-        s = Mathf.Sqrt((-2.0f * Mathf.Log(s)) / s);
-
-        return  new Vector2(v1*s, v2*s);
-    }
-
 }

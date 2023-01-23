@@ -34,7 +34,6 @@ public class InputProvider : InputBase
     {
         _player = GetComponentInChildren<NetworkPlayer>();
 
-
         InputActions.Player.Jump.performed += ctx => _isJumpPressed = true;
         InputActions.Player.Fire.performed += ctx => OnFirePressed();
 

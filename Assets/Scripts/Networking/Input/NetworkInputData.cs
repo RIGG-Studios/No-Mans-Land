@@ -30,7 +30,6 @@ public struct NetworkInputData : INetworkInput
     public Vector2 MovementInput;
     public Quaternion LookForward;
     public Quaternion LookVertical;
-
     
     public NetworkBool IsAiming;
     public NetworkBool IsReloading;

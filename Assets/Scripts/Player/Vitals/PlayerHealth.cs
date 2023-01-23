@@ -39,8 +39,8 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         
         Health = StartingHealth;
     }
-
     
+
     private static void OnDeadChanged(Changed<PlayerHealth> changed)
     {
         bool isDeadCurrent = changed.Behaviour.IsDead;

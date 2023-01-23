@@ -18,7 +18,8 @@ public class LocalInventory : ContextBehaviour, IInventory
 
     [Networked(OnChanged = nameof(OnInventoryUpdated), OnChangedTargets = OnChangedTargets.InputAuthority), Capacity(25)]
     public NetworkLinkedList<ItemListData> Items { get; }
-
+    
+    
     private bool _skipRefresh = true;
 
     [Serializable]
