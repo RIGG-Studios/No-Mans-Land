@@ -11,6 +11,8 @@ public struct NetworkTeam : INetworkStruct
     
     public int ShipIndex;
 
+
+    public NetworkBool CanRespawn;
     public NetworkBool IsFull => PlayerCount >= 1;
 
     public NetworkTeam(byte teamID, int playerCount)
@@ -18,6 +20,7 @@ public struct NetworkTeam : INetworkStruct
         TeamID = teamID;
         PlayerCount = playerCount;
         ShipIndex = 0;
+        CanRespawn = true;
     }
 }
 

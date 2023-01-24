@@ -15,8 +15,9 @@ MonoBehaviour:
   itemID: 7
   itemName: Cannon Ball
   itemDescription: Ammo for cannons
-  itemIcon: {fileID: 21300000, guid: 9de074e0a2210514e94e173ed7288f03, type: 3}
+  itemIcon: {fileID: 21300000, guid: 6b8d4c9b31aeb344cbcc20db6d038313, type: 3}
   maxStack: 64
   isEquippable: 0
   fpPrefab: {fileID: 0}
   tpPrefab: {fileID: 0}
+  pickupPrefab: {fileID: 0}

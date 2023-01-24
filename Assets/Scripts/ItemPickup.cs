@@ -11,11 +11,16 @@ public class ItemPickup : NetworkBehaviour, IInteractable
     public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
     public string ID => "ItemPickup";
 
+    private Rigidbody _rigidbody;
 
+    
     public void Init(int itemID, int stack)
     {
+        _rigidbody = GetComponent<Rigidbody>();
         _itemID = itemID;
         _stack = stack;
+        
+        _rigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
     }
     
     

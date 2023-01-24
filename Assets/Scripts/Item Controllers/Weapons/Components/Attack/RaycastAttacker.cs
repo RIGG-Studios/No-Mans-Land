@@ -95,6 +95,8 @@ public class RaycastAttacker : WeaponComponent, IAttacker
             NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
         
 
+        Debug.Log(hitData.IsFatal);
+        Debug.Log(Object.HasInputAuthority);
         if (hitData.IsFatal && Object.HasInputAuthority)
         {
             Weapon.Player.UI.ShowKillNotifcation(hitData.VictimUsername.ToString());

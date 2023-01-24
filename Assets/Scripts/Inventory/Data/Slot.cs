@@ -107,6 +107,11 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
                 _slotHandler.MoveItemInSlot(this, closestSlot, toFirstSlot);
                 itemIcon.transform.localPosition = Vector3.zero;
             }
+            else if (closestDist >= 100f)
+            {
+                Inventory.ThrowItem(this);
+                itemIcon.transform.localPosition = Vector3.zero;
+            }
             else
             {
                 itemIcon.transform.localPosition = Vector3.zero;

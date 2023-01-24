@@ -3261,7 +3261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  shipPrefab: {fileID: 3604247825852076780, guid: ff5d9932bdebcbb4bb02b6cacdb0053b,
+  shipPrefab: {fileID: 1980691314638753940, guid: 0d4875c791cb6ce47afcd3e1ecfd22d4,
     type: 3}
   _Ships:
     _items: []

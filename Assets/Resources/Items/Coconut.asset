@@ -15,10 +15,11 @@ MonoBehaviour:
   itemID: 5
   itemName: Coconut
   itemDescription: A delicious fruit that can heal you.
-  itemIcon: {fileID: 21300000, guid: 7935e9b551de25046a5bcce444da72a4, type: 3}
+  itemIcon: {fileID: 21300000, guid: eaf6adfa8b0a8cd4b9d708054d9a1d09, type: 3}
   maxStack: 5
   isEquippable: 1
   fpPrefab: {fileID: 7578479867961954631, guid: 42f697e7e59437b449ae7fc90a7ff1f6,
     type: 3}
   tpPrefab: {fileID: 2254039471274158066, guid: e66872ce583e2684ebf76fa107a4fc79,
     type: 3}
+  pickupPrefab: {fileID: 0}

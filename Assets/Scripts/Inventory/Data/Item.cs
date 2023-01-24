@@ -18,6 +18,7 @@ public class Item : ScriptableObject
     public bool isEquippable;
     public GameObject fpPrefab;
     public GameObject tpPrefab;
+    public GameObject pickupPrefab;
 
 
     public bool IsStackable => maxStack > 1;

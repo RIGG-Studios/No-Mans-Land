@@ -32,6 +32,7 @@ public interface IInventory
     void OnSlotUnHovered(Slot slot);
     void OnSlotReset(Slot slot);
     void UpdateItems(int oldSlotID, int newSlotID);
-
+    void ThrowItem(Slot slot);
+    
     bool FindItem(int itemID, out ItemListData itemData);
 }

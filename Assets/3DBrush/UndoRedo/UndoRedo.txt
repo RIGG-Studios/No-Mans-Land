@@ -1,0 +1,1 @@
+This folder holds the Undo and Redo data files. This text file is a placeholder for the empty folder.

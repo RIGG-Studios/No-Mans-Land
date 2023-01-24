@@ -24,3 +24,4 @@ MonoBehaviour:
     type: 3}
   tpPrefab: {fileID: 8810113523186110603, guid: 39e3ae23b13d9d447a6d005904b3b629,
     type: 3}
+  pickupPrefab: {fileID: 0}

@@ -115,14 +115,16 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
     public override bool Damage(ref HitData hitData)
     {
         Health -= (byte)hitData.Damage;
-        Debug.Log($"{Time.time} {transform.name} took damage got {Health} left ");
 
-        if (Health <= 0 && Object.HasStateAuthority)
+        if (Health <= 0)
         {
             hitData.IsFatal = true;
-            Debug.Log($"{Time.time} {transform.name} died");
-            Health = 0;
-            IsDead = true;
+
+            if (Object.HasStateAuthority)
+            {
+                Health = 0;
+                IsDead = true;
+            }
         }
         
         return true;

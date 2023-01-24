@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class LocalInventory : ContextBehaviour, IInventory
 {
     [SerializeField] private LocInventoryContainer[] inventories;
+    [SerializeField] private Transform throwTransform;
     [SerializeField] private GameObject itemInfoParent;
     [SerializeField] private Image itemSprite;
     [SerializeField] private Text itemName;
@@ -96,7 +97,7 @@ public class LocalInventory : ContextBehaviour, IInventory
             {
                 if (oldItems[i].ID == newItems[z].ID && (oldItems[i].SlotID != newItems[z].SlotID))
                 {
-                    changedSlots.Add(newItems[i]);
+                    changedSlots.Add(newItems[z]);
                     changedSlots.Add(oldItems[i]);
                 }
             }
@@ -218,7 +219,6 @@ public class LocalInventory : ContextBehaviour, IInventory
         }
 
         Slot slot = SlotHandler.FindSlotByID(itemData.SlotID);
-        
         slot.Reset();
         Items.Remove(itemData);
         onItemRemoved?.Invoke(itemData);
@@ -254,7 +254,35 @@ public class LocalInventory : ContextBehaviour, IInventory
         RPC_RequestUpdateInventory(oldSlotID, newSlotID);
     }
 
-    
+    public void ThrowItem(Slot slot)
+    {
+        if (!slot.HasItem)
+        {
+            return;
+        }
+
+        RPC_ThrowItem(slot.InventoryItem.ItemID, slot.InventoryItem.Stack);
+
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_ThrowItem(int itemID, int stack = 1)
+    {
+        Item item = Context.ItemDatabase.FindItem(itemID);
+
+        if (item != null)
+        {
+            ItemPickup pickup = Runner.Spawn(item.pickupPrefab, throwTransform.position, throwTransform.rotation)
+                .GetComponent<ItemPickup>();
+
+            if (pickup != null)
+            {
+                pickup.Init(itemID, stack);
+                RemoveItem(itemID);
+            }
+        }
+    }
+
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_RequestUpdateInventory(int oldSlotID, int newSlotID)
     {

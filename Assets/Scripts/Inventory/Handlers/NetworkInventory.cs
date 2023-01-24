@@ -149,6 +149,11 @@ public abstract class NetworkInventory : ContextBehaviour, IInventory
      //   RequestUpdateItems(item.itemID, newSlotID);
     }
 
+    public void ThrowItem(Slot slot)
+    {
+        throw new NotImplementedException();
+    }
+
     protected virtual void RequestUpdateItems(int itemID, int newSlotID) { }
     
 

@@ -304,4 +304,9 @@ public class PlayerInventory : LocalInventory, IInputProccesor
             EquippedItem.ProcessInput(_context);
         }
     }
+
+    public void ThrowItem()
+    {
+        
+    }
 }

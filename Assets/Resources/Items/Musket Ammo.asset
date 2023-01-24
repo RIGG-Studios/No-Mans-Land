@@ -20,3 +20,4 @@ MonoBehaviour:
   isEquippable: 0
   fpPrefab: {fileID: 0}
   tpPrefab: {fileID: 0}
+  pickupPrefab: {fileID: 0}
