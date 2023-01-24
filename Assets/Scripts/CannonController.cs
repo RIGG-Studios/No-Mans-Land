@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO.Enumeration;
 using Fusion;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -12,14 +11,8 @@ public class CannonController : ContextBehaviour
     [Networked(OnChanged = nameof(OnAttackChanged))]
     public bool IsAttacking { get; set; }
     
-    [Networked, HideInInspector]
-    public int CurrentAmmo { get; set; }
-    
     [Networked] 
     public NetworkBool isOccupied { get; set; }
-    
-    [Networked, HideInInspector]
-    public float NextFire { get; set; }
     
     [Networked]
     private NetworkButtons ButtonsPrevious { get; set; }
@@ -46,17 +39,31 @@ public class CannonController : ContextBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float xRotationMax;
     [SerializeField] private float yRotationMax;
+    [SerializeField] private float originalRotation;
+    [SerializeField] private float aimFOV = 60f;
 
-    
+    [SerializeField] private CameraShake cameraShake;
+
+
     public override void FixedUpdateNetwork()
     {
         if (!GetInput(out NetworkInputData input))
         {
             return;
         }
+
+        float fov = input.IsAiming ? aimFOV : 75f;
+
+        cannonCamera.fieldOfView = Mathf.Lerp(cannonCamera.fieldOfView, fov, Runner.DeltaTime * 5f);
+        
         
         UpdateRotation(input);
         UpdateAttack(input);
+    }
+
+    public override void Spawned()
+    {
+        pitch = originalRotation;
     }
 
     private void UpdateAttack(NetworkInputData input)
@@ -106,6 +113,11 @@ public class CannonController : ContextBehaviour
     private void OnAttackRemote()
     {
         muzzleFlash.Play();
+
+        if (Object.HasInputAuthority)
+        {
+            cameraShake.ShakeCamera("Fire");
+        }
     }
     
     
@@ -114,7 +126,7 @@ public class CannonController : ContextBehaviour
         yaw += input.RawLookY * rotationSpeed;
         pitch += input.RawLookX * rotationSpeed;
 
-        pitch = Mathf.Clamp(pitch, -xRotationMax, xRotationMax);
+        pitch = Mathf.Clamp(pitch, originalRotation-xRotationMax, originalRotation+xRotationMax);
         yaw = Mathf.Clamp(yaw, -yRotationMax, yRotationMax);
 
         transform.localRotation = Quaternion.Euler(-yaw, pitch, 0.0f);

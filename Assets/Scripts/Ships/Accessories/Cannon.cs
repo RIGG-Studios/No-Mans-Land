@@ -1,17 +1,14 @@
 using Fusion;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Cannon : NetworkBehaviour, IInteractable
 {
     public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
     public string ID => "Cannon";
-
-    private CannonController _cannonController;
-
-    private void Awake()
-    {
-        _cannonController = GetComponent<CannonController>();
-    }
+    
+    
+    [SerializeField] private CannonController cannonController;
     
 
     public void LookAtInteract() { }
@@ -20,12 +17,12 @@ public class Cannon : NetworkBehaviour, IInteractable
     public bool ButtonInteract(NetworkPlayer networkPlayer, out ButtonInteractionData interactData)
     {
         interactData = default;
-        if (_cannonController.isOccupied)
+        if (cannonController.isOccupied)
         {
             return false;
         }
         
-        _cannonController.RequestOccupyCannon(true, networkPlayer.Object.InputAuthority);
+        cannonController.RequestOccupyCannon(true, networkPlayer.Object.InputAuthority);
         
         interactData = new ButtonInteractionData()
         {
@@ -42,7 +39,7 @@ public class Cannon : NetworkBehaviour, IInteractable
     {
         if (Object.HasInputAuthority)
         {
-            _cannonController.RequestOccupyCannon(false, default);
+            cannonController.RequestOccupyCannon(false, default);
         }
         
 

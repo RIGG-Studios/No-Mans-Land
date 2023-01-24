@@ -32,8 +32,12 @@ public class ItemAnimator : MonoBehaviour
         ItemControllerState currentItemState = NetworkPlayer.Local.Inventory.GetEquippedItemState();
 
         bool isAiming = currentItemState.IsAiming;
-        bool isSprinting = NetworkPlayer.Local.Movement.IsSprinting && !isAiming;
-        bool isWalking = NetworkPlayer.Local.Movement.IsMoving && !isSprinting && !isAiming;
+        bool isSprinting = NetworkPlayer.Local.Movement.IsSprinting && !isAiming &&
+                           !NetworkPlayer.Local.Movement.IsSwimming;
+        
+        bool isWalking = NetworkPlayer.Local.Movement.IsMoving && !isSprinting && !isAiming &&
+                         !NetworkPlayer.Local.Movement.IsSwimming;
+        
         
         _animator.SetBool(IsAiming, isAiming);
         _animator.SetBool(IsWalking, isWalking);

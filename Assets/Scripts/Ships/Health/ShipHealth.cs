@@ -13,6 +13,14 @@ public class ShipHealth : NetworkHealthHandler
     
     private const byte StartingHealth = 100;
 
+    private Ship _ship;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _ship = GetComponent<Ship>();
+    }
+
     public override void Spawned()
     {
         if (!Object.HasStateAuthority)
@@ -45,6 +53,8 @@ public class ShipHealth : NetworkHealthHandler
         if (Object.HasStateAuthority)
         {
             physicsHandler.ReleaseGravity();
+            
+            SceneShipHandlerInstance.ShipHandler.RequestShipRespawn(_ship, _ship.TeamID);
         }
     }
 

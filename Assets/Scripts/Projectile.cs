@@ -7,7 +7,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Projectile : NetworkBehaviour
+public class Projectile : ContextBehaviour
 {
     [Networked] 
     private TickTimer life { get; set; }
@@ -58,8 +58,18 @@ public class Projectile : NetworkBehaviour
             HitData hitData =
                 NetworkDamageHandler.ProcessHit(Object.InputAuthority, Vector3.zero, transform.position, damageAmount,
                     HitAction.Damage, damage);
-                
-            damage.ProcessHit(ref hitData); 
+            
+            damage.ProcessHit(ref hitData);
+
+            if (hitData.IsFatal && Object.HasInputAuthority)
+            {
+                Context.Gameplay.TryFindPlayer(Object.InputAuthority, out Player player);
+
+                if (player != null)
+                {
+                    player.ActivePlayer.UI.ShowKillNotifcation("SHIP SUNK!");
+                }
+            }
         }
         
         Destroy = true;

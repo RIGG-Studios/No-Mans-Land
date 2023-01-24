@@ -107,7 +107,7 @@ public class PlayerNetworkMovement : ContextBehaviour
         _movementHandler.UpdateCameraRotation(input);
         
         IsMoving = input.MovementInput != Vector2.zero;
-        IsSwimming = (_player.Camera.transform.position.y < Ocean.Instance.GetWaterHeightAtPosition(_player.Camera.transform.position) + 0.5f);
+        IsSwimming = (_player.Camera.transform.position.y < Ocean.Instance.GetWaterHeightAtPosition(_player.Camera.transform.position) + 0.85f);
         IsGrounded = CheckForGround();
         
         if (pressed.IsSet(PlayerButtons.Sprint) && !input.IsAiming && !input.IsReloading)
