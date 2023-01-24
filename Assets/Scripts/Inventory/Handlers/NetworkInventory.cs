@@ -43,8 +43,9 @@ public abstract class NetworkInventory : ContextBehaviour, IInventory
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Slot[] slots = SlotSpawner.GenerateSlots(slotContainer, size);
         
         SlotHandler = new SlotHandler(this, slots);
@@ -126,6 +127,16 @@ public abstract class NetworkInventory : ContextBehaviour, IInventory
         
         itemSlot.Reset();
         RequestRemoveItem(inventoryItem);
+    }
+
+    public void OnSlotHovered(Slot slot)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnSlotUnHovered(Slot slot)
+    {
+        throw new NotImplementedException();
     }
 
     public void OnSlotReset(Slot slot)

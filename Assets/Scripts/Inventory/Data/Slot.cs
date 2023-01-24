@@ -127,10 +127,12 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
     public void OnPointerEnter(PointerEventData eventData)
     {
         IsHovered = true;
+        Inventory.OnSlotHovered(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         IsHovered = false;
+        Inventory.OnSlotUnHovered(this);
     }
 }

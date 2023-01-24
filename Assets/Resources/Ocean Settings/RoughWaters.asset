@@ -22,7 +22,7 @@ MonoBehaviour:
   crestSize: 0
   crestOffset: -6.77
   edgeFoam: 1
-  foamFallOff: 0.7
-  foamWidth: 4.73
+  foamFallOff: 1.84
+  foamWidth: 6
   foamRemoval: 0.11
   foamBands: 5

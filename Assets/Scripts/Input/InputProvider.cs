@@ -13,7 +13,6 @@ public class InputProvider : InputBase
     private bool _isFirePressed;
 
     private PlayerStates _currentState;
-    private int _currentWeaponID;
 
     private bool _isAiming;
     private bool _isReloading;
@@ -23,6 +22,9 @@ public class InputProvider : InputBase
     private bool _slot3Pressed;
     private bool _slot4Pressed;
     private bool _slot5Pressed;
+
+    private bool _interactPressed;
+    private bool _escapePressed;
 
     private bool _inventoryToggle;
 
@@ -42,6 +44,8 @@ public class InputProvider : InputBase
         InputActions.Player.Slot3.performed += ctx => _slot3Pressed = true;
         InputActions.Player.Slot4.performed += ctx => _slot4Pressed = true;
         InputActions.Player.Slot5.performed += ctx => _slot5Pressed = true;
+        InputActions.Player.Escape.performed += ctx => _escapePressed = true;
+        InputActions.Player.Interact.performed += ctx => _interactPressed = true;
         InputActions.Player.ToggleInventory.performed += ctx => _inventoryToggle = true;
     }
 
@@ -117,7 +121,6 @@ public class InputProvider : InputBase
         tickInput.RawLookY = _player.Camera.RawLookY; 
         tickInput.IsAiming = _isAiming;
         tickInput.IsReloading = _isReloading;
-        tickInput.CurrentWeaponID = _currentWeaponID;
         tickInput.CurrentState = _player.Movement.RequestedState;
 
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
@@ -131,6 +134,8 @@ public class InputProvider : InputBase
         tickInput.Buttons.Set(PlayerButtons.Slot4, _slot4Pressed);
         tickInput.Buttons.Set(PlayerButtons.Slot5, _slot5Pressed);
         tickInput.Buttons.Set(PlayerButtons.ToggleInventory, _inventoryToggle);
+        tickInput.Buttons.Set(PlayerButtons.Escape, _escapePressed);
+        tickInput.Buttons.Set(PlayerButtons.Interact, _interactPressed);
 
         
         
@@ -138,14 +143,14 @@ public class InputProvider : InputBase
 
         _isFirePressed = false;
         _isJumpPressed = false;
-        
         _slot1Pressed = false;
         _slot2Pressed = false;
         _slot3Pressed = false;
         _slot4Pressed = false;
         _slot5Pressed = false;
-
         _inventoryToggle = false;
+        _escapePressed = false;
+        _interactPressed = false;
     }
 
     public void ResetSprint()

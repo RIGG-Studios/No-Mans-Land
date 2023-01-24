@@ -8,6 +8,9 @@ public class ShipHealth : NetworkHealthHandler
 {
     [SerializeField] private ShipPhysicsHandler physicsHandler;
     
+    [Networked]
+    public NetworkBool IsDead { get; private set; }
+    
     private const byte StartingHealth = 100;
 
     public override void Spawned()
@@ -28,6 +31,7 @@ public class ShipHealth : NetworkHealthHandler
         if (Health <= 0)
         {
             hitData.IsFatal = true;
+            IsDead = true;
             Health = 0;
             
             Die();

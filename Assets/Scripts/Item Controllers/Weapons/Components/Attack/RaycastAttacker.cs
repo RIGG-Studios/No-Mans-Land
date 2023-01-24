@@ -72,7 +72,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         
         if (Object.HasStateAuthority && hitInfo.GameObject != null)
         {
-            ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
+       //     ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
         }
         
         

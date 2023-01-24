@@ -7,7 +7,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class CannonController : NetworkBehaviour
+public class CannonController : ContextBehaviour
 {
     [Networked(OnChanged = nameof(OnAttackChanged))]
     public bool IsAttacking { get; set; }
@@ -32,11 +32,15 @@ public class CannonController : NetworkBehaviour
     
     [Networked]
     private TickTimer fireCooldown { get; set; }
+    
+    [Networked]
+    private NetworkPlayer OccupiedPlayer { get; set; }
 
     [SerializeField] private Projectile projectile;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Camera cannonCamera;
     [SerializeField] private VisualEffect muzzleFlash;
+    [SerializeField] private Item ammoItem;
     [SerializeField] private float cannonBallVelocity;
     [SerializeField] private float fireRate;
     [SerializeField] private float rotationSpeed;
@@ -50,19 +54,18 @@ public class CannonController : NetworkBehaviour
         {
             return;
         }
-
-        if (Object.HasInputAuthority)
-        {
-            NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(false);
-            cannonCamera.gameObject.SetActive(true);
-        }
-
+        
         UpdateRotation(input);
         UpdateAttack(input);
     }
 
     private void UpdateAttack(NetworkInputData input)
     {
+        if (!OccupiedPlayer.Inventory.FindItem(ammoItem.itemID, out ItemListData itemData) || !Object.HasStateAuthority)
+        {
+            return;
+        }
+        
         NetworkButtons pressed = input.Buttons.GetPressed(ButtonsPrevious);
         
         ButtonsPrevious = input.Buttons;
@@ -72,9 +75,11 @@ public class CannonController : NetworkBehaviour
             fireCooldown = TickTimer.CreateFromSeconds(Runner, fireRate);
             Projectile projectileInstance = Runner.Spawn(projectile, shootPoint.position + shootPoint.forward,
                 Quaternion.LookRotation(shootPoint.forward), Object.InputAuthority);
-           
+            
            projectileInstance.Init(shootPoint,shootPoint.forward * cannonBallVelocity, 10f);
            IsAttacking = true;
+           OccupiedPlayer.Inventory.UpdateItemStack(itemData, 1);
+
            Invoke(nameof(ResetAttack), 0.09f);
         }
     }
@@ -114,19 +119,37 @@ public class CannonController : NetworkBehaviour
 
         transform.localRotation = Quaternion.Euler(-yaw, pitch, 0.0f);
     }
-    
+
+
+    public void RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer)
+    {
+        Debug.Log(occupy);
+        NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(!occupy);
+        cannonCamera.gameObject.SetActive(occupy);
+        
+        RPC_RequestOccupyCannon(occupy, requestedPlayer);
+    }
+
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer = default)
+    private void RPC_RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer = default)
     {
         isOccupied = occupy;
-
+        
         if (requestedPlayer.IsValid)
         {
-            Object.AssignInputAuthority(requestedPlayer);
+            Object.AssignInputAuthority(requestedPlayer); 
+            
+            Context.Gameplay.TryFindPlayer(requestedPlayer, out Player player);
+
+            if (player != null)
+            {
+                OccupiedPlayer = player.ActivePlayer;
+            }
         }
         else
         {
             Object.AssignInputAuthority(default);
+            OccupiedPlayer = null;
         }
     }
 

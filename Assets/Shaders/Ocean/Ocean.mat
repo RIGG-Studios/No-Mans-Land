@@ -206,9 +206,9 @@ Material:
     - _Extra_Expersion: -1.43
     - _FoamBands: 5
     - _FoamEdgeHardness: 1.83
-    - _FoamFalloff: 0.7
+    - _FoamFalloff: 1.84
     - _FoamRemoval: 0.11
-    - _FoamWidth: 4.73
+    - _FoamWidth: 6
     - _Foam_Bands: 5
     - _Foam_Edge_Hardness: 1.5
     - _Foam_Falloff: 2.28
@@ -217,7 +217,7 @@ Material:
     - _Frequency: 0.1
     - _Frequency_1: 0.1
     - _Frequency_2: 0.4
-    - _GameTime: 52.326004
+    - _GameTime: 88.961006
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0

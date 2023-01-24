@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 3
   itemName: Musket Ammo
-  itemDescription: 
+  itemDescription: Ammo for the musket.
   itemIcon: {fileID: 21300000, guid: d0bed57f281e1a24e8b48000e76ccfc3, type: 3}
   maxStack: 32
   isEquippable: 0

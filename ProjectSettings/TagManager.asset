@@ -19,8 +19,8 @@ TagManager:
   - PlayerIgnoreCollision
   - GrapplePoint
   - NetworkHitBox
-  - 
-  - 
+  - Projectile
+  - Terrain
   - 
   - 
   - 

@@ -16,7 +16,8 @@ public class EdibleItemController : BaseWeapon
         bool hasItem = Player.Inventory.FindItem(item.itemID, out ItemListData itemData);
         bool firePressed = context.Input.Buttons.IsSet(PlayerButtons.Fire);
 
-        if (!firePressed || IsEating || !hasItem)
+        Debug.Log(Player.Health.Health);
+        if (!firePressed || IsEating || !hasItem || Player.Health.Health >= 100)
         {
             return;
         }

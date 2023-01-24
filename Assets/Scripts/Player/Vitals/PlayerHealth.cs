@@ -12,12 +12,19 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
     [Networked(OnChanged = nameof(OnDeadChanged))]
     public NetworkBool IsDead { get; private set; }
 
+    [Networked]
+    public float Oxygen { get; private set; }
+
     [SerializeField] private Text healthText;
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject[] disableOnDeath;
+
+    [Space]
     
-    public UnityEvent<HitData> onDamageTaken;
+    [SerializeField] private Slider oxygenSlider;
+    [SerializeField, Range(0, 10)] private float oxygenDecayRate;
+    
     public UnityEvent onDeath;
     
     private const byte StartingHealth = 100;
@@ -38,6 +45,7 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         }
         
         Health = StartingHealth;
+        Oxygen = 1f;
     }
     
 
@@ -56,6 +64,28 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         if (Object.HasInputAuthority)
         {
             healthText.text = string.Format("<color={0}>+</color> {1}", "red", Health);
+        }
+
+        if (Owner.GetComponentInChildren<Test>().UnderWater)
+        {
+            Oxygen -= Runner.DeltaTime * oxygenDecayRate;
+            Oxygen = Mathf.Clamp01(Oxygen);
+            if (Object.HasInputAuthority)
+            {
+                oxygenSlider.gameObject.SetActive(true);
+                oxygenSlider.value = Oxygen;
+            }
+        }
+        else
+        {
+            Oxygen += Runner.DeltaTime * oxygenDecayRate;
+            Oxygen = Mathf.Clamp01(Oxygen);
+
+            if (Object.HasInputAuthority)
+            {
+                oxygenSlider.gameObject.SetActive(false);
+                oxygenSlider.value = Oxygen;
+            }
         }
     }
     
