@@ -4,11 +4,16 @@ using System.Linq;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 public class LocalInventory : ContextBehaviour, IInventory
 {
     [SerializeField] private LocInventoryContainer[] inventories;
+    [SerializeField] private GameObject itemInfoParent;
+    [SerializeField] private Image itemSprite;
+    [SerializeField] private Text itemName;
+    [SerializeField] private Text itemDescription;
 
     public UnityEvent<ItemListData> onItemAdded;
     public UnityEvent<ItemListData> onItemRemoved;
@@ -18,7 +23,8 @@ public class LocalInventory : ContextBehaviour, IInventory
 
     [Networked(OnChanged = nameof(OnInventoryUpdated), OnChangedTargets = OnChangedTargets.InputAuthority), Capacity(25)]
     public NetworkLinkedList<ItemListData> Items { get; }
-
+    
+    
     private bool _skipRefresh = true;
 
     [Serializable]
@@ -75,7 +81,6 @@ public class LocalInventory : ContextBehaviour, IInventory
     /// <param name="changed"></param>
     private static void OnInventoryUpdated(Changed<LocalInventory> changed)
     {
-        Debug.Log("inventory update");
         changed.LoadOld();
         ItemListData[] oldItems = changed.Behaviour.Items.ToArray();
         
@@ -100,14 +105,6 @@ public class LocalInventory : ContextBehaviour, IInventory
         changed.Behaviour.RefreshInventory(changedSlots.ToArray());
     }
     
-    protected virtual void OnInventoryUpdated()
-    {
-        if (Object.HasInputAuthority)
-        {
-        //    RefreshInventory();
-        }
-    }
-
     private void RefreshInventory(ItemListData[] changedItems)
     {
         for (int i = 0; i < changedItems.Length; i++)
@@ -132,28 +129,7 @@ public class LocalInventory : ContextBehaviour, IInventory
         }
     }
     
-    private void RefrehshInventory(Slot[] oldSlots, Slot[] newSlots)
-    {
-        for (int i = 0; i < oldSlots.Length; i++)
-        {
-            oldSlots[i].Reset();
-        }
-        
-        for (int i = 0; i < newSlots.Length; i++)
-        {
-            for (int z = 0; z < Items.Count; z++)
-            {
-                if (Items[z].SlotID == SlotHandler.FindSlotByID(newSlots[i].ID).ID)
-                {
-                    Item item = Context.ItemDatabase.FindItem(Items[z].ItemID);
-                    ItemListData itemData = Items[z];
 
-                    SlotHandler.Slots[Items[z].SlotID].InitItem(item, ref itemData);
-                }
-            }
-        }
-    }
-    
     public override void Spawned()
     {
         InitSlots();
@@ -246,6 +222,27 @@ public class LocalInventory : ContextBehaviour, IInventory
         slot.Reset();
         Items.Remove(itemData);
         onItemRemoved?.Invoke(itemData);
+    }
+
+    public void OnSlotHovered(Slot slot)
+    {
+        Item item = Context.ItemDatabase.FindItem(slot.InventoryItem.ItemID);
+
+        if (item != null)
+        {
+            itemInfoParent.SetActive(true);
+            itemSprite.sprite = item.itemIcon;
+            itemName.text = item.itemName;
+            itemDescription.text = item.itemDescription;
+        }
+    }
+
+    public void OnSlotUnHovered(Slot slot)
+    {
+        itemInfoParent.SetActive(false);
+        itemSprite.sprite = null;
+        itemName.text = "";
+        itemDescription.text = "";
     }
 
     public virtual void OnSlotReset(Slot slot)

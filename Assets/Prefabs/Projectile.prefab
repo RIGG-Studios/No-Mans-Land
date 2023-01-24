@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5721145078875404593}
   - component: {fileID: 7530685272770678305}
   - component: {fileID: 6159898814438801146}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: InterpolationTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 5077191938722197247}
   - component: {fileID: 8069137201196992715}
   - component: {fileID: 2438728132186598402}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &5077191938722197247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,9 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 2
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
+  damageAmount: 20
   projectileRender: {fileID: 277455472209822248}
   hitImpact: {fileID: 3419615265715968947}
 --- !u!1 &662283686490564891
@@ -232,7 +230,7 @@ GameObject:
   - component: {fileID: 6683387730714824375}
   - component: {fileID: 3419615265715968947}
   - component: {fileID: 22707430114859330}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CannonballExplosion 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,4 +328,4 @@ VFXRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1

@@ -52,6 +52,14 @@ public class PlayerUI : MonoBehaviour
         nextMenu.Enable();
         _openedMenu = nextMenu;
     }
+    
+    public void DisableMenu(string id)
+    {
+        UIComponent nextMenu = FindUIComponent(id);
+        
+        nextMenu.gameObject.SetActive(false);
+        nextMenu.Disable();
+    }
 
     public void CloseAllMenus()
     {

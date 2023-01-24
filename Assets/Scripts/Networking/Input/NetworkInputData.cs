@@ -13,7 +13,9 @@ public enum PlayerButtons
     Slot3,
     Slot4,
     Slot5,
-    ToggleInventory
+    ToggleInventory,
+    Escape,
+    Interact
 }
 
 public enum PlayerStates : byte
@@ -30,7 +32,6 @@ public struct NetworkInputData : INetworkInput
     public Vector2 MovementInput;
     public Quaternion LookForward;
     public Quaternion LookVertical;
-
     
     public NetworkBool IsAiming;
     public NetworkBool IsReloading;
@@ -39,5 +40,4 @@ public struct NetworkInputData : INetworkInput
     public float RawLookY;
     
     public PlayerStates CurrentState;
-    public int CurrentWeaponID;
 }

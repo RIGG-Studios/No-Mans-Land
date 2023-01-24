@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 
 [RequireComponent(typeof(PlayerInteractionInputHandler))]
-public class PlayerInteractionHandler : MonoBehaviour
+public class PlayerInteractionHandler : NetworkBehaviour
 {
     public bool CanInteract { get; private set; }
     
@@ -89,6 +90,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             }
         }
     }
+
 
     public void TryButtonInteract()
     {

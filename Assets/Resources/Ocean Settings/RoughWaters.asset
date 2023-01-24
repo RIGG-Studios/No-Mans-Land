@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e32bace0e3f4b48908f2397fc80868, type: 3}
+  m_Name: RoughWaters
+  m_EditorClassIdentifier: 
+  waves: {fileID: 11400000, guid: 1cb65d226ec1b98469ab1c0c9956a0bd, type: 2}
+  shallowColor: {r: 0.501958, g: 0.74035573, b: 0.754717, a: 0}
+  deepColor: {r: 0.22116414, g: 0.43548256, b: 0.6603774, a: 0}
+  foamColor: {r: 1, g: 1, b: 1, a: 0}
+  waveFoam: 1
+  extraDispersion: 0.36
+  edgeHardness: 1.83
+  crestSize: 0
+  crestOffset: -6.77
+  edgeFoam: 1
+  foamFallOff: 1.84
+  foamWidth: 6
+  foamRemoval: 0.11
+  foamBands: 5

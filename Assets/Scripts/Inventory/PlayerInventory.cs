@@ -117,7 +117,6 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     
     private void SelectSlot(int i)
     {
-        Debug.Log(i);
         if (!CheckSlots(i, out int itemID))
         {
             return;

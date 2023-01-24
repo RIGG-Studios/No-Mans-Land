@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerModel : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerModel : MonoBehaviour
 
         for (int i = 0; i < modelRenderers.Length; i++)
         {
-            modelRenderers[i].enabled = false;
+            modelRenderers[i].shadowCastingMode = ShadowCastingMode.ShadowsOnly;
         }
     }
 }

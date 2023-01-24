@@ -66,13 +66,13 @@ public class RaycastAttacker : WeaponComponent, IAttacker
             FireEffects();
         }
 
-
+        
         Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
             Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
         
         if (Object.HasStateAuthority && hitInfo.GameObject != null)
         {
-            ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
+       //     ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
         }
         
         

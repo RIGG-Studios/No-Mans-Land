@@ -25,7 +25,7 @@ public class Cannon : NetworkBehaviour, IInteractable
             return false;
         }
         
-        _cannonController.RPC_RequestOccupyCannon(true, networkPlayer.Object.InputAuthority);
+        _cannonController.RequestOccupyCannon(true, networkPlayer.Object.InputAuthority);
         
         interactData = new ButtonInteractionData()
         {
@@ -42,8 +42,7 @@ public class Cannon : NetworkBehaviour, IInteractable
     {
         if (Object.HasInputAuthority)
         {
-            _cannonController.RPC_RequestOccupyCannon(false);
-            _cannonController.Reset();
+            _cannonController.RequestOccupyCannon(false, default);
         }
         
 

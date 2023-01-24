@@ -69,7 +69,6 @@ MonoBehaviour:
   - {fileID: 448115243408767295}
   - {fileID: 856869237517622222}
   - {fileID: 7525415525635008788}
-  - {fileID: 1274355043314587538}
 --- !u!114 &448115243408767295
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -337,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766a6bc7d591043b9865e4af66711148, type: 3}
   m_Name: SunFlares
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   sunFlaresIntensity:
     m_OverrideState: 1
     m_Value: 0.02
@@ -694,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9e4ed5a6f56fb4ebd693e39684f36f, type: 3}
   m_Name: VolumetricClouds
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enable:
     m_OverrideState: 1
     m_Value: 1
