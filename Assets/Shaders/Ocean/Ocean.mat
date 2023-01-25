@@ -160,16 +160,16 @@ Material:
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
-    - _Amplitude: 0.51
-    - _Amplitude_1: 0.35
-    - _Amplitude_2: 0.39
+    - _Amplitude: 2.71
+    - _Amplitude_1: 1.5
+    - _Amplitude_2: 0.27
     - _Anisotropy: 0
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CrestFalloff: 6.36
-    - _CrestOffset: 2.35
-    - _CrestSize: 4.24
+    - _CrestOffset: 0
+    - _CrestSize: 0
     - _Crest_Falloff: 2.66
     - _Crest_Offset: -1
     - _Crest_Size: 0.34
@@ -200,21 +200,21 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _ExtraExpersion: 0.54
+    - _ExtraExpersion: 0.84
     - _Extra_Expersion: -1.43
-    - _FoamBands: 0.58
-    - _FoamEdgeHardness: 0.53
-    - _FoamFalloff: 7.36
-    - _FoamRemoval: 0.04
-    - _FoamWidth: 18.47
+    - _FoamBands: 5
+    - _FoamEdgeHardness: 0.83
+    - _FoamFalloff: 1.84
+    - _FoamRemoval: 0.11
+    - _FoamWidth: 7.84
     - _Foam_Bands: 5
     - _Foam_Edge_Hardness: 1.5
     - _Foam_Falloff: 2.28
     - _Foam_Removal: 0.21
     - _Foam_Width: 7.71
     - _Frequency: 0.1
-    - _Frequency_1: 0.1
-    - _Frequency_2: 0.2
+    - _Frequency_1: 1
+    - _Frequency_2: 1
     - _GameTime: 185.147
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
@@ -261,12 +261,12 @@ Material:
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
-    - _Speed: 0.35
-    - _Speed_1: 0.8
-    - _Speed_2: 0.35
+    - _Speed: 0.5
+    - _Speed_1: 1
+    - _Speed_2: 2.81
     - _SrcBlend: 1
-    - _Steepness: 2
-    - _Steepness_1: 1
+    - _Steepness: 1
+    - _Steepness_1: 0.34
     - _Steepness_2: 1
     - _StencilRef: 0
     - _StencilRefDepth: 8
@@ -321,14 +321,14 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color01: {r: 0.5529412, g: 0.9098039, b: 1, a: 0}
-    - _Color02: {r: 0.078720205, g: 0.4076946, b: 0.5754717, a: 0}
+    - _Color01: {r: 0.25, g: 0.96484375, b: 1, a: 0}
+    - _Color02: {r: 0.09549662, g: 0.45866615, b: 0.5471698, a: 0}
     - _Color_01: {r: 0, g: 0.6698113, b: 0.50369817, a: 0}
     - _Color_02: {r: 0.25907797, g: 0.51477236, b: 0.7735849, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
-    - _Direction: {r: -1, g: -1, b: 0, a: 0}
-    - _Direction_1: {r: 1, g: -1, b: 0, a: 0}
-    - _Direction_2: {r: 1, g: 1, b: 0, a: 0}
+    - _Direction: {r: 1, g: 1, b: 0, a: 0}
+    - _Direction_1: {r: -1, g: 1, b: 0, a: 0}
+    - _Direction_2: {r: 0, g: -1, b: 0, a: 0}
     - _Direction_3: {r: -1, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
