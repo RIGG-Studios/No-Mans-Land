@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Brush>
   <minLimit>0.1</minLimit>
-  <maxLimit>3</maxLimit>
+  <maxLimit>6</maxLimit>
   <rate>0.01</rate>
   <brushName>trees</brushName>
   <numPrefabs>4</numPrefabs>
@@ -126,28 +126,28 @@
     <randScaleZ>true</randScaleZ>
   </randScaleZs>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>3.30583334</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>3.64666653</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>3.35166669</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.4275</randScaleMin>
+    <randScaleMin>3.3775</randScaleMin>
   </randScaleMins>
   <randScaleMaxs>
-    <randScaleMax>1.5333333</randScaleMax>
+    <randScaleMax>4.68333149</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>1.775</randScaleMax>
+    <randScaleMax>4.921667</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>1.36416662</randScaleMax>
+    <randScaleMax>4.51083374</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>1.55749977</randScaleMax>
+    <randScaleMax>4.95</randScaleMax>
   </randScaleMaxs>
   <positionOffsets>
     <offsetX>0</offsetX>
@@ -226,7 +226,7 @@
     <spreadDistance>0.5</spreadDistance>
   </spreadDistances>
   <minLimit>0.1</minLimit>
-  <maxLimit>3</maxLimit>
+  <maxLimit>6</maxLimit>
   <rate>0.01</rate>
   <brushName>trees</brushName>
   <numPrefabs>4</numPrefabs>
@@ -351,28 +351,28 @@
     <randScaleZ>true</randScaleZ>
   </randScaleZs>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>3.30583334</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>3.64666653</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>3.35166669</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.4275</randScaleMin>
+    <randScaleMin>3.3775</randScaleMin>
   </randScaleMins>
   <randScaleMaxs>
-    <randScaleMax>1.5333333</randScaleMax>
+    <randScaleMax>4.68333149</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>1.775</randScaleMax>
+    <randScaleMax>4.921667</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>1.36416662</randScaleMax>
+    <randScaleMax>4.51083374</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>1.55749977</randScaleMax>
+    <randScaleMax>4.95</randScaleMax>
   </randScaleMaxs>
   <positionOffsets>
     <offsetX>0</offsetX>

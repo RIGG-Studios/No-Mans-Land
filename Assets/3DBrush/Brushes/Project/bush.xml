@@ -66,16 +66,16 @@
     <randScaleZ>true</randScaleZ>
   </randScaleZs>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>0.1</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>0.1</randScaleMin>
   </randScaleMins>
   <randScaleMaxs>
-    <randScaleMax>2.5</randScaleMax>
+    <randScaleMax>0.964166641</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>2.5</randScaleMax>
+    <randScaleMax>0.9883332</randScaleMax>
   </randScaleMaxs>
   <positionOffsets>
     <offsetX>0</offsetX>
@@ -181,16 +181,16 @@
     <randScaleZ>true</randScaleZ>
   </randScaleZs>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>0.1</randScaleMin>
   </randScaleMins>
   <randScaleMins>
-    <randScaleMin>0.5</randScaleMin>
+    <randScaleMin>0.1</randScaleMin>
   </randScaleMins>
   <randScaleMaxs>
-    <randScaleMax>2.5</randScaleMax>
+    <randScaleMax>0.964166641</randScaleMax>
   </randScaleMaxs>
   <randScaleMaxs>
-    <randScaleMax>2.5</randScaleMax>
+    <randScaleMax>0.9883332</randScaleMax>
   </randScaleMaxs>
   <positionOffsets>
     <offsetX>0</offsetX>
