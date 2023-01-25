@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class Crosshair : SimulationBehaviour
 {
     [SerializeField] private GameObject crossHair;
-    [SerializeField] private bool disableOnSize = true;
     [SerializeField] private RectTransform[] rectTransform;
 
 
@@ -17,7 +16,7 @@ public class Crosshair : SimulationBehaviour
         _walkSize = rectTransform[0].localPosition.y;
     }
 
-    private void Update()
+    public override void Render()
     {
         if (NetworkPlayer.Local == null)
         {
@@ -34,8 +33,7 @@ public class Crosshair : SimulationBehaviour
         
         _currentSize = _walkSize * currentWeapon.crossHairSize;
 
-        if (disableOnSize)
-            crossHair.SetActive(currentWeapon.crossHairSize > 0 || !NetworkPlayer.Local.Inventory.IsOpen);
+        crossHair.SetActive(currentWeapon.crossHairSize > 0);
 
         if (!NetworkPlayer.Local.Movement.IsMoving)
         {

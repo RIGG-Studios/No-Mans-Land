@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: RoughWaters
   m_EditorClassIdentifier: 
   waves: {fileID: 11400000, guid: 1cb65d226ec1b98469ab1c0c9956a0bd, type: 2}
-  shallowColor: {r: 0.501958, g: 0.74035573, b: 0.754717, a: 0}
-  deepColor: {r: 0.22116414, g: 0.43548256, b: 0.6603774, a: 0}
+  shallowColor: {r: 0.25, g: 0.96484375, b: 1, a: 0}
+  deepColor: {r: 0.09549662, g: 0.45866615, b: 0.5471698, a: 0}
   foamColor: {r: 1, g: 1, b: 1, a: 0}
   waveFoam: 1
-  extraDispersion: 0.36
-  edgeHardness: 1.83
+  extraDispersion: 0.84
+  edgeHardness: 0.83
   crestSize: 0
-  crestOffset: -6.77
+  crestOffset: 0
   edgeFoam: 1
   foamFallOff: 1.84
-  foamWidth: 6
+  foamWidth: 7.84
   foamRemoval: 0.11
   foamBands: 5

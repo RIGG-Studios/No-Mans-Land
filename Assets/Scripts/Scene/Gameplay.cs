@@ -170,6 +170,11 @@ public class Gameplay : ContextBehaviour
         });
     }
 
+    public void Disconnect(NetworkRunner runner)
+    {
+        runner.Shutdown();
+    }
+
     public void TryFindPlayer(PlayerRef playerRef, out Player player)
     {
         Players.TryGet(playerRef, out player);

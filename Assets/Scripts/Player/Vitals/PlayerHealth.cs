@@ -28,8 +28,9 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
     public UnityEvent onDeath;
     
     private const byte StartingHealth = 100;
-    
-    
+
+
+    public INetworkDamagable.DamageTypes Type => INetworkDamagable.DamageTypes.Player;
     public NetworkPlayer Owner { get; set; }
 
     private void Start()
@@ -64,28 +65,6 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         if (Object.HasInputAuthority)
         {
             healthText.text = string.Format("<color={0}>+</color> {1}", "red", Health);
-        }
-
-        if (Owner.GetComponentInChildren<Test>().UnderWater)
-        {
-            Oxygen -= Runner.DeltaTime * oxygenDecayRate;
-            Oxygen = Mathf.Clamp01(Oxygen);
-            if (Object.HasInputAuthority)
-            {
-                oxygenSlider.gameObject.SetActive(true);
-                oxygenSlider.value = Oxygen;
-            }
-        }
-        else
-        {
-            Oxygen += Runner.DeltaTime * oxygenDecayRate;
-            Oxygen = Mathf.Clamp01(Oxygen);
-
-            if (Object.HasInputAuthority)
-            {
-                oxygenSlider.gameObject.SetActive(false);
-                oxygenSlider.value = Oxygen;
-            }
         }
     }
     

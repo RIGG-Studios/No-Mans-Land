@@ -35,6 +35,13 @@ public struct HitData
 
 public interface INetworkDamagable
 {
+    public enum DamageTypes
+    {
+        Player,
+        Ship
+    }
+    
+    DamageTypes Type { get; }
     NetworkPlayer Owner { get; }
     
     bool ProcessHit(ref HitData hit);

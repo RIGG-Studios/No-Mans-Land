@@ -13,9 +13,21 @@ public class BaseSway : MonoBehaviour
     [SerializeField] private float swaySmoothing;
 
     private Vector2 _mouseLook;
-    
+
+    private ItemController _itemController;
+
+    private void Awake()
+    {
+        _itemController = GetComponent<ItemController>();
+    }
+
     private void Update()
     {
+        if (_itemController.Player.Pause.IsOpen || _itemController.Player.Inventory.IsOpen)
+        {
+            return;
+        }
+        
         float x = _mouseLook.x * swayAmount * Time.deltaTime;
         float y = _mouseLook.y * swayAmount * Time.deltaTime;
 

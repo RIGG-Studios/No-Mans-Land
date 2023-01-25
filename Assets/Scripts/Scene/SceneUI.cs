@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public enum FadeTypes
 {
@@ -13,6 +15,8 @@ public enum FadeTypes
 
 public class SceneUI : SceneComponent
 {
+    [SerializeField] private Image fadeImage;
+    
     private UIComponent[] _uiComponents;
     private UIComponent _openedMenu;
 
@@ -84,4 +88,23 @@ public class SceneUI : SceneComponent
 
         return null;
     }
+    
+    public void FadeImage(float targetAlpha, float time)
+    {
+        StartCoroutine(IE_Fade(time, targetAlpha));
+    }
+    
+    public IEnumerator IE_Fade(float time, float targetAlpha)
+    {
+        fadeImage.gameObject.SetActive(true);
+        fadeImage.CrossFadeAlpha(targetAlpha, time, false);
+        yield return new WaitForSeconds(time);
+
+        if (targetAlpha == 0.0f)
+        {
+            fadeImage.gameObject.SetActive(false);
+        }
+    }
 }
+
+

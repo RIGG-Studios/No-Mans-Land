@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,6 +12,8 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
     public IInventory Inventory { get; set; }
     public bool IsHovered { get; set; }
     
+    public bool IsSelected { get; private set; }
+    
     
     [SerializeField] protected Image itemIcon;
     [SerializeField] protected Text stackText;
@@ -20,7 +23,7 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
     
     public delegate void OnSlotReset(Slot slot);
     public OnSlotReset SlotReset;
-
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -56,6 +59,14 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
 
     public void SelectSlot()
     {
+        _animator.SetTrigger("Select");
+        IsSelected = true;
+    }
+
+    public void DeselectSlot()
+    {
+        _animator.SetTrigger("Hide");
+        IsSelected = false;
     }
 
     public virtual void Reset()
@@ -63,6 +74,11 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
         if (HasItem)
         {
             SlotReset?.Invoke(this);
+
+            if (IsSelected)
+            {
+                DeselectSlot();
+            }
         }
 
         HasItem = false;

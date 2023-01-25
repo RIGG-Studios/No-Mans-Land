@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 2f75788f3feaba4418bae38a79a6c5fa,
     type: 3}
   m_ValidKeywords:
-  - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
@@ -26,11 +25,10 @@ Material:
     MotionVector: User
     RenderType: Transparent
   disabledShaderPasses:
-  - TransparentDepthPrepass
+  - MOTIONVECTORS
   - TransparentDepthPostpass
   - TransparentBackface
   - RayTracingPrepass
-  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -63,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Foam_Texture:
-        m_Texture: {fileID: 2800000, guid: 9c299b8161bda344194d64b5c6595a33, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3f373d88a3e2f4a4480764fa62b555cf, type: 3}
         m_Scale: {x: 8, y: 8}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
@@ -162,16 +160,16 @@ Material:
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
-    - _Amplitude: 0.78
-    - _Amplitude_1: 1.42
-    - _Amplitude_2: 0.32
+    - _Amplitude: 0.51
+    - _Amplitude_1: 0.35
+    - _Amplitude_2: 0.39
     - _Anisotropy: 0
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CrestFalloff: 6.36
-    - _CrestOffset: -6.77
-    - _CrestSize: 0
+    - _CrestOffset: 2.35
+    - _CrestSize: 4.24
     - _Crest_Falloff: 2.66
     - _Crest_Offset: -1
     - _Crest_Size: 0.34
@@ -180,7 +178,7 @@ Material:
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
     - _DepthStrength: 1.04
-    - _DepthWaveIntensity: 4.92
+    - _DepthWaveIntensity: 0
     - _DetailAlbedoScale: 1
     - _DetailNormalScale: 1
     - _DetailSmoothnessScale: 1
@@ -189,7 +187,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
-    - _Distance: 20
+    - _Distance: 10
     - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
@@ -202,13 +200,13 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _ExtraExpersion: 0.36
+    - _ExtraExpersion: 0.54
     - _Extra_Expersion: -1.43
-    - _FoamBands: 5
-    - _FoamEdgeHardness: 1.83
-    - _FoamFalloff: 1.84
-    - _FoamRemoval: 0.11
-    - _FoamWidth: 6
+    - _FoamBands: 0.58
+    - _FoamEdgeHardness: 0.53
+    - _FoamFalloff: 7.36
+    - _FoamRemoval: 0.04
+    - _FoamWidth: 18.47
     - _Foam_Bands: 5
     - _Foam_Edge_Hardness: 1.5
     - _Foam_Falloff: 2.28
@@ -216,8 +214,8 @@ Material:
     - _Foam_Width: 7.71
     - _Frequency: 0.1
     - _Frequency_1: 0.1
-    - _Frequency_2: 0.4
-    - _GameTime: 89.828
+    - _Frequency_2: 0.2
+    - _GameTime: 185.147
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -246,35 +244,35 @@ Material:
     - _PPDPrimitiveWidth: 1
     - _RayTracing: 0
     - _ReceivesSSR: 1
-    - _ReceivesSSRTransparent: 0
+    - _ReceivesSSRTransparent: 1
     - _RefractionModel: 0
     - _RefractionStrength: 0.5
     - _Refraction_Strength: 0.42
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
-    - _RippleSpeed: 0.05
-    - _RippleStrength: 0.03
+    - _RippleSpeed: 0.2
+    - _RippleStrength: 0.13
     - _RippleTling: 0.26
     - _Secondary_Frequency: 0.4
     - _Secondary_Speed: 1
-    - _Smoothness: 0.7
+    - _Smoothness: 0.9
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
-    - _Speed: 0.5
+    - _Speed: 0.35
     - _Speed_1: 0.8
-    - _Speed_2: 1
+    - _Speed_2: 0.35
     - _SrcBlend: 1
     - _Steepness: 2
     - _Steepness_1: 1
     - _Steepness_2: 1
     - _StencilRef: 0
-    - _StencilRefDepth: 0
+    - _StencilRefDepth: 8
     - _StencilRefDistortionVec: 4
-    - _StencilRefGBuffer: 2
-    - _StencilRefMV: 32
+    - _StencilRefGBuffer: 10
+    - _StencilRefMV: 40
     - _StencilWriteMask: 6
     - _StencilWriteMaskDepth: 8
     - _StencilWriteMaskDistortionVec: 4
@@ -300,7 +298,7 @@ Material:
     - _TransparentDepthPrepassEnable: 0
     - _TransparentSortPriority: 50
     - _TransparentWritingMotionVec: 0
-    - _TransparentZWrite: 1
+    - _TransparentZWrite: 0
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
@@ -313,7 +311,7 @@ Material:
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - Vector3_110DB033: {r: 0.09, g: 0, b: 0.06, a: 0}
     - Vector3_13778AA8: {r: -0.2, g: 0, b: 0.12, a: 0}
@@ -323,13 +321,13 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color01: {r: 0.501958, g: 0.74035573, b: 0.754717, a: 0}
-    - _Color02: {r: 0.22116414, g: 0.43548256, b: 0.6603774, a: 0}
+    - _Color01: {r: 0.5529412, g: 0.9098039, b: 1, a: 0}
+    - _Color02: {r: 0.078720205, g: 0.4076946, b: 0.5754717, a: 0}
     - _Color_01: {r: 0, g: 0.6698113, b: 0.50369817, a: 0}
     - _Color_02: {r: 0.25907797, g: 0.51477236, b: 0.7735849, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
-    - _Direction: {r: 10, g: -1, b: 0, a: 0}
-    - _Direction_1: {r: -1, g: -10, b: 0, a: 0}
+    - _Direction: {r: -1, g: -1, b: 0, a: 0}
+    - _Direction_1: {r: 1, g: -1, b: 0, a: 0}
     - _Direction_2: {r: 1, g: 1, b: 0, a: 0}
     - _Direction_3: {r: -1, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

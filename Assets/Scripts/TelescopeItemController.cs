@@ -34,7 +34,17 @@ public class TelescopeItemController : BaseWeapon
         }
     }
 
-    private void Update()
+    public override void Hide()
+    {
+        base.Hide();
+
+        IsLooking = false;
+        Player.Camera.SetFOV(lookFOV, true);
+        render.SetActive(true);
+        Context.PostProcessing.DisablePostProcessing(ScenePostProcessing.PostProcessingTypes.Telescope);
+    }
+
+    public override void Render()
     {
         if (!Object.HasInputAuthority)
         {

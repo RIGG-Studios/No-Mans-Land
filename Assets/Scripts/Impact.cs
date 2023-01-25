@@ -2,11 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Impact : NetworkBehaviour
 {
-    [Networked] private TickTimer life { get; set; }
+    [SerializeField] private VisualEffect vfx;
+    
+    [Networked] 
+    private TickTimer life { get; set; }
 
+    public override void Spawned()
+    {
+        vfx.Play();
+    }
     
     public void Init(float time = 1.3f)
     {

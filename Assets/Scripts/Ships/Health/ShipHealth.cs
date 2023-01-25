@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 
 public class ShipHealth : NetworkHealthHandler
 {
-    [SerializeField] private ShipPhysicsHandler physicsHandler;
-    
     [Networked]
     public NetworkBool IsDead { get; private set; }
     
@@ -52,9 +51,15 @@ public class ShipHealth : NetworkHealthHandler
     {
         if (Object.HasStateAuthority)
         {
-            physicsHandler.ReleaseGravity();
-            
+            _ship.Physics.ReleaseGravity();
             SceneShipHandlerInstance.ShipHandler.RequestShipRespawn(_ship, _ship.TeamID);
+
+
+            Debug.Log(_ship.Cannons.Length);
+            foreach (CannonController controller in _ship.Cannons)
+            {
+                controller.OnSink();
+            }
         }
     }
 

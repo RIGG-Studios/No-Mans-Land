@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: 'A useful tool for looking at far distances
 
 '
-  itemIcon: {fileID: 21300000, guid: 8f07b76a2d34a01448c9098837eef13f, type: 3}
+  itemIcon: {fileID: 21300000, guid: ee1f41ed90c504048badd8f93ce302be, type: 3}
   maxStack: 1
   isEquippable: 1
   fpPrefab: {fileID: 3382469875342795533, guid: fdc81c4853a6ba44d9e753f22745e14b,

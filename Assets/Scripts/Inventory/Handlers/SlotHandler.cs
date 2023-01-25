@@ -25,6 +25,25 @@ public class SlotHandler
             Slots[i].SlotReset += OnSlotReset;
         }
     }
+    
+    
+    public Slot[] FindSelectedSlots()
+    {
+        List<Slot> slots = new();
+
+        for (int i = 0; i < Slots.Length; i++)
+        {
+            if (!Slots[i].IsSelected)
+            {
+                continue;
+            }
+            
+            slots.Add(Slots[i]);
+        }
+
+        return slots.ToArray();
+    }
+
 
     public void SetSlots(Slot[] slots)
     {

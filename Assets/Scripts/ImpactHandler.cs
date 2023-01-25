@@ -25,6 +25,11 @@ public class ImpactHandler : NetworkBehaviour
 
     public void RequestImpact(string tag, Vector3 position, Vector3 normal)
     {
+        if (!Runner.IsServer)
+        {
+            return;
+        }
+        
         ImpactProperties impactProperties = FindImpact(tag);
 
         if (impactProperties.impactPrefab == null)
@@ -33,9 +38,7 @@ public class ImpactHandler : NetworkBehaviour
         }
 
 
-        Impact impact = Runner.Spawn(impactProperties.impactPrefab, position, Quaternion.LookRotation(normal),
-            inputAuthority: Object.StateAuthority).GetComponent<Impact>();
-           
+        Impact impact = Runner.Spawn(impactProperties.impactPrefab, position, Quaternion.LookRotation(normal)).GetComponent<Impact>();
         impact.Init();
     }
 

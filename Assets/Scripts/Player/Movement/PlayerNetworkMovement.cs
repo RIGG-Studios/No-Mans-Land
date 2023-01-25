@@ -78,6 +78,8 @@ public class PlayerNetworkMovement : ContextBehaviour
 
     private void CharacterMovement(NetworkInputData input)
     {
+        CanMove = !_player.Inventory.IsOpen && !_player.Health.IsDead && !_player.Pause.IsOpen;
+        
         if (!CanMove)
         {
             IsMoving = false;

@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: 'A powerful rifle that shoots projectiles at far ranges.
 
 '
-  itemIcon: {fileID: 21300000, guid: 63164d6bf64f2e048a2cf187905b9049, type: 3}
+  itemIcon: {fileID: 21300000, guid: 9b2df9b38e849af4eb0093a63f964772, type: 3}
   maxStack: 1
   isEquippable: 1
   fpPrefab: {fileID: 8072611267142044377, guid: 977ab58d113bc1947b5f37ee7a50889d,

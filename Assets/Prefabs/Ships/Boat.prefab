@@ -1107,8 +1107,8 @@ MonoBehaviour:
   _HasPilot: 0
   _TeamID: 0
   rudderTransform: {fileID: 2112588003853790680}
-  targetCameraTransform: {fileID: 5913015562395102146}
-  cameraTransform: {fileID: 1719170884409337165}
+  physicsHandler: {fileID: 8584073878116748037}
+  health: {fileID: 2332197427796278130}
 --- !u!114 &8584073878116748037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1141,7 +1141,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Health: 0
-  physicsHandler: {fileID: 8584073878116748037}
   _IsDead:
     _value: 0
 --- !u!114 &3087906529535807523

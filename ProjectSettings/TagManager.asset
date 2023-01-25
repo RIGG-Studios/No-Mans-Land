@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ship
   - Impact
+  - PlayerVitalPoint
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - NetworkHitBox
   - Projectile
   - Terrain
-  - 
+  - TelescopeIgnore
   - 
   - 
   - 

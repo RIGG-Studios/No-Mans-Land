@@ -61,7 +61,7 @@ public class Projectile : ContextBehaviour
             
             damage.ProcessHit(ref hitData);
 
-            if (hitData.IsFatal && Object.HasInputAuthority)
+            if (hitData.IsFatal && Object.HasInputAuthority && damage.Type == INetworkDamagable.DamageTypes.Ship)
             {
                 Context.Gameplay.TryFindPlayer(Object.InputAuthority, out Player player);
 

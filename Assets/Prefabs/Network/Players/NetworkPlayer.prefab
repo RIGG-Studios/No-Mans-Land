@@ -1248,7 +1248,7 @@ GameObject:
   - component: {fileID: 4385399820646090875}
   m_Layer: 11
   m_Name: HitBox
-  m_TagString: Untagged
+  m_TagString: PlayerVitalPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1302,7 +1302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3385502578649867203
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1472,7 +1472,7 @@ GameObject:
   - component: {fileID: 8403892621334275890}
   m_Layer: 6
   m_Name: NetworkPlayer
-  m_TagString: Untagged
+  m_TagString: PlayerVitalPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1544,6 +1544,7 @@ MonoBehaviour:
   health: {fileID: 5968819807260933364}
   ui: {fileID: 4944068395436352298}
   hitMarker: {fileID: 2933927376085267517}
+  pause: {fileID: 8403892621334275890}
   Owner: {fileID: 0}
 --- !u!114 &8874177288923519252
 MonoBehaviour:
@@ -1582,6 +1583,7 @@ MonoBehaviour:
   - {fileID: 3698441954151704457}
   - {fileID: 6980011311557788128}
   SimulationBehaviours:
+  - {fileID: 1242310045110792530}
   - {fileID: 5686992426205285742}
   - {fileID: 2933927376085267517}
 --- !u!54 &6467673482923859489
@@ -2166,7 +2168,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.000015258789, y: 0}
   m_SizeDelta: {x: 0.000015259, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2362,7 +2364,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2824004334715145717}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2501,7 +2503,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4178959770423704640}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2758,7 +2760,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crossHair: {fileID: 5401552950576182329}
-  disableOnSize: 1
   rectTransform:
   - {fileID: 5327046835786774653}
   - {fileID: 5327095842746956691}
@@ -2777,7 +2778,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crossHair: {fileID: 413536046871811973}
-  disableOnSize: 0
   rectTransform:
   - {fileID: 6116665085221931095}
   - {fileID: 1251032010258760171}
@@ -2801,7 +2801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5327326335239013589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3316,7 +3316,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5586857134000797173}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3450,6 +3450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  offset: 0
   _UnderWater:
     _value: 0
 --- !u!1 &7587149011968048517
@@ -3897,7 +3898,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8144622750871200228}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3938,7 +3939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8149072192621381174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3956,8 +3957,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000091552734}
-  m_SizeDelta: {x: 1144.4973, y: 530.72}
+  m_AnchoredPosition: {x: -0.0015869141, y: -0.00024414062}
+  m_SizeDelta: {x: 1002.5, y: 388.0601}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8149072192621381172
 CanvasRenderer:
@@ -4967,7 +4968,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8964126316484486945}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8403892621334275890}
+        m_TargetAssemblyTypeName: PlayerPauseManager, Assembly-CSharp
+        m_MethodName: Disconnect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8964126316485806712
 GameObject:
   m_ObjectHideFlags: 0
@@ -7848,21 +7861,21 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 8964126317704889002}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8964126317353057204}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 4944068395436352298}
+        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+        m_MethodName: DisableMenu
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: PauseMenu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &8964126317920982894

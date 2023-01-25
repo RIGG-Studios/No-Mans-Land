@@ -8,6 +8,7 @@ public class ProceduralAim : WeaponComponent, IAimer
 {
     [SerializeField] private Transform aimTransform;
     [SerializeField] private float aimSpeed;
+    [SerializeField] private float aimFOV;
     [SerializeField] private Vector3 aimPos;
 
 
@@ -37,6 +38,11 @@ public class ProceduralAim : WeaponComponent, IAimer
     public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
     {
         IsAiming = desires.Aim;
+
+        if (Object.HasInputAuthority)
+        {
+            Weapon.Player.Camera.SetFOV(aimFOV, !IsAiming);
+        }
         
         Vector3 pos = !IsAiming ? _defaultAimPos : aimPos;
         Quaternion rot = !IsAiming ? _defaultAimRot : quaternion.identity;

@@ -97,7 +97,6 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         
         IsOpen = !IsOpen;
         
-        _player.Movement.CanMove = !IsOpen;
         _player.Camera.CanLook = !IsOpen;
 
         if (Object.HasInputAuthority)
@@ -122,6 +121,16 @@ public class PlayerInventory : LocalInventory, IInputProccesor
             return;
         }
 
+        if (itemID == EquippedItem.item.itemID)
+        {
+            return;
+        }
+
+        if (IsSwitching)
+        {
+            return;
+        }
+
         
         ItemController itemController = FindItemController(itemID);
 
@@ -130,7 +139,7 @@ public class PlayerInventory : LocalInventory, IInputProccesor
             return;
         }
 
-        SwitchItemControllers(itemController);
+        SwitchItemControllers(itemController, i);
     }
 
     private bool CheckSlots(int j, out int itemID)
@@ -187,11 +196,11 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         }
     }
     
-    private void SwitchItemControllers(ItemController nextController)
+    private void SwitchItemControllers(ItemController nextController, int slotID)
     {
         if (EquippedItem != null)
         {
-            StartCoroutine(IE_SwitchItems(nextController));
+            StartCoroutine(IE_SwitchItems(nextController, slotID));
         }
         else
         {
@@ -223,18 +232,31 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_UpdateEquippedItemID(int id) => EquippedItemID = id;
 
-    private IEnumerator IE_SwitchItems(ItemController nextController)
+    private IEnumerator IE_SwitchItems(ItemController nextController, int newSlotID)
     {
         IsSwitching = true;
 
+        if (Object.HasInputAuthority)
+        {
+            Slot[] selectedSlots = SlotHandler.FindSelectedSlots();
+
+            for (int i = 0; i < selectedSlots.Length; i++)
+            {
+                selectedSlots[i].DeselectSlot();
+            }
+        }
+        
         EquippedItem.Hide();
         float hideTime = EquippedItem.GetHideTime();
         yield return new WaitForSeconds(hideTime);
 
         EquippedItem.gameObject.SetActive(false);
-        Debug.Log(EquippedItem.gameObject.name);
+        Debug.Log(EquippedItem.gameObject.activeInHierarchy);
         nextController.gameObject.SetActive(true);
         nextController.Equip();
+        
+        if (Object.HasInputAuthority)
+            SlotHandler.Slots[newSlotID].SelectSlot();
         
         float equipTime = nextController.GetEquipTime();
         yield return new WaitForSeconds(equipTime);
@@ -258,6 +280,11 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     public void ProcessInput(NetworkInputData input)
     {
         if (_player.Movement.CurrentState != PlayerStates.PlayerController)
+        {
+            return;
+        }
+
+        if (_player.Pause.IsOpen)
         {
             return;
         }

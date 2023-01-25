@@ -53,18 +53,12 @@ public class SceneCamera : SceneComponent
             return;
         }
         
-        transform.position = _positionInterpolation(transform.position, _target.position, 6.0f * Time.deltaTime);
-        transform.rotation = _rotationInterpolation(transform.rotation, _target.rotation, 6.0f * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, _target.position, 6.0f * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, _target.rotation, 6.0f * Time.deltaTime);
     }
 
     public void SmoothLerp(Transform target, float speed)
     {
-         _positionInterpolation =
-            InterpolationTransitions.GetInterpolationPosition(Interpolation.EASE, positionEasing);
-
-         _rotationInterpolation =
-            InterpolationTransitions.GetInterpolationRotation(Interpolation.EASE, rotationEasing);
-
-         _target = target;
+        _target = target;
     }
 }

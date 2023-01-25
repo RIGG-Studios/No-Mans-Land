@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
-public class ItemAnimator : MonoBehaviour
+public class ItemAnimator : SimulationBehaviour
 {
     [SerializeField] private Transform movementTransform;
     [SerializeField] private float horizontalMovementAngle;
@@ -20,14 +21,18 @@ public class ItemAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    public override void Render()
     {
-        UpdateAnimator();
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
         
+        UpdateAnimations();
         UpdateTransform();
     }
 
-    private void UpdateAnimator()
+    public void UpdateAnimations()
     {
         ItemControllerState currentItemState = NetworkPlayer.Local.Inventory.GetEquippedItemState();
 

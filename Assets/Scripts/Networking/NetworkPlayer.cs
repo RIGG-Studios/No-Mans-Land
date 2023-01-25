@@ -25,6 +25,7 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     [SerializeField] private PlayerHealth health;
     [SerializeField] private PlayerUI ui;
     [SerializeField] private Crosshair hitMarker;
+    [SerializeField] private PlayerPauseManager pause;
 
     public PlayerInteractionHandler Interaction => interaction;
     public PlayerNetworkMovement Movement => movement;
@@ -33,6 +34,7 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     public PlayerAttacker Attack => attacker;
     public PlayerHealth Health => health;
     public PlayerUI UI => ui;
+    public PlayerPauseManager Pause => pause;
 
     public Crosshair HitMarker => hitMarker;
 
@@ -71,7 +73,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         }
         
         Camera.CanLook = false;
-        Movement.CanMove = false;
         Inventory.CanUse = false;
     }
 
@@ -112,29 +113,12 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 
     public void PlayerLeft(PlayerRef player)
     {
+        Debug.Log("player left");
         if (player != Object.InputAuthority)
         {
             return;
         }
         
         Runner.Despawn(Object);
-    }
-
-    public void OnInventoryToggled(bool state)
-    {
-        Movement.CanMove = !state;
-        Camera.CanLook = !state;
-
-        if (Object.HasInputAuthority)
-        {
-            if (state)
-            {
-                Context.Input.RequestCursorRelease();
-            }
-            else
-            {
-                Context.Input.RequestCursorLock();
-            }
-        }
     }
 }

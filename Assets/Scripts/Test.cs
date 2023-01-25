@@ -1,15 +1,20 @@
 using Fusion;
+using UnityEngine;
 
 public class Test : ContextBehaviour
 {
+    [SerializeField] private float offset;
+    
     [Networked]
     public NetworkBool UnderWater { get; private set; }
     
     public override void FixedUpdateNetwork()
     {
         float y = Ocean.Instance.GetWaterHeightAtPosition(transform.position);
+
+        float k = (transform.position.y - y);
         
-        if (transform.position.y - y < 0)
+        if (k < offset)
         {
             if (Object.HasInputAuthority)
             {

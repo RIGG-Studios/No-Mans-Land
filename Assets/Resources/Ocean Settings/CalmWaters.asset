@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves: {fileID: 11400000, guid: 8935bbc05f6d2374193cfd337fc37cf2, type: 2}
   shallowColor: {r: 0.5529412, g: 0.9098039, b: 1, a: 0}
-  deepColor: {r: 0.25490195, g: 0.5465004, b: 0.78431374, a: 0}
+  deepColor: {r: 0.078720205, g: 0.4076946, b: 0.5754717, a: 0}
   foamColor: {r: 1, g: 1, b: 1, a: 0}
   waveFoam: 1
-  extraDispersion: 6.53
-  edgeHardness: 0.69
+  extraDispersion: 0.54
+  edgeHardness: 0.53
   crestSize: 4.24
   crestOffset: 2.35
   edgeFoam: 1
-  foamFallOff: 1.51
-  foamWidth: 4.3
-  foamRemoval: 0.02
-  foamBands: 1.42
+  foamFallOff: 7.36
+  foamWidth: 18.47
+  foamRemoval: 0.04
+  foamBands: 0.58

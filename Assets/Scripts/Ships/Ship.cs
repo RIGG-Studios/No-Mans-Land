@@ -14,11 +14,21 @@ public class Ship : NetworkBehaviour
     public byte TeamID { get; set; }
 
     [SerializeField] private Transform rudderTransform;
-    [SerializeField] private Transform targetCameraTransform;
-    [SerializeField] private Transform cameraTransform;
-
-    public Transform RudderTransform => rudderTransform;
+    [SerializeField] private ShipPhysicsHandler physicsHandler;
+    [SerializeField] private ShipHealth health;
     
+    
+    public Transform RudderTransform => rudderTransform;
+    public ShipPhysicsHandler Physics => physicsHandler;
+    public ShipHealth Health => health;
+    
+    public CannonController[] Cannons { get; private set; }
+
+    private void Awake()
+    {
+        Cannons = GetComponentsInChildren<CannonController>();
+    }
+
     public void Init(byte id)
     {
         TeamID = id;

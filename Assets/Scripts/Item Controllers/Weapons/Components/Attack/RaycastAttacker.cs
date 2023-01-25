@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.VFX;
 
 public class RaycastAttacker : WeaponComponent, IAttacker
 {
@@ -11,7 +12,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     [SerializeField] private float raycastLength;
     [SerializeField] private float damage;
     [SerializeField] private LayerMask attackableLayers;
-    [SerializeField] private ParticleSystem[] muzzleFlash;
+    [SerializeField] private VisualEffect muzzleFlash;
 
     public event Action onAttack;
     
@@ -72,7 +73,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         
         if (Object.HasStateAuthority && hitInfo.GameObject != null)
         {
-       //     ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
+            ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
         }
         
         
@@ -94,9 +95,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         HitData hitData =
             NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
         
-
-        Debug.Log(hitData.IsFatal);
-        Debug.Log(Object.HasInputAuthority);
+        
         if (hitData.IsFatal && Object.HasInputAuthority)
         {
             Weapon.Player.UI.ShowKillNotifcation(hitData.VictimUsername.ToString());
@@ -116,11 +115,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
     private void FireEffects()
     {
-        foreach (ParticleSystem particle in muzzleFlash)
-        {
-            particle.Play();
-        }
-        
+        muzzleFlash.Play();
         Animator.SetTrigger(_fire);
     }
 }

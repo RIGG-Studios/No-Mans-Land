@@ -16,6 +16,9 @@ public class CannonController : ContextBehaviour
     
     [Networked]
     private NetworkButtons ButtonsPrevious { get; set; }
+    
+    [Networked]
+    private NetworkBool ResetCannon { get; set; }
 
     [Networked]
     private float pitch { get; set; }
@@ -53,10 +56,8 @@ public class CannonController : ContextBehaviour
         }
 
         float fov = input.IsAiming ? aimFOV : 75f;
-
         cannonCamera.fieldOfView = Mathf.Lerp(cannonCamera.fieldOfView, fov, Runner.DeltaTime * 5f);
-        
-        
+
         UpdateRotation(input);
         UpdateAttack(input);
     }
@@ -135,7 +136,6 @@ public class CannonController : ContextBehaviour
 
     public void RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer)
     {
-        Debug.Log(occupy);
         NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(!occupy);
         cannonCamera.gameObject.SetActive(occupy);
         
@@ -164,7 +164,24 @@ public class CannonController : ContextBehaviour
             OccupiedPlayer = null;
         }
     }
+    
+    
 
+    public void OnSink()
+    {
+        if (isOccupied)
+        {
+            return;
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_RemoveInputAuthority()
+    {
+        NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(true);
+        cannonCamera.gameObject.SetActive(false);
+    }
+    
     public void Reset()
     {
         NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(true);

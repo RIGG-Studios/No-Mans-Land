@@ -8,9 +8,10 @@ public class ShipVitalPoint : MonoBehaviour, INetworkDamagable
 {
     [SerializeField] private NetworkHealthHandler shipHealth;
     
-    public bool IsActive { get; }
     public NetworkPlayer Owner { get; }
+    public INetworkDamagable.DamageTypes Type => INetworkDamagable.DamageTypes.Ship;
 
+    
     public bool ProcessHit(ref HitData hit)
     {
         return shipHealth.Damage(ref hit);
