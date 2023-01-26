@@ -27,8 +27,8 @@ public class PlayerPauseManager : ContextBehaviour
 
         if (input.Buttons.IsSet(PlayerButtons.Escape))
         {
-            IsOpen = !IsOpen;
-            _player.Camera.CanLook = !IsOpen;
+        ///    IsOpen = !IsOpen;
+       //     _player.Camera.CanLook = !IsOpen;
         }
     }
 
@@ -43,13 +43,13 @@ public class PlayerPauseManager : ContextBehaviour
     {
         if (changed.Behaviour.IsOpen)
         {
-            changed.Behaviour._player.UI.EnableMenu("PauseMenu");
-            changed.Behaviour.Context.Input.RequestCursorRelease();
+          //  changed.Behaviour._player.UI.EnableMenu("PauseMenu");
+        //    changed.Behaviour.Context.Input.RequestCursorRelease();
         }
         else
         {
-            changed.Behaviour._player.UI.DisableMenu("PauseMenu");
-            changed.Behaviour.Context.Input.RequestCursorLock();
+       //     changed.Behaviour._player.UI.DisableMenu("PauseMenu");
+        //    changed.Behaviour.Context.Input.RequestCursorLock();
         }
     }
 }

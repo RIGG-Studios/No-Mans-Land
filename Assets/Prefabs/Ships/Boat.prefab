@@ -1124,7 +1124,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   movementSpeed: 4000
   maxMovementSpeed: 4000
-  rotationSpeed: 175
+  rotationSpeed: 600
   _CanMove:
     _value: 0
 --- !u!114 &2332197427796278130

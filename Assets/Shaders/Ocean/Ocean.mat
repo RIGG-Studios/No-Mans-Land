@@ -215,7 +215,7 @@ Material:
     - _Frequency: 0.1
     - _Frequency_1: 0.1
     - _Frequency_2: 0.2
-    - _GameTime: 155.78801
+    - _GameTime: 45.050003
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -251,7 +251,7 @@ Material:
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _RippleSpeed: 0.1
-    - _RippleStrength: 0.1
+    - _RippleStrength: 0.05
     - _RippleTling: 0.26
     - _Secondary_Frequency: 0.4
     - _Secondary_Speed: 1

@@ -21,8 +21,8 @@ public class SceneCamera : SceneComponent
 
     private void Awake()
     {
-        _startPos = transform.position;
-        _startRot = transform.rotation;
+        _startPos = sceneCamera.transform.position;
+        _startRot = sceneCamera.transform.rotation;
     }
 
     protected override void OnInit()
@@ -41,8 +41,8 @@ public class SceneCamera : SceneComponent
     {
         Camera.gameObject.SetActive(false);
 
-        transform.position = _startPos;
-        transform.rotation = _startRot;
+        sceneCamera.transform.position = _startPos;
+        sceneCamera.transform.rotation = _startRot;
         _target = null;
     }
 
@@ -53,8 +53,8 @@ public class SceneCamera : SceneComponent
             return;
         }
         
-        transform.position = Vector3.Lerp(transform.position, _target.position, 6.0f * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, _target.rotation, 6.0f * Time.deltaTime);
+        sceneCamera.transform.position = Vector3.Lerp(sceneCamera.transform.position, _target.position, 2.0f * Time.deltaTime);
+        sceneCamera.transform.rotation = Quaternion.Lerp(sceneCamera.transform.rotation, _target.rotation, 2.0f * Time.deltaTime);
     }
 
     public void SmoothLerp(Transform target, float speed)
