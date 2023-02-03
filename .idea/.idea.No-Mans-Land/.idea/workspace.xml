@@ -8,6 +8,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Backpack.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CannonController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interpolation/InterpolationTransitions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Character.cs" root0="FORCE_HIGHLIGHTING" />
@@ -104,7 +105,7 @@
       <workItem from="1674539522732" duration="3827000" />
       <workItem from="1674678959209" duration="4023000" />
       <workItem from="1675308904918" duration="6074000" />
-      <workItem from="1675364887864" duration="7721000" />
+      <workItem from="1675364887864" duration="10254000" />
     </task>
     <servers />
   </component>

@@ -90,7 +90,6 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     
     public void ToggleInventory()
     {
-        Debug.Log(CanUse);
         if (!CanUse)
         {
             return;

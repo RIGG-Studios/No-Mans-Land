@@ -20,6 +20,13 @@ public struct ItemListData : INetworkStruct
     }
 }
 
+[System.Serializable]
+public struct StartingItemData
+{
+    public Item item;
+    public int stack;
+}
+
 
 public interface IInventory
 {

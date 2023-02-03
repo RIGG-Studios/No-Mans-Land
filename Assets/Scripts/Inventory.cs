@@ -10,6 +10,7 @@ public class Inventory : ContextBehaviour, IInventory
     public NetworkLinkedList<ItemListData> Items { get; }
 
     [SerializeField] private Transform slotContainer;
+    [SerializeField] private StartingItemData[] startingItems;
     [SerializeField] private int size;
 
     protected SlotHandler SlotHandler;
@@ -38,6 +39,14 @@ public class Inventory : ContextBehaviour, IInventory
     {
         Slot[] slots = SlotSpawner.GenerateSlots(slotContainer, size);
         SlotHandler = new SlotHandler(this, slots.ToArray());
+
+        if (Object.HasStateAuthority)
+        {
+            for (int i = 0; i < startingItems.Length; i++)
+            {
+                AddItem(startingItems[i].item.itemID, startingItems[i].stack);
+            }
+        }
     }
     
     private static void OnInventoryUpdated(Changed<Inventory> changed)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class Gameplay : ContextBehaviour
     [Networked]
     public GameplayStates GameplayState { get; set; }
 
+
+    [SerializeField] private Backpack backpackPrefab;
 
     private SpawnPoint[] _spawnPoints;
     private int _lastSpawnPoint = -1;
@@ -152,6 +155,10 @@ public class Gameplay : ContextBehaviour
     private IEnumerator DelayDespawnNetworkPlayer(Player player)
     {
         yield return new WaitForSeconds(3.5f);
+
+        Backpack backpack = Runner.Spawn(backpackPrefab, player.ActivePlayer.transform.position, player.ActivePlayer.transform.rotation);
+        backpack.LoadItems(player.ActivePlayer.Inventory.Items.ToArray());
+        
         player.State = StateTypes.Dead;
         DespawnNetworkPlayer(player);
     }

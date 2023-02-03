@@ -101,6 +101,11 @@ public class LocalInventory : ContextBehaviour, IInventory
                     changedSlots.Add(oldItems[i]);
                 }
             }
+
+            if (!newItems.Contains(oldItems[i]))
+            {
+                changedSlots.Add(oldItems[i]);
+            }
         }
 
         changed.Behaviour.RefreshInventory(changedSlots.ToArray());
@@ -108,15 +113,13 @@ public class LocalInventory : ContextBehaviour, IInventory
     
     private void RefreshInventory(ItemListData[] changedItems)
     {
-        /*/
         for (int i = 0; i < changedItems.Length; i++)
         {
             Slot slot = SlotHandler.FindSlotByID(changedItems[i].SlotID);
             slot.Reset();
         }
-        /*/
         
-        SlotHandler.ResetSlots();
+       // SlotHandler.ResetSlots();
 
         for (int i = 0; i < Items.Count; i++)
         {

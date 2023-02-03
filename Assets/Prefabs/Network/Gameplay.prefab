@@ -3208,6 +3208,8 @@ MonoBehaviour:
   _Players:
     _items: []
   _GameplayState: 0
+  backpackPrefab: {fileID: 8059029883664273408, guid: c8954d64d03ceb347b3d36b7b23af815,
+    type: 3}
 --- !u!114 &2926668079268535786
 MonoBehaviour:
   m_ObjectHideFlags: 0
