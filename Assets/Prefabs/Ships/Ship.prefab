@@ -8598,6 +8598,7 @@ MonoBehaviour:
   - {fileID: 8862409944368310223}
   - {fileID: 6906855585580923748}
   - {fileID: 8610281271090685066}
+  - {fileID: 2437317993671700325}
   - {fileID: 1980691315857359171}
   - {fileID: 1980691315074030430}
   - {fileID: 1980691314354146650}
@@ -8649,8 +8650,8 @@ MonoBehaviour:
   _HasPilot: 0
   _TeamID: 0
   rudderTransform: {fileID: 3150111431307192175}
-  targetCameraTransform: {fileID: 0}
-  cameraTransform: {fileID: 0}
+  physicsHandler: {fileID: 0}
+  health: {fileID: 0}
 --- !u!114 &6906855585580923748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8665,7 +8666,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _Health: 0
-  physicsHandler: {fileID: 8610281271090685066}
   _IsDead:
     _value: 0
 --- !u!114 &8610281271090685066
@@ -12894,6 +12894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d5ee6b6f724621449a3f73dcff46a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   ship: {fileID: 8862409944368310223}
 --- !u!1 &7692439293723011225
 GameObject:

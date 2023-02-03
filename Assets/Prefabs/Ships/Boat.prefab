@@ -1077,6 +1077,7 @@ MonoBehaviour:
   - {fileID: 4908851019850570039}
   - {fileID: 8584073878116748037}
   - {fileID: 2332197427796278130}
+  - {fileID: 5020780317162022295}
   - {fileID: 5508019294146204529}
   - {fileID: 581970187}
   - {fileID: 343445367}
@@ -2188,6 +2189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d5ee6b6f724621449a3f73dcff46a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   ship: {fileID: 4908851019850570039}
 --- !u!114 &6096437887057708574
 MonoBehaviour:

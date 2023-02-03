@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,9 +24,17 @@ public class PlayerInteractionHandler : NetworkBehaviour
     public UnityEvent<IInteractable> onButtonInteract = new();
     public UnityEvent<IInteractable> onButtonInteractStop = new();
 
-    private bool _sentLookAtEvent;
-    private bool _isInteracting;
-    private IInteractable _currentInteractable;
+    
+    [Networked]
+    private bool _sentLookAtEvent { get; set; }
+    
+    [Networked]
+    private bool _isInteracting { get; set; }
+    
+    [Networked]
+    private NetworkBehaviour currentInteractable { get; set; }
+
+    private IInteractable _currentInteractable => currentInteractable as IInteractable;
 
     private NetworkPlayer _networkPlayer;
 
@@ -39,42 +48,68 @@ public class PlayerInteractionHandler : NetworkBehaviour
         CanInteract = true;
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
-        if (!CanInteract)
+        if (!GetInput(out NetworkInputData input))
         {
-            return;
-        }
-
-        if (_isInteracting)
-        {
-            return;
-        }
-
-        RaycastHit hit;
-        if (!Physics.Raycast(lookFromPoint.position, lookFromPoint.forward,
-                out hit, maxInteractionDistance, interactLayer))
-        {
-            if (_currentInteractable != null)
-            {
-                _sentLookAtEvent = false;
-                _currentInteractable.StopLookAtInteract();
-                interactText.text = "";
-                _currentInteractable = null;
-                interactUI.SetActive(false);
-            }
             return;
         }
         
-        if (hit.collider.TryGetComponent(out IInteractable interactable))
+        ShootRaycast(input);
+        
+        bool interactPressed = input.Buttons.IsSet(PlayerButtons.Interact);
+        
+        
+        if (_currentInteractable != null && input.Buttons.IsSet(_currentInteractable.ExitKey))
         {
-            _currentInteractable = interactable;
+            TryExitInteract();
+        }
+        
+        if (interactPressed && _currentInteractable != null)
+        {
+            TryButtonInteract();
+        }
+    }
+
+    private void ShootRaycast(NetworkInputData input)
+    {
+        Vector3 pos = lookFromPoint.position;
+        Vector3 dir = (input.LookForward * input.LookVertical) * Vector3.forward;
+
+        Runner.LagCompensation.Raycast(pos, dir, maxInteractionDistance, Object.InputAuthority, out var hitInfo,
+            interactLayer, HitOptions.IncludePhysX);
+
+        if (hitInfo.GameObject == null)
+        {
+            if (_currentInteractable != null)
+            {
+                if (Object.HasInputAuthority)
+                {
+                    _currentInteractable.StopLookAtInteract();
+                    interactText.text = "";
+                    interactUI.SetActive(false);
+                }
+                
+                _sentLookAtEvent = false;
+
+            }
+
+            return;
+        }
+
+        if (hitInfo.GameObject != null && hitInfo.GameObject.TryGetComponent(out IInteractable interactable))
+        {
+            currentInteractable = interactable as NetworkBehaviour;
             
             if (!_sentLookAtEvent)
             {
-                onLookAtInteract?.Invoke(_currentInteractable);
-                interactText.text = _currentInteractable.LookAtID;
-                interactUI.SetActive(true);
+                if (Object.HasInputAuthority)
+                {
+                    onLookAtInteract?.Invoke(_currentInteractable);
+                    interactText.text = _currentInteractable.LookAtID;
+                    interactUI.SetActive(true);
+                }
+
                 _sentLookAtEvent = true;
             }
         }
@@ -83,10 +118,13 @@ public class PlayerInteractionHandler : NetworkBehaviour
             if (_currentInteractable != null)
             {
                 _sentLookAtEvent = false;
-                _currentInteractable.StopLookAtInteract();
-                interactText.text = "";
-                _currentInteractable = null;
-                interactUI.SetActive(false);
+
+                if (Object.HasInputAuthority)
+                {
+                    _currentInteractable.StopLookAtInteract();
+                    interactText.text = "";
+                    interactUI.SetActive(false);
+                }
             }
         }
     }
@@ -105,8 +143,13 @@ public class PlayerInteractionHandler : NetworkBehaviour
         
         if (success)
         {
-            interactUI.SetActive(false);
+            if (Object.HasInputAuthority)
+            {
+                interactUI.SetActive(false);
+            }
+            
             onButtonInteract?.Invoke(_currentInteractable);
+
 
             if (interactionData.StopMovement)
             {
@@ -130,14 +173,17 @@ public class PlayerInteractionHandler : NetworkBehaviour
                     _networkPlayer.Inventory.ToggleInventory();
             }
 
-            if (interactionData.EnableCameraLook)
+            if (Object.HasInputAuthority)
             {
-                _networkPlayer.Camera.enabled = true;
-            }
-            
-            if (interactionData.StopCameraLook)
-            {
-                _networkPlayer.Camera.enabled = false;
+                if (interactionData.EnableCameraLook)
+                {
+                    _networkPlayer.Camera.enabled = true;
+                }
+
+                if (interactionData.StopCameraLook)
+                {
+                    _networkPlayer.Camera.enabled = false;
+                }
             }
         }
     }
@@ -151,7 +197,7 @@ public class PlayerInteractionHandler : NetworkBehaviour
         
         _currentInteractable.StopLookAtInteract();
         onButtonInteractStop?.Invoke(_currentInteractable);
-        _currentInteractable.StopButtonInteract(out ButtonInteractionData interactionData);
+        _currentInteractable.StopButtonInteract(_networkPlayer,out ButtonInteractionData interactionData);
 
         _isInteracting = false;
         if (interactionData.StopMovement)

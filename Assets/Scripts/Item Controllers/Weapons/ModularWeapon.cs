@@ -164,16 +164,6 @@ public class ModularWeapon : BaseWeapon
         }
     }
 
-    public override void Attack()
-    {
-        if (Attacker == null)
-        {
-            return;
-        }
-        
-        Attacker.Attack();
-    }
-
     public void OnFired()
     {
         lastFireTick = Runner.Tick;

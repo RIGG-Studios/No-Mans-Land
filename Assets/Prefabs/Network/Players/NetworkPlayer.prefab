@@ -1521,6 +1521,7 @@ MonoBehaviour:
   - {fileID: 1509187590541231210}
   - {fileID: 4815149227603423245}
   - {fileID: 5401546507443890703}
+  areOfInterestExtents: 64
   onLocalPlayerInit:
     m_PersistentCalls:
       m_Calls:
@@ -1558,11 +1559,11 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectInterest: 1
+  ObjectInterest: 0
   DefaultInterestGroups: []
   DestroyWhenStateAuthorityLeaves: 0
   AllowStateAuthorityOverride: 1
-  AoiPositionSource: {fileID: 0}
+  AoiPositionSource: {fileID: 1678779374052586985}
   Flags: 2305
   NetworkGuid:
     RawGuidValue: 62adfde91941e1e458293a472f8445b2

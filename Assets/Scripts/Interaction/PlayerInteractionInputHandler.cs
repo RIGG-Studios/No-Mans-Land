@@ -12,7 +12,7 @@ public class PlayerInteractionInputHandler : InputBase
 
     private void Start()
     {
-        InputActions.Player.Interact.performed += ctx => _playerInteraction.TryButtonInteract();
-        InputActions.Player.Escape.performed += ctx => _playerInteraction.TryExitInteract();
+  //      InputActions.Player.Interact.performed += ctx => _playerInteraction.TryButtonInteract();
+    //    InputActions.Player.Escape.performed += ctx => _playerInteraction.TryExitInteract();
     }
 }

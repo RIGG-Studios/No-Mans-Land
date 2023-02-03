@@ -108,13 +108,16 @@ public class LocalInventory : ContextBehaviour, IInventory
     
     private void RefreshInventory(ItemListData[] changedItems)
     {
+        /*/
         for (int i = 0; i < changedItems.Length; i++)
         {
             Slot slot = SlotHandler.FindSlotByID(changedItems[i].SlotID);
             slot.Reset();
         }
-
+        /*/
         
+        SlotHandler.ResetSlots();
+
         for (int i = 0; i < Items.Count; i++)
         {
             for (int z = 0; z < SlotHandler.Slots.Length; z++)
@@ -124,7 +127,7 @@ public class LocalInventory : ContextBehaviour, IInventory
                     Item item = Context.ItemDatabase.FindItem(Items[i].ItemID);
                     ItemListData itemData = Items[i];
                     
-                    SlotHandler.Slots[z].InitItem(item, ref itemData);
+                    SlotHandler.Slots[z].InitItem(item, itemData);
                 }
             }
         }
@@ -144,46 +147,31 @@ public class LocalInventory : ContextBehaviour, IInventory
         {
             for (int z = 0; z < inventories[i].startingItems.Length; z++)
             {
-                AddItem(inventories[i].startingItems[z].itemID, -1, inventories[i].startingItems[z].maxStack, false);
+                AddItem(inventories[i].startingItems[z].itemID,  inventories[i].startingItems[z].maxStack);
             }
         }
     }
     
 
-    public virtual void AddItem(int itemID, int slotID = -1, int stack = 1, bool networked = true)
+    public virtual void AddItem(int itemID, int stack = 1, int slotID = -1)
     {
-        if (networked)
+        if (Object.HasStateAuthority)
         {
-            RPC_AddItem(itemID, slotID, stack);
+            ExecuteAddItem(itemID, slotID, stack);
         }
         else
         {
-            Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] : SlotHandler.GetNextSlot();
-
-            if (slot == null)
-            {
-                Debug.Log("Couldn't find slot, inventory is full or there was an error finding it");
-                return;
-            }
-
-            Item item = Context.ItemDatabase.FindItem(itemID);
-
-            if (item == null)
-            {
-                Debug.Log("Error finding item with ID: " + itemID);
-                return;
-            }
-
-            ItemListData inventoryItem = new ItemListData(Items.Count+1, itemID, slot.ID, stack);
-            slot.InitItem(item, ref inventoryItem);
-            slot.HasItem = true;
-
-            Items.Add(inventoryItem);
+            RPC_AddItem(itemID, slotID, stack);
         }
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_AddItem(int itemID, int slotID, int stack)
+    {
+        ExecuteAddItem(itemID, slotID, stack);
+    }
+
+    private void ExecuteAddItem(int itemID, int slotID, int stack)
     {
         Slot slot = slotID != -1 ? SlotHandler.Slots[slotID] :  SlotHandler.GetNextSlot();
 
@@ -207,21 +195,47 @@ public class LocalInventory : ContextBehaviour, IInventory
         Items.Add(inventoryItem);
     }
 
-    public virtual void RemoveItem(int itemID)
+    public virtual void RemoveItem(int itemID, int slotID = -1)
+    {
+        if (Object.HasStateAuthority)
+        {
+            ExecuteRemoveItem(itemID, slotID);
+        }
+        else
+        {
+            RPC_RemoveItem(itemID, slotID);
+        }
+    }
+
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_RemoveItem(int itemID, int slotID = -1)
+    {
+        ExecuteRemoveItem(itemID, slotID);
+    }
+
+    private void ExecuteRemoveItem(int itemID, int slotID = -1)
     {
         ItemListData itemData = default;
-        FindItem(itemID, out itemData);
+
+        if (slotID != -1)
+        {
+            FindItemBySlotID(slotID, out itemData);
+        }
+        else
+        {
+            FindItem(itemID, out itemData);
+        }
 
         if (itemData.ItemID == 0)
         {
-            Debug.Log("Error finding item");
             return;
         }
 
         Slot slot = SlotHandler.FindSlotByID(itemData.SlotID);
         slot.Reset();
+        
         Items.Remove(itemData);
-        onItemRemoved?.Invoke(itemData);
     }
 
     public void OnSlotHovered(Slot slot)
@@ -261,7 +275,7 @@ public class LocalInventory : ContextBehaviour, IInventory
             return;
         }
 
-        RPC_ThrowItem(slot.InventoryItem.ItemID, slot.InventoryItem.Stack);
+     //   RPC_ThrowItem(slot.InventoryItem.ItemID, slot.InventoryItem.Stack);
 
     }
 
@@ -326,7 +340,6 @@ public class LocalInventory : ContextBehaviour, IInventory
                 break;
             }
         }
-        
     }
 
 
@@ -335,6 +348,23 @@ public class LocalInventory : ContextBehaviour, IInventory
         for (int i = 0; i < Items.Count; i++)
         {
             if (itemID != Items[i].ItemID)
+            {
+                continue;
+            }
+
+            itemData = Items[i];
+            return true;
+        }
+
+        itemData = default;
+        return false;
+    }
+
+    public bool FindItemBySlotID(int slotID, out ItemListData itemData)
+    {
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (slotID != Items[i].SlotID)
             {
                 continue;
             }

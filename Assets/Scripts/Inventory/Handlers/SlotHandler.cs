@@ -126,18 +126,11 @@ public class SlotHandler
         
         Item item = SceneHandler.Instance.ItemDatabase.FindItem(oldSlot.InventoryItem.ItemID);
 
-        if (oldSlot.Inventory != newSlot.Inventory)
+        if (oldSlot.inventory != newSlot.inventory)
         {
-            if (newSlot.Inventory.IsFull)
-            {
-                return;
-            }
-            
-            oldSlot.Inventory.RemoveItem(item.itemID);
-
-            int slotID = toFirstSlot ? -1 : newSlot.ID;
-            
-            newSlot.Inventory.AddItem(item.itemID, slotID);
+            oldSlot.inventory.FindItem(item.itemID, out ItemListData inventoryItem);
+            oldSlot.inventory.RemoveItem(item.itemID, oldSlot.ID);
+            newSlot.inventory.AddItem(item.itemID, inventoryItem.Stack, newSlot.ID);
             return;
         }
 

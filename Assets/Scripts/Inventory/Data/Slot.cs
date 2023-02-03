@@ -9,20 +9,21 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
 {
     public int ID { get; set; }
     public bool HasItem { get; set; }
-    public IInventory Inventory { get; set; }
+    public IInventory inventory { get; set; }
     public bool IsHovered { get; set; }
-    
     public bool IsSelected { get; private set; }
     
     
     [SerializeField] protected Image itemIcon;
     [SerializeField] protected Text stackText;
 
-    private SlotHandler _slotHandler;
-    private Animator _animator;
-    
     public delegate void OnSlotReset(Slot slot);
     public OnSlotReset SlotReset;
+    
+    
+    private SlotHandler _slotHandler;
+    private Animator _animator;
+
     
     private void Awake()
     {
@@ -36,13 +37,13 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
         itemIcon.enabled = false;
         stackText.enabled = false;
         _slotHandler = slotHandler;
-        Inventory = inventory;
+        this.inventory = inventory;
     }
     
     [HideInInspector]
     public ItemListData InventoryItem;
 
-    public virtual void InitItem(Item item, ref ItemListData inventoryItem)
+    public virtual void InitItem(Item item, ItemListData inventoryItem)
     {
         itemIcon.enabled = true;
         itemIcon.sprite = item.itemIcon;
@@ -125,7 +126,7 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
             }
             else if (closestDist >= 100f)
             {
-                Inventory.ThrowItem(this);
+                inventory.ThrowItem(this);
                 itemIcon.transform.localPosition = Vector3.zero;
             }
             else
@@ -148,12 +149,12 @@ public class Slot : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterH
     public void OnPointerEnter(PointerEventData eventData)
     {
         IsHovered = true;
-        Inventory.OnSlotHovered(this);
+        inventory.OnSlotHovered(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         IsHovered = false;
-        Inventory.OnSlotUnHovered(this);
+        inventory.OnSlotUnHovered(this);
     }
 }

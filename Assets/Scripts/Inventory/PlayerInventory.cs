@@ -29,7 +29,7 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     [Networked(OnChanged = nameof(OnEquippedItemChanged), OnChangedTargets = OnChangedTargets.All)]
     public int EquippedItemID { get; set; }
     
-    [Networked, HideInInspector]
+    [Networked]
     public NetworkBool IsOpen { get; private set; }
 
     [Networked, HideInInspector]
@@ -90,6 +90,7 @@ public class PlayerInventory : LocalInventory, IInputProccesor
     
     public void ToggleInventory()
     {
+        Debug.Log(CanUse);
         if (!CanUse)
         {
             return;
@@ -97,11 +98,10 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         
         IsOpen = !IsOpen;
         
-        _player.Camera.CanLook = !IsOpen;
-
         if (Object.HasInputAuthority)
         {
             inventoryUI.SetActive(IsOpen);
+            _player.Camera.CanLook = !IsOpen;
 
             if (IsOpen)
             {
@@ -123,7 +123,7 @@ public class PlayerInventory : LocalInventory, IInputProccesor
 
         if (itemID == EquippedItem.item.itemID)
         {
-            return;
+       //     return;
         }
 
         if (IsSwitching)
@@ -251,7 +251,6 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         yield return new WaitForSeconds(hideTime);
 
         EquippedItem.gameObject.SetActive(false);
-        Debug.Log(EquippedItem.gameObject.activeInHierarchy);
         nextController.gameObject.SetActive(true);
         nextController.Equip();
         

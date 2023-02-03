@@ -6,8 +6,9 @@ public class Cannon : NetworkBehaviour, IInteractable
 {
     public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
     public string ID => "Cannon";
-    
-    
+    public PlayerButtons ExitKey => PlayerButtons.Escape;
+
+
     [SerializeField] private CannonController cannonController;
     
 
@@ -35,13 +36,9 @@ public class Cannon : NetworkBehaviour, IInteractable
         return true;
     }
 
-    public void StopButtonInteract(out ButtonInteractionData interactionData)
+    public void StopButtonInteract(NetworkPlayer player, out ButtonInteractionData interactionData)
     {
-        if (Object.HasInputAuthority)
-        {
-            cannonController.RequestOccupyCannon(false, default);
-        }
-        
+        cannonController.RequestOccupyCannon(false, player.Object.InputAuthority);
 
         interactionData = new ButtonInteractionData()
         {

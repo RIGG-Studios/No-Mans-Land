@@ -136,36 +136,35 @@ public class CannonController : ContextBehaviour
 
     public void RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer)
     {
-        NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(!occupy);
-        cannonCamera.gameObject.SetActive(occupy);
-        
-        RPC_RequestOccupyCannon(occupy, requestedPlayer);
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer = default)
-    {
-        isOccupied = occupy;
-        
-        if (requestedPlayer.IsValid)
+        if (Runner.LocalPlayer == requestedPlayer)
         {
-            Object.AssignInputAuthority(requestedPlayer); 
-            
-            Context.Gameplay.TryFindPlayer(requestedPlayer, out Player player);
+            NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(!occupy);
+            cannonCamera.gameObject.SetActive(occupy);
+        }
 
-            if (player != null)
+        if (Object.HasStateAuthority)
+        {
+            isOccupied = occupy;
+        
+            if (occupy)
             {
-                OccupiedPlayer = player.ActivePlayer;
+                Object.AssignInputAuthority(requestedPlayer); 
+            
+                Context.Gameplay.TryFindPlayer(requestedPlayer, out Player player);
+
+                if (player != null)
+                {
+                    OccupiedPlayer = player.ActivePlayer;
+                }
+            }
+            else
+            {
+                Object.AssignInputAuthority(default);
+                OccupiedPlayer = null;
             }
         }
-        else
-        {
-            Object.AssignInputAuthority(default);
-            OccupiedPlayer = null;
-        }
     }
-    
-    
+
 
     public void OnSink()
     {

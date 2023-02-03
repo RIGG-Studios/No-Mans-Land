@@ -23,6 +23,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     [Networked]
     private TickTimer fireCooldown { get; set; }
     
+    
     public override void OnEnable()
     {
         base.OnEnable();
@@ -64,10 +65,9 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         
         if (Object.HasInputAuthority)
         {
-            FireEffects();
+            FireEffectsLocal();
         }
 
-        
         Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
             Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
         
@@ -107,13 +107,13 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
     public void Attack()
     {
-        NetworkPlayer.Local.Attack.HitScanAttack(damage, raycastLength);
-        onAttack?.Invoke();
+     //   NetworkPlayer.Local.Attack.HitScanAttack(damage, raycastLength);
+     //   onAttack?.Invoke();
         
-        FireEffects();
+     //   FireEffects();
     }
 
-    private void FireEffects()
+    private void FireEffectsLocal()
     {
         muzzleFlash.Play();
         Animator.SetTrigger(_fire);

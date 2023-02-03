@@ -62,7 +62,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Foam_Texture:
         m_Texture: {fileID: 2800000, guid: 3f373d88a3e2f4a4480764fa62b555cf, type: 3}
-        m_Scale: {x: 8, y: 8}
+        m_Scale: {x: 50, y: 50}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
         m_Texture: {fileID: 0}
@@ -200,13 +200,13 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _ExtraExpersion: 0.54
+    - _ExtraExpersion: 0.68
     - _Extra_Expersion: -1.43
-    - _FoamBands: 0.58
+    - _FoamBands: 3.16
     - _FoamEdgeHardness: 0.53
-    - _FoamFalloff: 7.36
-    - _FoamRemoval: 0.04
-    - _FoamWidth: 18.47
+    - _FoamFalloff: 2.12
+    - _FoamRemoval: 0.2
+    - _FoamWidth: 2.87
     - _Foam_Bands: 5
     - _Foam_Edge_Hardness: 1.5
     - _Foam_Falloff: 2.28
@@ -215,7 +215,7 @@ Material:
     - _Frequency: 0.1
     - _Frequency_1: 0.1
     - _Frequency_2: 0.2
-    - _GameTime: 45.050003
+    - _GameTime: 18.683
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -236,6 +236,7 @@ Material:
     - _MetallicRemapMin: 0
     - _NormalMapSpace: 0
     - _NormalScale: 1
+    - _Opacity_2: 0
     - _OpaqueCullMode: 2
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -246,7 +247,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 1
     - _RefractionModel: 0
-    - _RefractionStrength: 0.5
+    - _RefractionStrength: 0.26
     - _Refraction_Strength: 0.42
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
@@ -255,7 +256,7 @@ Material:
     - _RippleTling: 0.26
     - _Secondary_Frequency: 0.4
     - _Secondary_Speed: 1
-    - _Smoothness: 0.9
+    - _Smoothness: 0.754
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SpecularAAScreenSpaceVariance: 0.1
@@ -305,7 +306,7 @@ Material:
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
     - _WaterEdgeOpacity: 1
-    - _WaterOpacity: 1
+    - _WaterOpacity: 0.903
     - _Water_Edge_Opacity: 0.636
     - _Water_Opacity: 0.75
     - _ZTestDepthEqualForOpaque: 4
@@ -318,11 +319,12 @@ Material:
     - Vector3_8495EC90: {r: 0.04, g: 0, b: -0.08, a: 0}
     - Vector3_BB5DA054: {r: -0.04, g: 0, b: 0.1, a: 0}
     - Vector4_2DF06505: {r: 1, g: 1, b: 1, a: 0.5}
+    - _AlphaMaskPos: {r: 92.4, g: 1.18, b: 47.6, a: 18.7}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color01: {r: 0.5529412, g: 0.9098039, b: 1, a: 0}
-    - _Color02: {r: 0.078720205, g: 0.4076946, b: 0.5754717, a: 0}
+    - _Color01: {r: 0, g: 0.79824567, b: 1, a: 0}
+    - _Color02: {r: 0.16567281, g: 0.47453272, b: 0.6886792, a: 0}
     - _Color_01: {r: 0, g: 0.6698113, b: 0.50369817, a: 0}
     - _Color_02: {r: 0.25907797, g: 0.51477236, b: 0.7735849, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}

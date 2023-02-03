@@ -13,6 +13,8 @@ public class Character : ContextBehaviour
     private CharacterEquippableItem _currentItem;
     private NetworkPlayer _player;
     private int _currentTpID;
+
+    public CharacterEquippableItem CurrentItem => _currentItem;
     
     private void Start()
     {
@@ -30,7 +32,7 @@ public class Character : ContextBehaviour
         CharacterEquippableItem itemController =
             Instantiate(item.tpPrefab, weaponsContainer).GetComponent<CharacterEquippableItem>();
         
-        itemController.Init(item.itemID);
+        itemController.Init(item.itemID, _player);
         itemController.gameObject.SetActive(false);
 
         _tpItems.Add(itemController);

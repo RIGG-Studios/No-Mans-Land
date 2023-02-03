@@ -23,23 +23,26 @@ public class BaseSway : MonoBehaviour
 
     private void Update()
     {
-        if (_itemController.Player.Pause.IsOpen || _itemController.Player.Inventory.IsOpen)
+        if (_itemController.Object.HasInputAuthority)
         {
-            return;
+            if (_itemController.Player.Pause.IsOpen || _itemController.Player.Inventory.IsOpen)
+            {
+                return;
+            }
+
+            float x = _mouseLook.x * swayAmount * Time.deltaTime;
+            float y = _mouseLook.y * swayAmount * Time.deltaTime;
+
+            x = Mathf.Clamp(x, -maxSway, maxSway);
+            y = Mathf.Clamp(y, -maxSway, maxSway);
+
+
+            Quaternion swayRot = Quaternion.Euler(y, -x, x);
+
+            swayTarget.localRotation = Quaternion.Lerp(swayTarget.localRotation, swayRot, Time.deltaTime * 5f);
         }
-        
-        float x = _mouseLook.x * swayAmount * Time.deltaTime;
-        float y = _mouseLook.y * swayAmount * Time.deltaTime;
-
-        x = Mathf.Clamp(x, -maxSway, maxSway);
-        y = Mathf.Clamp(y, -maxSway, maxSway);
-
-        
-        Quaternion swayRot = Quaternion.Euler(y, -x, x);
-        
-        swayTarget.localRotation = Quaternion.Lerp(swayTarget.localRotation, swayRot, Time.deltaTime * 5f);
     }
-    
+
 
     public void UpdateInput(Vector2 mouseLook) => _mouseLook = mouseLook;
     public virtual float CalculateSwaySpeed() => swaySmoothing;

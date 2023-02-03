@@ -18,11 +18,13 @@ public interface IInteractable
     string LookAtID { get; }
     string ID { get; }
     
+    PlayerButtons ExitKey { get; }
+    
     
     void LookAtInteract();
 
     void StopLookAtInteract();
 
     bool ButtonInteract(NetworkPlayer networkPlayer, out ButtonInteractionData interactData);
-    void StopButtonInteract(out ButtonInteractionData interactionData);
+    void StopButtonInteract(NetworkPlayer networkPlayer, out ButtonInteractionData interactionData);
 }

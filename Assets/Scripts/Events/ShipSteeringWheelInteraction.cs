@@ -4,7 +4,7 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
+public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
 {
     [SerializeField] private Ship ship;
 
@@ -13,8 +13,9 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
     public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
 
     public string ID => "ShipWheel";
-    
-    
+    public PlayerButtons ExitKey => PlayerButtons.Interact;
+
+
     public void LookAtInteract() { }
 
     public void StopLookAtInteract() { }
@@ -41,7 +42,7 @@ public class ShipSteeringWheelInteraction : ShipComponent, IInteractable
         return true;
     }
 
-    public void StopButtonInteract(out ButtonInteractionData interactionData)
+    public void StopButtonInteract(NetworkPlayer player, out ButtonInteractionData interactionData)
     {
         Ship.RPC_RequestResetPilot();
 
