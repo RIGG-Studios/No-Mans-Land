@@ -1513,15 +1513,12 @@ MonoBehaviour:
   remoteComponentsToDisable:
   - {fileID: 4179003223961389194}
   - {fileID: 6880502451465274540}
-  - {fileID: 405607105689438971}
-  - {fileID: 3421363453046290868}
   remoteGameObjectsDisable:
   - {fileID: 82060555539084502}
   - {fileID: 8056894814738391696}
   - {fileID: 1509187590541231210}
   - {fileID: 4815149227603423245}
   - {fileID: 5401546507443890703}
-  areOfInterestExtents: 64
   onLocalPlayerInit:
     m_PersistentCalls:
       m_Calls:
@@ -1541,8 +1538,8 @@ MonoBehaviour:
   movement: {fileID: 67780509746397124}
   cameraLook: {fileID: 2711695760728551273}
   inventory: {fileID: 3134399232989235859}
-  attacker: {fileID: 0}
   health: {fileID: 5968819807260933364}
+  character: {fileID: 0}
   ui: {fileID: 4944068395436352298}
   hitMarker: {fileID: 2933927376085267517}
   pause: {fileID: 8403892621334275890}

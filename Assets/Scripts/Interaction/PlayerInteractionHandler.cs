@@ -163,14 +163,19 @@ public class PlayerInteractionHandler : NetworkBehaviour
 
             if (interactionData.OpenInventory)
             {
-                if(!_networkPlayer.Inventory.IsOpen)
+                Debug.Log(Object.HasStateAuthority);
+                if (!_networkPlayer.Inventory.IsOpen)
+                {
                     _networkPlayer.Inventory.ToggleInventory();
+                }
             }
             
             if (interactionData.HideInventory)
             {
-                if(_networkPlayer.Inventory.IsOpen)
+                if (_networkPlayer.Inventory.IsOpen)
+                {
                     _networkPlayer.Inventory.ToggleInventory();
+                }
             }
 
             if (Object.HasInputAuthority)
@@ -212,14 +217,14 @@ public class PlayerInteractionHandler : NetworkBehaviour
 
         if (interactionData.OpenInventory)
         {
-            if(!_networkPlayer.Inventory.IsOpen)
-                _networkPlayer.Inventory.ToggleInventory();
+       //     if(!_networkPlayer.Inventory.IsOpen)
+         //       _networkPlayer.Inventory.ToggleInventory();
         }
             
         if (interactionData.HideInventory)
         {
-            if(_networkPlayer.Inventory.IsOpen)
-                _networkPlayer.Inventory.ToggleInventory();
+         //   if(_networkPlayer.Inventory.IsOpen)
+           //     _networkPlayer.Inventory.ToggleInventory();
         }
 
         if (interactionData.EnableCameraLook)
