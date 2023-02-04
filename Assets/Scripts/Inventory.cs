@@ -131,8 +131,26 @@ public class Inventory : ContextBehaviour, IInventory
         }
     }
 
-    public void OnSlotHovered(Slot slot) { }
-    public void OnSlotUnHovered(Slot slot) { }
+    public void OnSlotHovered(Slot slot)
+    {
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
+        
+        NetworkPlayer.Local.Inventory.OnSlotHovered(slot);
+    }
+
+    public void OnSlotUnHovered(Slot slot)
+    {
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
+
+        NetworkPlayer.Local.Inventory.OnSlotUnHovered(slot);
+    }
+
     public void OnSlotReset(Slot slot) { }
     
     
