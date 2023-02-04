@@ -160,16 +160,16 @@ Material:
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
-    - _Amplitude: 0.51
-    - _Amplitude_1: 0.35
-    - _Amplitude_2: 0.39
+    - _Amplitude: 3.63
+    - _Amplitude_1: 1.24
+    - _Amplitude_2: 3
     - _Anisotropy: 0
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CrestFalloff: 6.36
-    - _CrestOffset: 2.35
-    - _CrestSize: 4.24
+    - _CrestOffset: 0
+    - _CrestSize: 0
     - _Crest_Falloff: 2.66
     - _Crest_Offset: -1
     - _Crest_Size: 0.34
@@ -187,7 +187,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
-    - _Distance: 10
+    - _Distance: 30
     - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
@@ -200,13 +200,13 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _ExtraExpersion: 0.68
+    - _ExtraExpersion: 0.47
     - _Extra_Expersion: -1.43
-    - _FoamBands: 3.16
-    - _FoamEdgeHardness: 0.53
-    - _FoamFalloff: 2.12
-    - _FoamRemoval: 0.2
-    - _FoamWidth: 2.87
+    - _FoamBands: 5
+    - _FoamEdgeHardness: 0.83
+    - _FoamFalloff: 3.78
+    - _FoamRemoval: 0.11
+    - _FoamWidth: 7.84
     - _Foam_Bands: 5
     - _Foam_Edge_Hardness: 1.5
     - _Foam_Falloff: 2.28
@@ -214,8 +214,8 @@ Material:
     - _Foam_Width: 7.71
     - _Frequency: 0.1
     - _Frequency_1: 0.1
-    - _Frequency_2: 0.2
-    - _GameTime: 39.134003
+    - _Frequency_2: 0.1
+    - _GameTime: 9.860001
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -262,13 +262,13 @@ Material:
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
-    - _Speed: 0.35
-    - _Speed_1: 0.8
-    - _Speed_2: 0.35
+    - _Speed: 0.5
+    - _Speed_1: 0.7
+    - _Speed_2: 0.3
     - _SrcBlend: 1
-    - _Steepness: 2
+    - _Steepness: 0.69
     - _Steepness_1: 1
-    - _Steepness_2: 1
+    - _Steepness_2: 0.5
     - _StencilRef: 0
     - _StencilRefDepth: 8
     - _StencilRefDistortionVec: 4
@@ -306,7 +306,7 @@ Material:
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
     - _WaterEdgeOpacity: 1
-    - _WaterOpacity: 0.903
+    - _WaterOpacity: 1
     - _Water_Edge_Opacity: 0.636
     - _Water_Opacity: 0.75
     - _ZTestDepthEqualForOpaque: 4
@@ -323,14 +323,14 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color01: {r: 0, g: 0.79824567, b: 1, a: 0}
-    - _Color02: {r: 0.16567281, g: 0.47453272, b: 0.6886792, a: 0}
+    - _Color01: {r: 0.1511659, g: 0.7172879, b: 0.745283, a: 0}
+    - _Color02: {r: 0.13725491, g: 0.52824855, b: 0.67058825, a: 0}
     - _Color_01: {r: 0, g: 0.6698113, b: 0.50369817, a: 0}
     - _Color_02: {r: 0.25907797, g: 0.51477236, b: 0.7735849, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
-    - _Direction: {r: -1, g: -1, b: 0, a: 0}
-    - _Direction_1: {r: 1, g: -1, b: 0, a: 0}
-    - _Direction_2: {r: 1, g: 1, b: 0, a: 0}
+    - _Direction: {r: 0.5, g: 0.2, b: 0, a: 0}
+    - _Direction_1: {r: -0.8, g: 0.5, b: 0, a: 0}
+    - _Direction_2: {r: 0, g: -1, b: 0, a: 0}
     - _Direction_3: {r: -1, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}

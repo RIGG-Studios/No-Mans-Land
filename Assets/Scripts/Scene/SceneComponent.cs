@@ -18,11 +18,7 @@ public class SceneComponent : MonoBehaviour
 
     public void Init(Scene scene, SceneContext context)
     {
-        if (_isInitialized)
-        {
-            return;
-        }
-
+        Debug.Log(context);
         _scene = scene;
         _context = context;
         

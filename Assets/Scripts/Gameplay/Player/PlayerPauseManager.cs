@@ -35,7 +35,7 @@ public class PlayerPauseManager : ContextBehaviour
     public void Disconnect()
     {
         Context.UI.FadeImage(1.0f, 2.0f);
-        Context.Camera.Enable();
+        Context.Camera.Enable(SceneCamera.CameraTypes.Scene);
         Context.Gameplay.Disconnect(Runner);
     }
 

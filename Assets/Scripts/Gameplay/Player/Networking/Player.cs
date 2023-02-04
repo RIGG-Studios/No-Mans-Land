@@ -51,6 +51,13 @@ public class Player : ContextBehaviour
 
     public NetworkPlayer PlayerPrefab => playerPrefab;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void AssignNetworkPlayer(NetworkPlayer player)
     {
         if (Object.HasInputAuthority)
@@ -77,7 +84,7 @@ public class Player : ContextBehaviour
 
         if (changed.Behaviour.State == StateTypes.Dead)
         {
-            changed.Behaviour.Context.Camera.Enable();
+            changed.Behaviour.Context.Camera.Enable(SceneCamera.CameraTypes.Deploy);
             changed.Behaviour.Context.Input.RequestCursorRelease();
             changed.Behaviour.Context.UI.EnableMenu("SpawnSelectionMenu");
         }
@@ -107,7 +114,7 @@ public class Player : ContextBehaviour
 
         if (Context.Gameplay != null)
         {
-            Context.Gameplay.Join(this);
+   //         Context.Gameplay.Join(this);
         }
         
         if (Object.HasInputAuthority)

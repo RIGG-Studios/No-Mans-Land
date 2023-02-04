@@ -51,7 +51,8 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         {
             Local = this;
             Context.Input.RequestCursorLock();
-            Context.Camera.Disable();
+            Context.Camera.Disable(SceneCamera.CameraTypes.Deploy);
+            Context.Camera.Disable(SceneCamera.CameraTypes.Scene);
         }
 
         _inputProcessors = GetComponents<IInputProccesor>();

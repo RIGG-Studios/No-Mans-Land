@@ -6,21 +6,10 @@ using UnityEngine;
 
 public class Gameplay : ContextBehaviour
 {
-    public enum GameplayStates : byte
-    {
-        StartingGame,
-        PreBattle,
-        InBattle,
-        EndGame
-    }
-    
     [Networked, Capacity(16)]
     public NetworkDictionary<PlayerRef, Player> Players { get; } = new();
+
     
-    [Networked]
-    public GameplayStates GameplayState { get; set; }
-
-
     [SerializeField] private Backpack backpackPrefab;
 
     private SpawnPoint[] _spawnPoints;
@@ -57,6 +46,11 @@ public class Gameplay : ContextBehaviour
         Players.Add(playerRef, player);
         
         SpawnNetworkPlayer(player, spawnPoint.Transform.position, spawnPoint.Transform.rotation);
+    }
+
+    public void OnGameplayStarted()
+    {
+        
     }
 
     public void Leave(NetworkBehaviour player)

@@ -23,10 +23,16 @@ public class SceneUI : SceneComponent
     private void Awake()
     {
         _uiComponents = GetComponentsInChildren<UIComponent>();
+        
     }
 
     private void Start()
     {
+        Debug.Log(Context);
+        for (int i = 0; i < _uiComponents.Length; i++)
+        {
+            _uiComponents[i].Init(Context);
+        }
         CloseAllMenus();
     }
 
@@ -54,6 +60,14 @@ public class SceneUI : SceneComponent
         nextMenu.gameObject.SetActive(true);
         nextMenu.Enable();
         _openedMenu = nextMenu;
+    }
+
+    public void DisableMenu(string id)
+    {
+        UIComponent menu = FindUIComponent(id);
+
+        menu.Disable();
+        menu.gameObject.SetActive(false);
     }
 
     public void CloseAllMenus()
