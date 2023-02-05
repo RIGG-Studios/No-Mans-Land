@@ -111,17 +111,13 @@ public class Player : ContextBehaviour
     {
         Stats.PlayerRef = Object.InputAuthority;
         State = StateTypes.Alive;
-
-        if (Context.Gameplay != null)
-        {
-   //         Context.Gameplay.Join(this);
-        }
+        
+        
         
         if (Object.HasInputAuthority)
         {
-            RPC_RequestUpdatePlayerName(Object.HasStateAuthority ? "PLAYER (HOST)" : "PLAYER (CLIENT)");
+            RPC_RequestUpdatePlayerName(ClientInfo.ClientName);
             Local = this;
-          //  Context.UI.EnableMenu("SpawnSelectionMenu");
         }
     }
 

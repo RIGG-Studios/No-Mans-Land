@@ -136,7 +136,7 @@ public class CannonController : ContextBehaviour
 
     public void RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer)
     {
-        if (Runner.LocalPlayer == requestedPlayer)
+        if (Object.InputAuthority == requestedPlayer)
         {
             NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(!occupy);
             cannonCamera.gameObject.SetActive(occupy);

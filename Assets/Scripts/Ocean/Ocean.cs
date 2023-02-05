@@ -119,9 +119,9 @@ public class Ocean : NetworkBehaviour
         float dot = Vector2.Dot(new Vector2(pos.x, pos.z), frequencyDir);
         float time = Time * waveSettings.speed;
         float total = dot + time;
-        float amp = waveSettings.amplitude * waveSettings.steepness;
+            float amp = waveSettings.amplitude * waveSettings.steepness;
 
-        return Mathf.Cos(total) * (amp * waveSettings.direction.y);
+        return Mathf.Cos(total) * (amp * dir.y);
     }
     
 }

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb03aff2ae5b0f45a2ca32dfc5fab0a, type: 3}
   m_Name: Wave 2
   m_EditorClassIdentifier: 
-  amplitude: 1.24
-  frequency: 0.1
-  speed: 0.7
-  steepness: 1
+  amplitude: 0
+  frequency: 0
+  speed: 0
+  steepness: 0
   direction: {x: -0.8, y: 0.5}
   amplitudeID: _Amplitude_1
   frequencyID: _Frequency_1

@@ -13,7 +13,7 @@ public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
     public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
 
     public string ID => "ShipWheel";
-    public PlayerButtons ExitKey => PlayerButtons.Interact;
+    public PlayerButtons ExitKey => PlayerButtons.Escape;
 
 
     public void LookAtInteract() { }

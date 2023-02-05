@@ -17,7 +17,7 @@ MonoBehaviour:
   deepColor: {r: 0.13725491, g: 0.52824855, b: 0.67058825, a: 0}
   foamColor: {r: 1, g: 1, b: 1, a: 0}
   waveFoam: 1
-  extraDispersion: 0.47
+  extraDispersion: 0.84
   edgeHardness: 0.83
   crestSize: 0
   crestOffset: 0
