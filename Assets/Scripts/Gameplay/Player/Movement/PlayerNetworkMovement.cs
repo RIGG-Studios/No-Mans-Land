@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerNetworkMovement : ContextBehaviour
 {
@@ -37,8 +38,9 @@ public class PlayerNetworkMovement : ContextBehaviour
     
     public float Vertical { get; private set; }
     public float Horizontal { get; private set; }
-    
-    
+
+
+    private WaterSurface _waterSurface;
     
     protected override void Awake()
     {
@@ -46,6 +48,7 @@ public class PlayerNetworkMovement : ContextBehaviour
         
         _movementHandler = GetComponent<PlayerMovement>();
         _player = GetComponent<NetworkPlayer>();
+        _waterSurface = FindObjectOfType<WaterSurface>();
     }
 
     public override void FixedUpdateNetwork()
@@ -109,7 +112,18 @@ public class PlayerNetworkMovement : ContextBehaviour
         _movementHandler.UpdateCameraRotation(input);
         
         IsMoving = input.MovementInput != Vector2.zero;
-        IsSwimming = (_player.Camera.transform.position.y < Ocean.Instance.GetWaterHeightAtPosition(_player.Camera.transform.position) + 0.85f);
+        
+        WaterSearchParameters wsp = new WaterSearchParameters()
+        {
+            startPositionWS = transform.position,
+            targetPositionWS = transform.position,
+            maxIterations = 7,
+            error = 0.01f
+        };
+
+        _waterSurface.ProjectPointOnWaterSurface(wsp, out WaterSearchResult result);
+        
+        IsSwimming = (_player.Camera.transform.position.y < result.projectedPositionWS.y + 0.5f);
         IsGrounded = CheckForGround();
         
         if (pressed.IsSet(PlayerButtons.Sprint) && !input.IsAiming && !input.IsReloading)

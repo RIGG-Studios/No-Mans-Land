@@ -37,6 +37,11 @@ public class ShipPhysicsHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        _rigidbody.AddForce(transform.forward * forwardInput * movementSpeed, ForceMode.Force);
+
+        _rigidbody.AddForceAtPosition(horizontalInput * -_ship.RudderTransform.right * rotationSpeed,
+            _ship.RudderTransform.position, ForceMode.Force);
+        
         if (!GetInput(out NetworkInputData input) || !CanMove)
         {
             return;
@@ -45,11 +50,6 @@ public class ShipPhysicsHandler : NetworkBehaviour
         
         forwardInput = Mathf.Clamp(input.MovementInput.y, 0.0f, maxMovementSpeed);
         horizontalInput = input.MovementInput.x;
-        
-        _rigidbody.AddForce(transform.forward * forwardInput * movementSpeed, ForceMode.Force);
-
-        _rigidbody.AddForceAtPosition(horizontalInput * -_ship.RudderTransform.right * rotationSpeed,
-            _ship.RudderTransform.position, ForceMode.Force);
     }
 
     public void AddForce(Vector3 velocity)
