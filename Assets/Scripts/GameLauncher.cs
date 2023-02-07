@@ -63,6 +63,11 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     {
         Instance = this;
         
+        SpawnRunner();
+    }
+
+    private void SpawnRunner()
+    {
         _runner = Instantiate(networkRunnerPrefab, Vector3.zero, Quaternion.identity);
         _runner.AddCallbacks(this);
         _runner.name = "Network Runner";
@@ -78,8 +83,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (_runner == null)
         {
-            Debug.Log("Runner Not Initialized");
-            return false;
+            SpawnRunner();
         }
 
         var sceneIndex = SceneUtility.GetBuildIndexByScenePath($"scenes/{sceneName}");

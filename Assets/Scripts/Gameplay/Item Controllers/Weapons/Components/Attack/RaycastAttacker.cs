@@ -89,19 +89,16 @@ public class RaycastAttacker : WeaponComponent, IAttacker
                 Weapon.Player.HitMarker.ShowCrosshair();
             }
         }
-        
-        Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
 
-        HitData hitData =
-            NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
-        
-        
-        if (hitData.IsFatal && Object.HasInputAuthority)
+        if (Object.HasStateAuthority)
         {
-            Weapon.Player.UI.ShowKillNotifcation(hitData.VictimUsername.ToString());
+
+            Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
+
+            HitData hitData =
+                NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
+
         }
-        
-        
         Weapon.OnFired();
     }
 

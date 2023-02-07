@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Fusion;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gameplay : ContextBehaviour
 {
@@ -171,9 +172,11 @@ public class Gameplay : ContextBehaviour
         });
     }
 
-    public void Disconnect(NetworkRunner runner)
+    public void Disconnect(NetworkBehaviour player, NetworkRunner runner)
     {
-        runner.Shutdown();
+         runner.Shutdown();
+         SceneManager.LoadScene(0);
+
     }
 
     public void TryFindPlayer(PlayerRef playerRef, out Player player)

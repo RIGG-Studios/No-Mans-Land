@@ -6,7 +6,7 @@ public class Cannon : NetworkBehaviour, IInteractable
 {
     public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
     public string ID => "Cannon";
-    public PlayerButtons ExitKey => PlayerButtons.Escape;
+    public PlayerButtons ExitKey => PlayerButtons.Interact;
 
 
     [SerializeField] private CannonController cannonController;

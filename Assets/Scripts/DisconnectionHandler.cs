@@ -18,8 +18,20 @@ public class DisconnectionHandler : MonoBehaviour
         Close();
     }
 
+    public void ShutdownCustomMessage(string status, string message)
+    {
+        disconnectionStatusText.text = status;
+        disconnectionReasonText.text = message;
+        disconnectUI.SetActive(true);
+    }
+
     public void OnShutdown(ShutdownReason reason)
     {
+        if (disconnectUI == null)
+        {
+            return;
+        }
+        
         (string status, string message) = ShutDownReason(reason);
 
         disconnectionStatusText.text = status;
@@ -29,6 +41,12 @@ public class DisconnectionHandler : MonoBehaviour
 
     public void OnConnectionFailed(NetConnectFailedReason reason)
     {
+        if (disconnectUI == null)
+        {
+            return;
+        }
+
+        
         (string status, string message) = ConnectFailedReason(reason);
         
         disconnectionStatusText.text = status;
