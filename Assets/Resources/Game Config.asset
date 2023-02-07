@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea0848a35401484eb9fddbc70747cae, type: 3}
   m_Name: Game Config
   m_EditorClassIdentifier: 
-  gameVersion: 0
+  gameVersion: 0.01
   maxTeamSize: 4
   maxPlayersPerGame: 1
   shipRespawnDelay: 30

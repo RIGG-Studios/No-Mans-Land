@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Fusion;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChestInventory : Inventory, IInteractable
 {
@@ -11,6 +12,7 @@ public class ChestInventory : Inventory, IInteractable
     public NetworkBool IsOpen { get; set; } = false;
 
     [SerializeField] private GameObject chestUI;
+    [SerializeField] private Text inventoryHeader;
     
     private bool _canOpen;
     
@@ -18,7 +20,13 @@ public class ChestInventory : Inventory, IInteractable
     public string ID => "Chest";
     public PlayerButtons ExitKey => PlayerButtons.ToggleInventory;
 
-    private void Start()
+    protected override void Awake()
+    {
+        base.Awake();
+        SetHeaderText("BARREL");
+    }
+    
+    protected virtual void Start()
     {
         chestUI.SetActive(false);
     }
@@ -26,6 +34,12 @@ public class ChestInventory : Inventory, IInteractable
     public void LookAtInteract() { }
 
     public void StopLookAtInteract() { }
+
+
+    protected void SetHeaderText(string text)
+    {
+        inventoryHeader.text = text;
+    }
 
     public bool ButtonInteract(NetworkPlayer player, out ButtonInteractionData interactionData)
     {
@@ -41,7 +55,10 @@ public class ChestInventory : Inventory, IInteractable
             Object.AssignInputAuthority(player.Object.InputAuthority);
         }
 
-        chestUI.SetActive(true);
+        if (player.Object.HasInputAuthority)
+        {
+            chestUI.SetActive(true);
+        }
 
 
         interactionData = new ButtonInteractionData()
@@ -57,12 +74,15 @@ public class ChestInventory : Inventory, IInteractable
 
     public void StopButtonInteract(NetworkPlayer player, out ButtonInteractionData interactionData)
     {
-        chestUI.SetActive(false);
-
         if(Object.HasStateAuthority)
         {
             IsOpen = false;
             Object.AssignInputAuthority(default);
+        }
+        
+        if (player.Object.HasInputAuthority)
+        {
+            chestUI.SetActive(false);
         }
         
         interactionData = new ButtonInteractionData()

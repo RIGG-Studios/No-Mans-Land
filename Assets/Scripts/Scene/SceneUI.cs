@@ -57,6 +57,7 @@ public class SceneUI : SceneComponent
 
         UIComponent nextMenu = FindUIComponent(id);
         
+        Debug.Log(nextMenu);
         nextMenu.gameObject.SetActive(true);
         nextMenu.Enable();
         _openedMenu = nextMenu;

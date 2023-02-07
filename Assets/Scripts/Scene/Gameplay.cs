@@ -151,7 +151,7 @@ public class Gameplay : ContextBehaviour
         yield return new WaitForSeconds(3.5f);
 
         Backpack backpack = Runner.Spawn(backpackPrefab, player.ActivePlayer.transform.position, player.ActivePlayer.transform.rotation);
-        backpack.LoadItems(player.ActivePlayer.Inventory.Items.ToArray());
+        backpack.LoadItems(player.PlayerName, player.ActivePlayer.Inventory.Items.ToArray());
         
         player.State = StateTypes.Dead;
         DespawnNetworkPlayer(player);

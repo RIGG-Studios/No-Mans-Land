@@ -54,18 +54,19 @@ public class PlayerInteractionHandler : NetworkBehaviour
         {
             return;
         }
-        
-        ShootRaycast(input);
-        
+
+        if (!_isInteracting)
+        {
+            ShootRaycast(input);
+        }
+
         bool interactPressed = input.Buttons.IsSet(PlayerButtons.Interact);
-        
-        
-        if (_currentInteractable != null && input.Buttons.IsSet(_currentInteractable.ExitKey))
+
+        if (_currentInteractable != null && input.Buttons.IsSet(_currentInteractable.ExitKey) && _isInteracting)
         {
             TryExitInteract();
         }
-        
-        if (interactPressed && _currentInteractable != null)
+        else if (_currentInteractable != null && interactPressed && !_isInteracting)
         {
             TryButtonInteract();
         }
@@ -137,7 +138,7 @@ public class PlayerInteractionHandler : NetworkBehaviour
             return;
         }
         
-        bool success = _currentInteractable.ButtonInteract(NetworkPlayer.Local, out ButtonInteractionData interactionData);
+        bool success = _currentInteractable.ButtonInteract(_networkPlayer, out ButtonInteractionData interactionData);
 
         _isInteracting = success;
         

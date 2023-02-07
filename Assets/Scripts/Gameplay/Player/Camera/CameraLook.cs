@@ -46,6 +46,8 @@ public class CameraLook : MonoBehaviour
         _fov = _defaultFOV;
         CanLook = true;
     }
+
+    public void ToggleCamera(bool state) => Camera.gameObject.SetActive(state);
     
     private void LateUpdate()
     {

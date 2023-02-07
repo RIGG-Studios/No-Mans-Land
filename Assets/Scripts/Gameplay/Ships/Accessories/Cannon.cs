@@ -22,6 +22,14 @@ public class Cannon : NetworkBehaviour, IInteractable
         {
             return false;
         }
+
+        
+        if (networkPlayer.Object.HasInputAuthority)
+        {
+            Debug.Log("Input auth on player");
+            networkPlayer.Camera.ToggleCamera(false);
+            cannonController.ToggleCamera(true);
+        }
         
         cannonController.RequestOccupyCannon(true, networkPlayer.Object.InputAuthority);
         
@@ -40,6 +48,13 @@ public class Cannon : NetworkBehaviour, IInteractable
     {
         cannonController.RequestOccupyCannon(false, player.Object.InputAuthority);
 
+        if (player.Object.HasInputAuthority)
+        {
+            player.Camera.ToggleCamera(true);
+            cannonController.ToggleCamera(false);
+        }
+
+        
         interactionData = new ButtonInteractionData()
         {
             EnableMovement = true

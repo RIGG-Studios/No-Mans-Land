@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
-using UnityEngine;
+    using NoMansLand.Scene;
+    using UnityEngine;
 
 public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
 {
@@ -18,15 +19,50 @@ public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
         EndingSession
     }
     
-    [Networked]
+    [Networked(OnChanged = nameof(OnSessionStateChanged), OnChangedTargets = OnChangedTargets.All)]
     public SessionStates SessionState { get; set; }
 
         
     [Networked]
     public TickTimer StartingGameTimer { get; set; }
     
+    [Networked]
+    public float GameplayTimer { get; set; }
+
+    [Networked]
+    public TickTimer EndingGameplayTimer { get; set; }
+
+    
     private Dictionary<PlayerRef, Player> _players = new(16);
 
+    private static void OnSessionStateChanged(Changed<Session> changed)
+    {
+        SceneContext context = changed.Behaviour.Context;
+        SessionStates state = changed.Behaviour.SessionState;
+
+        switch (state)
+        {
+            case SessionStates.WaitingForPlayers:
+                context.UI.EnableMenu("WaitingForPlayers");
+                return;
+            
+            case SessionStates.StartingGameplay:
+                context.UI.EnableMenu("StartingGameplay");
+                return;
+            
+            case SessionStates.Gameplay:
+                context.UI.EnableMenu("Gameplay");
+                return;
+            
+            case SessionStates.EndingGameplay:
+
+                return;
+            
+            case SessionStates.EndingSession:
+
+                return;
+        }
+    }
     
     public override void Spawned()
     {
@@ -64,14 +100,8 @@ public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
 
     public override void FixedUpdateNetwork()
     {
-        if (SessionState == SessionStates.WaitingForPlayers)
+        if (SessionState == SessionStates.StartingGameplay)
         {
-            Context.UI.EnableMenu("WaitingForPlayers");
-        }
-        else if (SessionState == SessionStates.StartingGameplay)
-        {
-            Context.UI.EnableMenu("StartingGameplay");
-
             if (StartingGameTimer.ExpiredOrNotRunning(Runner))
             {
                 if (Object.HasStateAuthority)
@@ -83,10 +113,16 @@ public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
                     
                     SessionState = SessionStates.Gameplay;
                 }
-                
-                Context.UI.CloseAllMenus();
             }
-        } 
+        }
+        else if (SessionState == SessionStates.Gameplay)
+        {
+            if(Object.HasStateAuthority)
+                GameplayTimer += Runner.DeltaTime;
+            
+            Context.UI.EnableMenu("Gameplay");
+
+        }
     }
 
     public void PlayerLeft(PlayerRef playerRef)

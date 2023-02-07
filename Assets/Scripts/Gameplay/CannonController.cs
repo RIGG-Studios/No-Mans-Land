@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO.Enumeration;
 using Fusion;
-using TMPro;
 using UnityEngine;
 using UnityEngine.VFX;
 
+
+[RequireComponent(typeof(AudioSource))]
 public class CannonController : ContextBehaviour
 {
-    [Networked(OnChanged = nameof(OnAttackChanged))]
+    [Networked(OnChanged = nameof(OnAttackChanged), OnChangedTargets = OnChangedTargets.All)]
     public bool IsAttacking { get; set; }
     
     [Networked] 
@@ -17,9 +15,6 @@ public class CannonController : ContextBehaviour
     [Networked]
     private NetworkButtons ButtonsPrevious { get; set; }
     
-    [Networked]
-    private NetworkBool ResetCannon { get; set; }
-
     [Networked]
     private float pitch { get; set; }
     
@@ -37,6 +32,9 @@ public class CannonController : ContextBehaviour
     [SerializeField] private Camera cannonCamera;
     [SerializeField] private VisualEffect muzzleFlash;
     [SerializeField] private Item ammoItem;
+    [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private AudioClip[] fireSoundEffects;
+
     [SerializeField] private float cannonBallVelocity;
     [SerializeField] private float fireRate;
     [SerializeField] private float rotationSpeed;
@@ -45,8 +43,14 @@ public class CannonController : ContextBehaviour
     [SerializeField] private float originalRotation;
     [SerializeField] private float aimFOV = 60f;
 
-    [SerializeField] private CameraShake cameraShake;
+    private AudioSource _audioSource;
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     public override void FixedUpdateNetwork()
     {
@@ -114,6 +118,7 @@ public class CannonController : ContextBehaviour
     private void OnAttackRemote()
     {
         muzzleFlash.Play();
+        _audioSource.PlayOneShot(fireSoundEffects[Random.Range(0, fireSoundEffects.Length)]);
 
         if (Object.HasInputAuthority)
         {
@@ -133,15 +138,11 @@ public class CannonController : ContextBehaviour
         transform.localRotation = Quaternion.Euler(-yaw, pitch, 0.0f);
     }
 
+    public void ToggleCamera(bool state) => cannonCamera.gameObject.SetActive(state);
+
 
     public void RequestOccupyCannon(bool occupy, PlayerRef requestedPlayer)
     {
-        if (Object.InputAuthority == requestedPlayer)
-        {
-            NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(!occupy);
-            cannonCamera.gameObject.SetActive(occupy);
-        }
-
         if (Object.HasStateAuthority)
         {
             isOccupied = occupy;
