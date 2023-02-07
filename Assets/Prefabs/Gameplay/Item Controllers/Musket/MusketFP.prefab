@@ -739,9 +739,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   recoilX: 1
-  recoilY: 1.2
+  recoilY: 5
   recoilSmoothness: 6
-  maxRecoilY: 2
+  maxRecoilY: 9
 --- !u!114 &2220991232557056156
 MonoBehaviour:
   m_ObjectHideFlags: 0
