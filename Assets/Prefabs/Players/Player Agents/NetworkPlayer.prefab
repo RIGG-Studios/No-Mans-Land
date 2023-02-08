@@ -3392,7 +3392,7 @@ MonoBehaviour:
   mouseSensitivity: 8
   lookSmooth: 1
   maxLookAngleY: 65
-  maxLookAngleX: 0
+  maxLookAngleX: 45
 --- !u!114 &3698441954151704457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3463,6 +3463,7 @@ GameObject:
   - component: {fileID: 4179003223961389194}
   - component: {fileID: 6880502451465274540}
   - component: {fileID: 1764449813856325811}
+  - component: {fileID: 7020970927419016725}
   m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
@@ -3662,6 +3663,19 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!114 &7020970927419016725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7587149011968048517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f9a3df9116bf2243a219a0f24de063c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.4
 --- !u!1 &8056894814738391696
 GameObject:
   m_ObjectHideFlags: 0

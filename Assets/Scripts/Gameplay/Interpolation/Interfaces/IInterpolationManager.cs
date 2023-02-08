@@ -1,5 +1,14 @@
 using UnityEngine;
 
+
+public struct InterpolationData
+{
+    public bool IsValid;
+    public bool Return;
+    public Vector3 TargetPos;
+    public Quaternion TargetRot;
+}
+
 public interface IInterpolationManager
 {
     void SetPose(Vector3 position, CustomPositionInterpolation posInterpolation, Quaternion rotation,

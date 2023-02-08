@@ -44,15 +44,6 @@ public class MenuControl : MonoBehaviour
         nameInput.SetActive(true);
     }
 
-    public void InitializeName()
-    {
-    //    config.SetName(usernameInput.text);
-        if(config.GetName() != ""){
-            mainMenu.SetActive(true);
-            nameInput.SetActive(false);
-        }
-    }
-
     void UpdateOptionsText()
     {
         volumeText.text = (config.GetVolume()) + "%";

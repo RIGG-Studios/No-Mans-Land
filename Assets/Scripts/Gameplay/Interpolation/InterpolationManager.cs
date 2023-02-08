@@ -26,6 +26,8 @@ public class InterpolationManager : MonoBehaviour, IInterpolationManager
     private float _inverseTransitionDuration;
     private float _interpolationDur;
 
+    public event Action onInterpolationCompleted; 
+
     private void OnDisable()
     {
         _sourcePos = _targetPos;
@@ -105,6 +107,8 @@ public class InterpolationManager : MonoBehaviour, IInterpolationManager
 
                 if (_targetScale != Vector3.zero)
                     interpolationTransform.localScale = _targetScale;
+                
+                onInterpolationCompleted?.Invoke();
             }
             else
             {
@@ -128,5 +132,4 @@ public class InterpolationManager : MonoBehaviour, IInterpolationManager
             }
         }
     }
-    
 }

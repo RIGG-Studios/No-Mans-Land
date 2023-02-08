@@ -29,6 +29,7 @@ public class CannonController : ContextBehaviour
 
     [SerializeField] private Projectile projectile;
     [SerializeField] private Transform shootPoint;
+    [SerializeField] private Transform barrel;
     [SerializeField] private Camera cannonCamera;
     [SerializeField] private VisualEffect muzzleFlash;
     [SerializeField] private Item ammoItem;
@@ -135,7 +136,8 @@ public class CannonController : ContextBehaviour
         pitch = Mathf.Clamp(pitch, originalRotation-xRotationMax, originalRotation+xRotationMax);
         yaw = Mathf.Clamp(yaw, -yRotationMax, yRotationMax);
 
-        transform.localRotation = Quaternion.Euler(-yaw, pitch, 0.0f);
+        transform.localRotation = Quaternion.Euler(0.0f, pitch, 0.0f);
+        barrel.localRotation = Quaternion.Euler(0.0f, 0.0f, yaw);
     }
 
     public void ToggleCamera(bool state) => cannonCamera.gameObject.SetActive(state);
@@ -187,4 +189,6 @@ public class CannonController : ContextBehaviour
         NetworkPlayer.Local.Camera.Camera.gameObject.SetActive(true);
         cannonCamera.gameObject.SetActive(false);
     }
+
+    public Camera GetCannonCamera() => cannonCamera;
 }

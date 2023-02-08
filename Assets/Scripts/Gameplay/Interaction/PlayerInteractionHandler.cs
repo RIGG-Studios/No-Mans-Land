@@ -60,6 +60,7 @@ public class PlayerInteractionHandler : NetworkBehaviour
             ShootRaycast(input);
         }
 
+        Debug.Log(_currentInteractable);
         bool interactPressed = input.Buttons.IsSet(PlayerButtons.Interact);
 
         if (_currentInteractable != null && input.Buttons.IsSet(_currentInteractable.ExitKey) && _isInteracting)
@@ -76,7 +77,6 @@ public class PlayerInteractionHandler : NetworkBehaviour
     {
         Vector3 pos = lookFromPoint.position;
         Vector3 dir = (input.LookForward * input.LookVertical) * Vector3.forward;
-
         Runner.LagCompensation.Raycast(pos, dir, maxInteractionDistance, Object.InputAuthority, out var hitInfo,
             interactLayer, HitOptions.IncludePhysX);
 
@@ -87,6 +87,7 @@ public class PlayerInteractionHandler : NetworkBehaviour
                 if (Object.HasInputAuthority)
                 {
                     _currentInteractable.StopLookAtInteract();
+                    currentInteractable = null;
                     interactText.text = "";
                     interactUI.SetActive(false);
                 }
@@ -100,6 +101,8 @@ public class PlayerInteractionHandler : NetworkBehaviour
 
         if (hitInfo.GameObject != null && hitInfo.GameObject.TryGetComponent(out IInteractable interactable))
         {
+            Debug.DrawRay(pos, dir * 10, Color.blue, 10f);
+
             currentInteractable = interactable as NetworkBehaviour;
             
             if (!_sentLookAtEvent)
@@ -125,6 +128,7 @@ public class PlayerInteractionHandler : NetworkBehaviour
                     _currentInteractable.StopLookAtInteract();
                     interactText.text = "";
                     interactUI.SetActive(false);
+                    currentInteractable = null;
                 }
             }
         }
@@ -144,6 +148,11 @@ public class PlayerInteractionHandler : NetworkBehaviour
         
         if (success)
         {
+            if (interactionData.Interpolation.IsValid && Object.HasInputAuthority)
+            {
+                _networkPlayer.Camera.Interpolator.InterpolateToTarget(interactionData.Interpolation);
+            }
+            
             if (Object.HasInputAuthority)
             {
                 interactUI.SetActive(false);
@@ -164,7 +173,6 @@ public class PlayerInteractionHandler : NetworkBehaviour
 
             if (interactionData.OpenInventory)
             {
-                Debug.Log(Object.HasStateAuthority);
                 if (!_networkPlayer.Inventory.IsOpen)
                 {
                     _networkPlayer.Inventory.ToggleInventory();
@@ -204,8 +212,14 @@ public class PlayerInteractionHandler : NetworkBehaviour
         _currentInteractable.StopLookAtInteract();
         onButtonInteractStop?.Invoke(_currentInteractable);
         _currentInteractable.StopButtonInteract(_networkPlayer,out ButtonInteractionData interactionData);
-
         _isInteracting = false;
+        
+        
+        if (interactionData.Interpolation.Return && Object.HasInputAuthority)
+        {
+            _networkPlayer.Camera.Interpolator.InterpolateToDefault();
+        }
+        
         if (interactionData.StopMovement)
         {
             _networkPlayer.Movement.CanMove = false;
@@ -237,5 +251,7 @@ public class PlayerInteractionHandler : NetworkBehaviour
         {
             _networkPlayer.Camera.enabled = false;
         }
+
+        currentInteractable = null;
     }
 }

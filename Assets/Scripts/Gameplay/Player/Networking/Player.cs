@@ -48,6 +48,7 @@ public class Player : ContextBehaviour
 
     
     [SerializeField] private NetworkPlayer playerPrefab;
+    [SerializeField] private bool displayPerformance;
 
     public NetworkPlayer PlayerPrefab => playerPrefab;
 
@@ -220,5 +221,14 @@ public class Player : ContextBehaviour
                 Stats.TeamID -= (byte)value;
                 return;
         }
+    }
+    
+    void OnGUI()
+    {
+        if (displayPerformance)
+        {
+            GUI.TextField(new Rect(10, 10, 150, 100), Runner.GetPlayerRtt(Object.InputAuthority).ToString());
+        }
+        
     }
 }

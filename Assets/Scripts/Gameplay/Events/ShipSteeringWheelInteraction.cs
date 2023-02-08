@@ -7,13 +7,14 @@ using UnityEngine.Events;
 public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
 {
     [SerializeField] private Ship ship;
+    [SerializeField] private Transform LookTransform;
 
     public Ship Ship => ship;
     
     public string LookAtID =>  string.Format("<color={0}>[F]</color> INTERACT", "red");
 
     public string ID => "ShipWheel";
-    public PlayerButtons ExitKey => PlayerButtons.Escape;
+    public PlayerButtons ExitKey => PlayerButtons.Interact;
 
 
     public void LookAtInteract() { }
@@ -27,10 +28,12 @@ public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
 
         if (Ship.HasPilot)
         {
+            interactData = default;
             success = false;
+            return success;
         }
 
-        Ship.RPC_RequestPilotChange(networkPlayer.Object.InputAuthority);
+        Ship.RequestOwnership(networkPlayer.Object.InputAuthority);
         
         interactData = new ButtonInteractionData()
         {
@@ -39,16 +42,29 @@ public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
             HideInventory = true
         };
 
+        interactData.Interpolation = new InterpolationData()
+        {
+            TargetPos = LookTransform.position,
+            TargetRot = LookTransform.rotation,
+            IsValid = true
+        };
+
         return true;
     }
 
     public void StopButtonInteract(NetworkPlayer player, out ButtonInteractionData interactionData)
     {
-        Ship.RPC_RequestResetPilot();
+        Ship.ResetOwnership();
 
         interactionData = new ButtonInteractionData()
         {
             EnableMovement = true
+        };
+        
+        interactionData.Interpolation = new InterpolationData()
+        {
+            IsValid = true,
+            Return = true
         };
     }
 

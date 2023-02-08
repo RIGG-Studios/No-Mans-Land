@@ -39,21 +39,18 @@ public class Ship : NetworkBehaviour
             spawnPoint.Init();
         }
     }
-    
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_RequestPilotChange(PlayerRef playerRef)
+
+    public void RequestOwnership(PlayerRef playerRef)
     {
         Object.AssignInputAuthority(playerRef);
         HasPilot = true;
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_RequestResetPilot()
+    public void ResetOwnership()
     {
         Object.AssignInputAuthority(default);
         HasPilot = false;
     }
-    
 
     private static void HasPilotChanged(Changed<Ship> changed)
     {

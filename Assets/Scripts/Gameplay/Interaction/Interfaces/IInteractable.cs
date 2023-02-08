@@ -11,6 +11,8 @@ public struct ButtonInteractionData
 
     public bool StopCameraLook;
     public bool EnableCameraLook;
+
+    public InterpolationData Interpolation;
 }
 
 public interface IInteractable

@@ -24,6 +24,7 @@ public class CameraLook : MonoBehaviour
     private float _defaultFOV;
 
     public Camera Camera { get; private set; }
+    public CameraInterpolator Interpolator { get; private set; }
     public Quaternion PlayerRotation { get; private set; }
     public Quaternion CameraRotation { get; private set; }
     
@@ -42,6 +43,7 @@ public class CameraLook : MonoBehaviour
         _nativeRotation.eulerAngles = new Vector3(0f, _lookRotation.y, 0f);
 
         Camera = GetComponentInChildren<Camera>();
+        Interpolator = GetComponentInChildren<CameraInterpolator>();
         _defaultFOV = Camera.fieldOfView;
         _fov = _defaultFOV;
         CanLook = true;

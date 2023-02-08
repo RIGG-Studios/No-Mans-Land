@@ -25,6 +25,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private NetworkRunner networkRunnerPrefab;
     [SerializeField] private SessionListUIHandler sessionListHandler;
     [SerializeField] private DisconnectionHandler disconnectionHandler;
+    [SerializeField] private LoadingScreen loadingScreen;
     
     private NetworkRunner _runner;
     
@@ -113,7 +114,10 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
         }
         
         runner.ProvideInput = true;
-
+        if (loadingScreen != null)
+        {
+            loadingScreen.Enable();
+        }
         return runner.StartGame(new StartGameArgs
         {
             GameMode = gameMode,
@@ -147,11 +151,12 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        
+
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+    //    loadingScreen.Disable();
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)

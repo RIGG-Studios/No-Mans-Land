@@ -17,7 +17,8 @@ public class PlayerConfig : MonoBehaviour {
         LoadSettings();
     }
 
-    public void SetName(string newName){
+    public void SetName(string newName)
+    {
         if(newName == ""){
             Debug.Log("Invalid username.");
         } else {
@@ -30,15 +31,18 @@ public class PlayerConfig : MonoBehaviour {
         return username;
     }
 
-    public void SetVolume(float newValue){
+    public void SetVolume(float newValue)
+    {
         volumePercent = newValue;
         AudioListener.volume = (volumePercent / 100);
     }
-    public float GetVolume(){
+    public float GetVolume()
+    {
         return volumePercent;
     }
 
-    public void SetSensitivity(float newValue){
+    public void SetSensitivity(float newValue)
+    {
         mouseSens = newValue;
     }
     public float GetSensitivity(){
@@ -46,19 +50,22 @@ public class PlayerConfig : MonoBehaviour {
     }
 
     //Loads current settings from Unity's PlayerPrefs
-    public void LoadSettings(){
+    public void LoadSettings()
+    {
         SetVolume(PlayerPrefs.GetFloat("Volume Percentage", 100f));
         SetSensitivity(PlayerPrefs.GetFloat("Mouse Sensitivity", 3f));
     }
 
     //Saves current settings to Unity's PlayerPrefs
-    public void SaveSettings(){
+    public void SaveSettings()
+    {
         PlayerPrefs.SetFloat("Volume Percentage", volumePercent);
         PlayerPrefs.SetFloat("Mouse Sensitivity", mouseSens);
     }
 
     //Resets all settings to default
-    public void ResetSettings(){
+    public void ResetSettings()
+    {
         PlayerPrefs.DeleteAll();
         LoadSettings();
     }

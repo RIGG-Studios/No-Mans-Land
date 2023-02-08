@@ -11,11 +11,11 @@
     <setting file="file://$PROJECT_DIR$/Assets/MenuControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/MenuController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DisconnectionHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Player/Camera/CameraInterpolator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Upgrading/Station/UpgradeStation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LobbyTypes.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/Backend/ClientInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/MatchMaking/Server Browser/SessionInfoListUIHandler.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Ocean/LocalWaveSync.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Scene/Gameplay.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Base/UIComponent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Gameplay/SpawnSelectionMenu.cs" root0="FORCE_HIGHLIGHTING" />
@@ -109,6 +109,8 @@
       <workItem from="1675477072049" duration="11358000" />
       <workItem from="1675545143536" duration="7452000" />
       <workItem from="1675724448477" duration="12158000" />
+      <workItem from="1675836649971" duration="8644000" />
+      <workItem from="1675884167141" duration="1213000" />
     </task>
     <servers />
   </component>

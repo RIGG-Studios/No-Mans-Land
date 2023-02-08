@@ -9,6 +9,7 @@ public class ShipPhysicsHandler : NetworkBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float maxMovementSpeed;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private Transform wheel;
     
     private Rigidbody _rigidbody;
     private Floater[] _floaters;
@@ -47,9 +48,27 @@ public class ShipPhysicsHandler : NetworkBehaviour
             return;
         }
         
-        
         forwardInput = Mathf.Clamp(input.MovementInput.y, 0.0f, maxMovementSpeed);
         horizontalInput = input.MovementInput.x;
+        
+    //    wheel.localEulerAngles = Vector3.Lerp(wheel.localEulerAngles,
+      //      Vector3.back * Mathf.Clamp(input.MovementInput.x * 100, -90, 90f), Runner.DeltaTime * .5f);
+    }
+
+    private void Update()
+    {
+        if (Object.HasInputAuthority)
+        {
+            Vector3 angle = Vector3.back * Mathf.Clamp((-Input.GetAxis("Horizontal") * 180), -180, 180);
+
+            if (angle.z <= -178f)
+            {
+                angle.z = 0.0f;
+            }
+            
+     //       wheel.localEulerAngles = Vector3.Lerp(wheel.localEulerAngles,
+          //      angle, Time.deltaTime * 2.0f);
+        }
     }
 
     public void AddForce(Vector3 velocity)
