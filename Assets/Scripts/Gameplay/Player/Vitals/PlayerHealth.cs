@@ -15,6 +15,9 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
     [Networked]
     public float Oxygen { get; private set; }
 
+    
+    private TickTimer _damageTick;
+
     [SerializeField] private Text healthText;
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private GameObject model;
@@ -65,6 +68,41 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         if (Object.HasInputAuthority)
         {
             healthText.text = string.Format("<color={0}>+</color> {1}", "red", Health);
+        }
+
+        if (Owner.Movement.CameraSubmerged)
+        {
+            if (Object.HasStateAuthority)
+            {
+                Oxygen -= Runner.DeltaTime * oxygenDecayRate;
+                Oxygen = Mathf.Clamp01(Oxygen);
+            }
+            
+            if (Object.HasInputAuthority)
+            {
+                oxygenSlider.gameObject.SetActive(true);
+                oxygenSlider.value = Oxygen;
+            }
+
+            if (Oxygen <= 0 && Object.HasStateAuthority)
+            {
+                if (_damageTick.ExpiredOrNotRunning(Runner))
+                {
+                    _damageTick = TickTimer.CreateFromSeconds(Runner, 3.5f);
+
+                    HitData hitData = new HitData() { Damage = 10f };
+                    Damage(ref hitData);
+                }
+            }
+        }
+        else
+        {
+            if(Object.HasInputAuthority) oxygenSlider.gameObject.SetActive(false);
+            if (Object.HasStateAuthority)
+            {
+                Oxygen += Runner.DeltaTime * oxygenDecayRate * 2f;
+                Oxygen = Mathf.Clamp01(Oxygen);
+            }
         }
     }
     

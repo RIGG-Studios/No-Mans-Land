@@ -7,6 +7,13 @@ TagManager:
   - Ship
   - Impact
   - PlayerVitalPoint
+  - Projectile
+  - Terrain
+  - Boat
+  - Sand
+  - Wood
+  - Grass
+  - Rock
   layers:
   - Default
   - TransparentFX

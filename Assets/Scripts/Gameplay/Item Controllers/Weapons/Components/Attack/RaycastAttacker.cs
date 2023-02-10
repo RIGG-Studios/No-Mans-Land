@@ -5,6 +5,7 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
+using Random = UnityEngine.Random;
 
 public class RaycastAttacker : WeaponComponent, IAttacker
 {
@@ -15,6 +16,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     [SerializeField] private VisualEffect muzzleFlash;
     [SerializeField] private BulletTracer bulletTracerPrefab;
     [SerializeField] private Transform barrel;
+    [SerializeField] private AudioClip[] fireAudioClips;
     
 
     public event Action onAttack;
@@ -26,12 +28,36 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     [Networked]
     private TickTimer fireCooldown { get; set; }
     
+    [Networked(OnChanged = nameof(OnAttack), OnChangedTargets = OnChangedTargets.All)]
+    private NetworkBool _attack { get; set; }
+
+    private AudioSource _audioSource;
+
+    public override void Awake()
+    {
+        base.Awake();
+        _audioSource = GetComponent<AudioSource>();
+    }
     
     public override void OnEnable()
     {
         base.OnEnable();
         
         Weapon.SetAttacker(this);
+    }
+
+    private static void OnAttack(Changed<RaycastAttacker> changed)
+    {
+        changed.LoadOld();
+        bool oldAttack = changed.Behaviour._attack;
+        
+        changed.LoadNew();
+        bool newAttack = changed.Behaviour._attack;
+        
+        if (!oldAttack && newAttack && !changed.Behaviour.Object.HasInputAuthority)
+        {
+            changed.Behaviour.PlaySFX();
+        }
     }
 
     public override bool IsBusy => !fireCooldown.ExpiredOrNotRunning(Runner);
@@ -65,10 +91,11 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         }
         
         fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks / 2);
+        _attack = !fireCooldown.ExpiredOrNotRunning(Runner);
         
         if (Object.HasInputAuthority)
         {
-            FireEffectsLocal(context.FirePosition, context.FireDirection);
+            FireEffectsLocal();
         }
 
         Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
@@ -112,8 +139,14 @@ public class RaycastAttacker : WeaponComponent, IAttacker
      //   FireEffects();
     }
 
-    private void FireEffectsLocal(Vector3 firePos, Vector3 fireDir)
+    private void PlaySFX()
     {
+        _audioSource.PlayOneShot(fireAudioClips[Random.Range(0, fireAudioClips.Length)]);
+    }
+    
+    private void FireEffectsLocal()
+    {
+        PlaySFX();
         muzzleFlash.Play();
         Animator.SetTrigger(_fire);
 

@@ -126,9 +126,6 @@ using Fusion;
         {
             if(Object.HasStateAuthority)
                 GameplayTimer += Runner.DeltaTime;
-            
-            Context.UI.EnableMenu("Gameplay");
-
         }
     }
 

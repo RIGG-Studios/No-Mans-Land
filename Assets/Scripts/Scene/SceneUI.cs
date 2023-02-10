@@ -22,7 +22,7 @@ public class SceneUI : SceneComponent
 
     private void Awake()
     {
-        _uiComponents = GetComponentsInChildren<UIComponent>();
+        _uiComponents = GetComponentsInChildren<UIComponent>(true);
         
     }
 

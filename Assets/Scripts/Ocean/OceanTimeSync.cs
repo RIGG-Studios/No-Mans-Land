@@ -10,11 +10,15 @@ public class OceanTimeSync : ContextBehaviour
     private float waterTimeMultiplier { get; set; }
 
     private WaterSurface _waterSurface;
-
-    public override void Spawned()
+    
+    protected override void Awake()
     {
+        base.Awake();
+        
         _waterSurface = FindFirstObjectByType<WaterSurface>();
+        Debug.Log(_waterSurface);
     }
+    
 
     public override void FixedUpdateNetwork()
     {

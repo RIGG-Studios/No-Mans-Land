@@ -67,13 +67,13 @@ MonoBehaviour:
     m_Value: 1000
   baseHeight:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 50
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 50
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 1400
+    m_Value: 1500
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384c4d03a551c44448145f4093304119, type: 3}
   m_Name: ScreenSpaceReflection
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   quality:
     m_OverrideState: 1
     m_Value: 1
@@ -229,7 +229,7 @@ MonoBehaviour:
     m_Value: 1
   m_MinSmoothness:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.913
   m_SmoothnessFadeStart:
     m_OverrideState: 1
     m_Value: 1

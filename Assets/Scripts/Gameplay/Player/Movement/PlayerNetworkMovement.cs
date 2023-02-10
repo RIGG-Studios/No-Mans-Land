@@ -20,6 +20,12 @@ public class PlayerNetworkMovement : ContextBehaviour
     public NetworkBool IsMoving { get; set; }
     
     [Networked]
+    public NetworkBool CameraSubmerged { get; set; }
+    
+    [Networked]
+    public NetworkBool InWater { get; set; }
+    
+    [Networked]
     public NetworkBool CanMove { get; set; }
     
     [Networked]
@@ -33,7 +39,7 @@ public class PlayerNetworkMovement : ContextBehaviour
 
     [Networked]
     public PlayerStates CurrentState { get; set; }
-    
+
     public PlayerStates RequestedState { get; set; }
     
     public float Vertical { get; private set; }
@@ -124,6 +130,8 @@ public class PlayerNetworkMovement : ContextBehaviour
 
         IsMoving = input.MovementInput != Vector2.zero;
         IsSwimming = (_player.Camera.transform.position.y < _searchResult.projectedPositionWS.y + 0.5f);
+        InWater = (_player.transform.position.y - 1.0f < _searchResult.projectedPositionWS.y);
+        CameraSubmerged = (_player.Camera.transform.position.y < _searchResult.projectedPositionWS.y);
         IsGrounded = CheckForGround();
         
         if (pressed.IsSet(PlayerButtons.Sprint) && !input.IsAiming && !input.IsReloading)

@@ -54,6 +54,9 @@ public class SceneCamera : SceneComponent
                 sceneLookCamera.gameObject.SetActive(true);
                 return;
         }
+        
+        depolyCamera.transform.position = _startPos;
+        depolyCamera.transform.rotation = _startRot;
     }
 
     public void Disable(CameraTypes type)
