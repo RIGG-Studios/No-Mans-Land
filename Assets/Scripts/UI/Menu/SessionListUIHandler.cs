@@ -9,29 +9,22 @@ using System;
 
 public class SessionListUIHandler : UIComponent
 {
-    public TextMeshProUGUI statusText;
-
     public GameObject sessionItemListPrefab;
-
-    public VerticalLayoutGroup verticalLayoutGroup;
+    public Transform verticalLayoutGroup;
 
 
     public void Clearlist()
     {
-        //Delete children of vertical layout group for session list
         foreach (Transform child in verticalLayoutGroup.transform)
         {
             Destroy(child.gameObject);
         }
-
-        //Hide Status message in list
-     //   statusText.gameObject.SetActive(false); 
     }
 
     public void AddToList(SessionInfo sessionInfo)
     {
         //Add a new room to the list
-        SessionInfoListUIHandler addedsessionInfoListUIItem = Instantiate(sessionItemListPrefab, verticalLayoutGroup.transform).GetComponent<SessionInfoListUIHandler>();
+        SessionInfoListUIHandler addedsessionInfoListUIItem = Instantiate(sessionItemListPrefab, verticalLayoutGroup).GetComponent<SessionInfoListUIHandler>();
         
         addedsessionInfoListUIItem.SetInformation(sessionInfo);
 

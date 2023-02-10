@@ -42,12 +42,6 @@ public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
             HideInventory = true
         };
 
-        interactData.Interpolation = new InterpolationData()
-        {
-            TargetPos = LookTransform.position,
-            TargetRot = LookTransform.rotation,
-            IsValid = true
-        };
 
         return true;
     }

@@ -91,6 +91,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -278,6 +279,37 @@ Transform:
   m_Father: {fileID: 5438806875975662224}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4542303519669165749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6006338538623207548}
+  m_Layer: 0
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6006338538623207548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542303519669165749}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.018, y: 0.139, z: -1.933}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8882333857348056103}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &5436494456584057568
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,8 +480,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7181337784699147833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.225, y: 0.042, z: -2.046}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: -0.009, y: 0.155, z: -2.046}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8882333857348056103}
@@ -468,6 +500,7 @@ VisualEffect:
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 1
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
@@ -639,6 +672,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2049
   muzzleFlash: {fileID: 7758693364431015251}
+  bulletTracerPrefab: {fileID: 4222054311010746411, guid: 7d824a56ee755934db0f519444806e76,
+    type: 3}
+  barrel: {fileID: 6006338538623207548}
 --- !u!114 &5178440982009832456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,6 +813,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 4291669296104833446}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 83b5b00be8b77834f86f2058a6b0ac6d,
@@ -855,6 +892,21 @@ PrefabInstance:
       value: Musket
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 83b5b00be8b77834f86f2058a6b0ac6d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1005131569377722990}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 83b5b00be8b77834f86f2058a6b0ac6d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6006338538623207548}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 83b5b00be8b77834f86f2058a6b0ac6d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6240832190323084878}
   m_SourcePrefab: {fileID: 100100000, guid: 83b5b00be8b77834f86f2058a6b0ac6d, type: 3}
 --- !u!1 &8074869717465542301 stripped
 GameObject:
@@ -864,7 +916,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &6240832190323084878
 Animator:
-  serializedVersion: 4
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -878,10 +930,11 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!4 &8882333857348056103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 83b5b00be8b77834f86f2058a6b0ac6d,

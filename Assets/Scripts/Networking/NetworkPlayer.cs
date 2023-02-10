@@ -64,7 +64,7 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 
         SetupPlayer();
     }
-
+    
 
     public void OnDeath()
     {

@@ -20,6 +20,11 @@ public class SwayInput : InputBase
     {
         Vector2 mousePos = InputActions.Player.Look.ReadValue<Vector2>();
 
+        if (NetworkPlayer.Local == null)
+        {
+            return;
+        }
+        
         if (NetworkPlayer.Local.Inventory.IsOpen)
         {
             return;

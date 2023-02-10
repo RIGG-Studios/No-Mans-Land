@@ -28,7 +28,6 @@ public class SceneUI : SceneComponent
 
     private void Start()
     {
-        Debug.Log(Context);
         for (int i = 0; i < _uiComponents.Length; i++)
         {
             _uiComponents[i].Init(Context);
@@ -57,7 +56,6 @@ public class SceneUI : SceneComponent
 
         UIComponent nextMenu = FindUIComponent(id);
         
-        Debug.Log(nextMenu);
         nextMenu.gameObject.SetActive(true);
         nextMenu.Enable();
         _openedMenu = nextMenu;

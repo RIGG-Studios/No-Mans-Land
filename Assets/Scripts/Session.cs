@@ -4,23 +4,25 @@ using System.Collections.Generic;
 using Fusion;
     using NoMansLand.Scene;
     using UnityEngine;
+    using UnityEngine.Rendering.HighDefinition;
 
-public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
+    public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
 {
     [SerializeField] private Player playerPrefab;
     
 
     public enum SessionStates : byte
     {
+        None,
         WaitingForPlayers,
         StartingGameplay,
         Gameplay,
         EndingGameplay,
         EndingSession
     }
-    
+
     [Networked(OnChanged = nameof(OnSessionStateChanged), OnChangedTargets = OnChangedTargets.All)]
-    public SessionStates SessionState { get; set; }
+    public SessionStates SessionState { get; set; } = SessionStates.None;
 
         
     [Networked]
@@ -68,7 +70,7 @@ public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
     {
         Context.Session = this;
     }
-    
+
 
     public void PlayerJoined(PlayerRef player)
     {
@@ -81,6 +83,11 @@ public class Session : ContextBehaviour, IPlayerJoined, IPlayerLeft
         
         _players.Add(player, playerObj);
         Runner.SetPlayerObject(player, playerObj.Object);
+
+        if (SessionState == SessionStates.None)
+        {
+            SessionState = SessionStates.WaitingForPlayers;
+        }
         
         CheckForGameStart();
     }

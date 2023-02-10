@@ -59,6 +59,11 @@ public static class NetworkDamageHandler
             return default;
         }
 
+        if (networkDamagable.Owner == null)
+        {
+            return default;
+        }
+
         if (attackerRef == networkDamagable.Owner.Object.InputAuthority)
         {
             return default;

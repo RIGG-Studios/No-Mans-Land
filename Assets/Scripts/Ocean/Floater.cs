@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using Random = UnityEngine.Random;
 
 public class Floater : NetworkBehaviour
@@ -10,27 +11,39 @@ public class Floater : NetworkBehaviour
     [SerializeField] private float depthBeforeSubmerged;
     [SerializeField] private float displacementAmount;
     [SerializeField] private Rigidbody rigidBody;
-    
-    
+
     [Networked]
    private float WaveHeight { get; set; }
 
-   private void Awake()
-    {
-        rigidBody.useGravity = false;
-    }
-    
-    public override void FixedUpdateNetwork()
-    {
-        rigidBody.useGravity = true;
+   private WaterSearchParameters _searchParameters;
+   private WaterSearchResult _searchResult;
 
+   private WaterSurface _waterSurface;
+
+
+   private void Awake()
+   {
+       _waterSurface = FindFirstObjectByType<WaterSurface>();
+   }
+
+
+   public override void FixedUpdateNetwork()
+    {
+        _searchParameters.startPositionWS = _searchResult.candidateLocationWS;
+        _searchParameters.targetPositionWS = transform.position;
+        _searchParameters.error = 0.01f;
+        _searchParameters.maxIterations = 8;
+
+        if (_waterSurface.ProjectPointOnWaterSurface(_searchParameters, out _searchResult))
+        {
+            WaveHeight = _searchResult.projectedPositionWS.y;
+        }
+        
         if (!(transform.position.y < WaveHeight))
         {
             return;
         }
-
-        WaveHeight = Ocean.Instance.GetWaterHeightAtPosition(transform.position);
-
+        
         float displacementMultiplier = Mathf.Clamp01((WaveHeight - transform.position.y) / depthBeforeSubmerged) *
                                        displacementAmount;
 

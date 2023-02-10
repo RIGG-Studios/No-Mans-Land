@@ -17,7 +17,7 @@ public class DisconnectionHandler : MonoBehaviour
     {
         Close();
     }
-
+    
     public void ShutdownCustomMessage(string status, string message)
     {
         disconnectionStatusText.text = status;

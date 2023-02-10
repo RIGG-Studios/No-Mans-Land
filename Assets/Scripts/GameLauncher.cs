@@ -26,6 +26,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private SessionListUIHandler sessionListHandler;
     [SerializeField] private DisconnectionHandler disconnectionHandler;
     [SerializeField] private LoadingScreen loadingScreen;
+    [SerializeField] private MenuControl menuControl;
     
     private NetworkRunner _runner;
     
@@ -50,13 +51,13 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 
         if (!result.Ok)
         {
-            Debug.LogError($"Unable to join lobby {lobbyID}");
             SetConnectionStatus(ConnectionStatus.Disconnected);
+            disconnectionHandler.ShutdownCustomMessage("Disconnected", "Error connecting to the lobby, please try again.");
         }
         else
         {
-            Debug.Log("JoinLobby ok");
             SetConnectionStatus(ConnectionStatus.InLobby);
+            menuControl.OnLobbyConnection();
         }
     }
 

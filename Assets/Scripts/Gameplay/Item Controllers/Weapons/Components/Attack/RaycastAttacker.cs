@@ -13,6 +13,9 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     [SerializeField] private float damage;
     [SerializeField] private LayerMask attackableLayers;
     [SerializeField] private VisualEffect muzzleFlash;
+    [SerializeField] private BulletTracer bulletTracerPrefab;
+    [SerializeField] private Transform barrel;
+    
 
     public event Action onAttack;
     
@@ -65,7 +68,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         
         if (Object.HasInputAuthority)
         {
-            FireEffectsLocal();
+            FireEffectsLocal(context.FirePosition, context.FireDirection);
         }
 
         Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
@@ -92,13 +95,12 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
         if (Object.HasStateAuthority)
         {
-
             Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
 
             HitData hitData =
                 NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
-
         }
+        
         Weapon.OnFired();
     }
 
@@ -110,9 +112,12 @@ public class RaycastAttacker : WeaponComponent, IAttacker
      //   FireEffects();
     }
 
-    private void FireEffectsLocal()
+    private void FireEffectsLocal(Vector3 firePos, Vector3 fireDir)
     {
         muzzleFlash.Play();
         Animator.SetTrigger(_fire);
+
+        BulletTracer tracer = Instantiate(bulletTracerPrefab, barrel.transform.position, barrel.transform.rotation);
+        tracer.Init(barrel.transform.forward);
     }
 }

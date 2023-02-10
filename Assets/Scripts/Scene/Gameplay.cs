@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.SceneManagement;
 
 public class Gameplay : ContextBehaviour
@@ -25,7 +26,7 @@ public class Gameplay : ContextBehaviour
     }
     
     private List<SpawnRequest> _spawnRequests = new();
-
+    
     public void Join(Player player)
     {
         //only want to execute this code on the server
@@ -49,10 +50,6 @@ public class Gameplay : ContextBehaviour
         SpawnNetworkPlayer(player, spawnPoint.Transform.position, spawnPoint.Transform.rotation);
     }
 
-    public void OnGameplayStarted()
-    {
-        
-    }
 
     public void Leave(NetworkBehaviour player)
     {

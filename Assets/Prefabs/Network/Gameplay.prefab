@@ -656,6 +656,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1204,6 +1205,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2063,7 +2065,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &1563016264
 Animator:
-  serializedVersion: 4
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2077,10 +2079,11 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1597916407
 GameObject:
   m_ObjectHideFlags: 0
@@ -3136,7 +3139,7 @@ MonoBehaviour:
   m_Text: 5
 --- !u!95 &2143583663
 Animator:
-  serializedVersion: 4
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3150,10 +3153,11 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1095482506300068366
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,6 +3172,7 @@ GameObject:
   - component: {fileID: 1164755079560625501}
   - component: {fileID: 6425412639238764499}
   - component: {fileID: 3650451045262600548}
+  - component: {fileID: 8268295228072901537}
   m_Layer: 0
   m_Name: Gameplay
   m_TagString: Untagged
@@ -3207,7 +3212,6 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Players:
     _items: []
-  _GameplayState: 0
   backpackPrefab: {fileID: 8059029883664273408, guid: c8954d64d03ceb347b3d36b7b23af815,
     type: 3}
 --- !u!114 &2926668079268535786
@@ -3251,6 +3255,7 @@ MonoBehaviour:
   - {fileID: 2926668079268535786}
   - {fileID: 6425412639238764499}
   - {fileID: 3650451045262600548}
+  - {fileID: 8268295228072901537}
   SimulationBehaviours: []
 --- !u!114 &6425412639238764499
 MonoBehaviour:
@@ -3286,3 +3291,16 @@ MonoBehaviour:
   - tag: PlayerVitalPoint
     impactPrefab: {fileID: 2458262815497199864, guid: cf7fe8e2da485f74ead913ebe92c07b8,
       type: 3}
+--- !u!114 &8268295228072901537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095482506300068366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40390e868173f4a409b22d0899ee70e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,14 +13,17 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject nameInput;
+    [SerializeField] private GameObject connectionScreen;
     [SerializeField] private TextMeshProUGUI welcomeText;
+    [SerializeField] private CanvasFader canvasFader;
 
     
     //Options and config data
     private PlayerConfig config;
     [SerializeField] private TMP_Text volumeText;
+    
 
-    void Start()
+    void CheckName()
     {
         if(ClientInfo.ClientName == null)
         {
@@ -42,6 +46,20 @@ public class MenuControl : MonoBehaviour
     {
         mainMenu.SetActive(false);
         nameInput.SetActive(true);
+    }
+
+    public void OnLobbyConnection()
+    {
+        connectionScreen.SetActive(false);
+        canvasFader.FadeIn();
+        Invoke(nameof(ShowMainMenu), 1.0f);
+    }
+
+    private void ShowMainMenu()
+    {
+        canvasFader.FadeOut();
+        mainMenu.SetActive(true);
+        CheckName();
     }
 
     void UpdateOptionsText()
