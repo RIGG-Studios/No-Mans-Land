@@ -21,8 +21,8 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     [SerializeField] private PlayerNetworkMovement movement;
     [SerializeField] private CameraLook cameraLook;
     [SerializeField] private PlayerInventory inventory;
-    [SerializeField] private PlayerAttacker attacker;
     [SerializeField] private PlayerHealth health;
+    [SerializeField] private Character character;
     [SerializeField] private PlayerUI ui;
     [SerializeField] private Crosshair hitMarker;
     [SerializeField] private PlayerPauseManager pause;
@@ -31,10 +31,10 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     public PlayerNetworkMovement Movement => movement;
     public CameraLook Camera => cameraLook;
     public PlayerInventory Inventory => inventory;
-    public PlayerAttacker Attack => attacker;
     public PlayerHealth Health => health;
     public PlayerUI UI => ui;
     public PlayerPauseManager Pause => pause;
+    public Character Character => character;
 
     public Crosshair HitMarker => hitMarker;
 
@@ -51,7 +51,8 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
         {
             Local = this;
             Context.Input.RequestCursorLock();
-            Context.Camera.Disable();
+            Context.Camera.Disable(SceneCamera.CameraTypes.Deploy);
+            Context.Camera.Disable(SceneCamera.CameraTypes.Scene);
         }
 
         _inputProcessors = GetComponents<IInputProccesor>();
@@ -113,7 +114,6 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 
     public void PlayerLeft(PlayerRef player)
     {
-        Debug.Log("player left");
         if (player != Object.InputAuthority)
         {
             return;

@@ -1,24 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gameplay : ContextBehaviour
 {
-    public enum GameplayStates : byte
-    {
-        StartingGame,
-        PreBattle,
-        InBattle,
-        EndGame
-    }
-    
     [Networked, Capacity(16)]
     public NetworkDictionary<PlayerRef, Player> Players { get; } = new();
-    
-    [Networked]
-    public GameplayStates GameplayState { get; set; }
 
+    
+    [SerializeField] private Backpack backpackPrefab;
 
     private SpawnPoint[] _spawnPoints;
     private int _lastSpawnPoint = -1;
@@ -54,6 +47,11 @@ public class Gameplay : ContextBehaviour
         Players.Add(playerRef, player);
         
         SpawnNetworkPlayer(player, spawnPoint.Transform.position, spawnPoint.Transform.rotation);
+    }
+
+    public void OnGameplayStarted()
+    {
+        
     }
 
     public void Leave(NetworkBehaviour player)
@@ -152,6 +150,10 @@ public class Gameplay : ContextBehaviour
     private IEnumerator DelayDespawnNetworkPlayer(Player player)
     {
         yield return new WaitForSeconds(3.5f);
+
+        Backpack backpack = Runner.Spawn(backpackPrefab, player.ActivePlayer.transform.position, player.ActivePlayer.transform.rotation);
+        backpack.LoadItems(player.PlayerName, player.ActivePlayer.Inventory.Items.ToArray());
+        
         player.State = StateTypes.Dead;
         DespawnNetworkPlayer(player);
     }
@@ -170,9 +172,11 @@ public class Gameplay : ContextBehaviour
         });
     }
 
-    public void Disconnect(NetworkRunner runner)
+    public void Disconnect(NetworkBehaviour player, NetworkRunner runner)
     {
-        runner.Shutdown();
+         runner.Shutdown();
+         SceneManager.LoadScene(0);
+
     }
 
     public void TryFindPlayer(PlayerRef playerRef, out Player player)

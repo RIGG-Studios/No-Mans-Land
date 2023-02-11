@@ -28,10 +28,9 @@ public class Floater : NetworkBehaviour
         {
             return;
         }
-        
-        
+
         WaveHeight = Ocean.Instance.GetWaterHeightAtPosition(transform.position);
-        
+
         float displacementMultiplier = Mathf.Clamp01((WaveHeight - transform.position.y) / depthBeforeSubmerged) *
                                        displacementAmount;
 

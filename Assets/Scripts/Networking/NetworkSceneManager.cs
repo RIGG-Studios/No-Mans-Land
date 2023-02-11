@@ -18,7 +18,7 @@ public class NetworkSceneManager : Fusion.Behaviour
 
     private void Start()
     {
-        StartCoroutine(InitializeScene());
+   //     StartCoroutine(InitializeScene());
     }
     
     private IEnumerator InitializeScene()

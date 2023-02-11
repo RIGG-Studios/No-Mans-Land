@@ -71,9 +71,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d81b348948481d41ad05b47611a7f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameplayPrefab: {fileID: 1722330100034976009, guid: c57a901055dccc948b9d29ee3d5a4350,
+  _interpolationDataSource: 0
+  sessionPrefab: {fileID: 4949945095405849569, guid: 1c9a4564b6153b94fa26ba872fed533a,
     type: 3}
-  playerPrefab: {fileID: 4886208211875713145, guid: 23a877ed917b87e4d95e2efc586e4ba3,
+  gameplayPrefab: {fileID: 1722330100034976009, guid: c57a901055dccc948b9d29ee3d5a4350,
     type: 3}
 --- !u!114 &7096454829065807493
 MonoBehaviour:

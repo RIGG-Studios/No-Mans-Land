@@ -5,24 +5,34 @@ using UnityEngine;
 
 public class SceneCamera : SceneComponent
 {
-    public Camera Camera => sceneCamera;
+    public Camera Camera => _activeCamera;
     
-    [SerializeField] private Camera sceneCamera;
+    [SerializeField] private Camera depolyCamera;
+    [SerializeField] private Camera sceneLookCamera;
 
-    [SerializeField] private Easing positionEasing;
-    [SerializeField] private Easing rotationEasing;
+    private Camera _activeCamera => sceneLookCamera;
+    
+    public enum CameraTypes
+    {
+        Deploy,
+        Scene
+    }
 
+    
     private Vector3 _startPos;
     private Quaternion _startRot;
-
-    private CustomPositionInterpolation _positionInterpolation;
-    private CustomRotationInterpolation _rotationInterpolation;
     private Transform _target;
 
     private void Awake()
     {
-        _startPos = transform.position;
-        _startRot = transform.rotation;
+        _startPos = depolyCamera.transform.position;
+        _startRot = depolyCamera.transform.rotation;
+    }
+
+    private void Start()
+    {
+        depolyCamera.gameObject.SetActive(false);
+        sceneLookCamera.gameObject.SetActive(true);
     }
 
     protected override void OnInit()
@@ -32,17 +42,35 @@ public class SceneCamera : SceneComponent
         Scene.Context.Camera = this;
     }
 
-    public void Enable()
+    public void Enable(CameraTypes type)
     {
-        Camera.gameObject.SetActive(true);
+        switch (type)
+        {
+            case CameraTypes.Deploy:
+                depolyCamera.gameObject.SetActive(true);
+                return;
+            
+            case CameraTypes.Scene:
+                sceneLookCamera.gameObject.SetActive(true);
+                return;
+        }
     }
 
-    public void Disable()
+    public void Disable(CameraTypes type)
     {
-        Camera.gameObject.SetActive(false);
+        switch (type)
+        {
+            case CameraTypes.Deploy:
+                depolyCamera.gameObject.SetActive(false);
+                return;
+            
+            case CameraTypes.Scene:
+                sceneLookCamera.gameObject.SetActive(false);
+                return;
+        }
 
-        transform.position = _startPos;
-        transform.rotation = _startRot;
+        depolyCamera.transform.position = _startPos;
+        depolyCamera.transform.rotation = _startRot;
         _target = null;
     }
 
@@ -53,8 +81,8 @@ public class SceneCamera : SceneComponent
             return;
         }
         
-        transform.position = Vector3.Lerp(transform.position, _target.position, 6.0f * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, _target.rotation, 6.0f * Time.deltaTime);
+        depolyCamera.transform.position = Vector3.Lerp(depolyCamera.transform.position, _target.position, 2.0f * Time.deltaTime);
+        depolyCamera.transform.rotation = Quaternion.Lerp(depolyCamera.transform.rotation, _target.rotation, 2.0f * Time.deltaTime);
     }
 
     public void SmoothLerp(Transform target, float speed)

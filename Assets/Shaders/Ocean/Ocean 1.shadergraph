@@ -125,6 +125,12 @@
         },
         {
             "m_Id": "07cdf81c5f6149328d45c9065c5a5326"
+        },
+        {
+            "m_Id": "845ab624369e4549a4fdc9ad34b7c72d"
+        },
+        {
+            "m_Id": "5143ab1e093f41cfb9b6386c27feb4d1"
         }
     ],
     "m_Keywords": [],
@@ -4491,6 +4497,12 @@
         },
         {
             "m_Id": "aa9f4d8485374343811e88f3b28d0af9"
+        },
+        {
+            "m_Id": "845ab624369e4549a4fdc9ad34b7c72d"
+        },
+        {
+            "m_Id": "5143ab1e093f41cfb9b6386c27feb4d1"
         }
     ]
 }
@@ -8067,6 +8079,33 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector4ShaderProperty",
+    "m_ObjectId": "5143ab1e093f41cfb9b6386c27feb4d1",
+    "m_Guid": {
+        "m_GuidSerialized": "21db33a2-2bff-4c66-ad71-c21ea4a11e93"
+    },
+    "m_Name": "AlphaMaskPos",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "AlphaMaskPos",
+    "m_DefaultReferenceName": "_AlphaMaskPos",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "52adf595469a4e51a4359de07ff7a6c3",
@@ -11181,6 +11220,33 @@
         "e31": 0.0,
         "e32": 0.0,
         "e33": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "845ab624369e4549a4fdc9ad34b7c72d",
+    "m_Guid": {
+        "m_GuidSerialized": "31544f75-1e0e-451c-9e4c-3a078459568c"
+    },
+    "m_Name": "Opacity 2",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Opacity 2",
+    "m_DefaultReferenceName": "_Opacity_2",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 

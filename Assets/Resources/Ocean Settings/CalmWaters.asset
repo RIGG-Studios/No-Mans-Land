@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: CalmWaters
   m_EditorClassIdentifier: 
   waves: {fileID: 11400000, guid: 8935bbc05f6d2374193cfd337fc37cf2, type: 2}
-  shallowColor: {r: 0.5529412, g: 0.9098039, b: 1, a: 0}
-  deepColor: {r: 0.078720205, g: 0.4076946, b: 0.5754717, a: 0}
+  shallowColor: {r: 0.3329477, g: 0.8113208, b: 0.7157625, a: 0}
+  deepColor: {r: 0.33668566, g: 0.6411051, b: 0.735849, a: 0}
   foamColor: {r: 1, g: 1, b: 1, a: 0}
   waveFoam: 1
-  extraDispersion: 0.54
-  edgeHardness: 0.53
+  extraDispersion: 0.72
+  edgeHardness: 1.18
   crestSize: 4.24
   crestOffset: 2.35
   edgeFoam: 1
-  foamFallOff: 7.36
-  foamWidth: 18.47
-  foamRemoval: 0.04
-  foamBands: 0.58
+  foamFallOff: 14.71
+  foamWidth: 2.87
+  foamRemoval: 0.1
+  foamBands: 2.79

@@ -25,6 +25,9 @@ namespace NoMansLand.Scene
         
         [HideInInspector]
         public Gameplay Gameplay;
+
+        [HideInInspector]
+        public Session Session;
         
         [HideInInspector]
         public NetworkRunner Runner;
@@ -78,11 +81,14 @@ namespace NoMansLand.Scene
             }
             
             
-        //    AddService(Context.UI);
-
             yield return Activate();
         }
-        
+
+
+        private void Awake()
+        {
+            Initialize();
+        }
 
         public void Initialize()
         {
