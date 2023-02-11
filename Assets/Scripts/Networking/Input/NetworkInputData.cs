@@ -15,7 +15,8 @@ public enum PlayerButtons
     Slot5,
     ToggleInventory,
     Escape,
-    Interact
+    Interact,
+    Enter
 }
 
 public enum PlayerStates : byte

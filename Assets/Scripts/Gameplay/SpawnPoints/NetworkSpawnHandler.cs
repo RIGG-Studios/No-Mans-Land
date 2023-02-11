@@ -121,12 +121,13 @@ public class NetworkSpawnHandler : ContextBehaviour
         
         Context.Camera.SmoothLerp(_selectedSpawnPoint.Transform,  5.0f);
         Context.UI.CloseAllMenus();
-        StartCoroutine(SpawnPlayerDelay());
+        
+        StartCoroutine(SpawnPlayerDelay(3.5f));
     }
 
-    private IEnumerator SpawnPlayerDelay()
+    private IEnumerator SpawnPlayerDelay(float delay)
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(delay);
         Context.Gameplay.RPC_RequestSpawn(Player.Local, _selectedSpawnPoint.Transform.position, _selectedSpawnPoint.Transform.rotation);
     }
 }

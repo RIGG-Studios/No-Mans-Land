@@ -92,4 +92,6 @@ public class SceneCamera : SceneComponent
     {
         _target = target;
     }
+
+    public Vector3 GetDeployCamPos() => depolyCamera.transform.position;
 }

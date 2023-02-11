@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameVersion: 0.01
   maxTeamSize: 1
-  maxPlayersPerGame: 1
+  maxPlayersPerGame: 3
   shipRespawnDelay: 30
   backpackLife: 120
   startingGameTimer: 10

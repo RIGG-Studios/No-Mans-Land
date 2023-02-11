@@ -26,6 +26,9 @@ public class PlayerNetworkMovement : ContextBehaviour
     public NetworkBool InWater { get; set; }
     
     [Networked]
+    public NetworkBool IsFalling { get; set; }
+    
+    [Networked]
     public NetworkBool CanMove { get; set; }
     
     [Networked]
@@ -48,8 +51,11 @@ public class PlayerNetworkMovement : ContextBehaviour
     
     private WaterSearchParameters _searchParameters;
     private WaterSearchResult _searchResult;
-
+    
     private WaterSurface _waterSurface;
+
+    private float _fallStartPos;
+    private float _fallingDist;
 
     
     protected override void Awake()
@@ -161,6 +167,37 @@ public class PlayerNetworkMovement : ContextBehaviour
         {
             Vertical = input.MovementInput.y;
             Horizontal = input.MovementInput.x;
+        }
+        
+        if (IsGrounded)
+        {
+            /*/
+            if (IsFalling)
+            {
+                IsFalling = false;
+
+                if (_fallingDist >= 3.5f && Object.HasStateAuthority)
+                {
+                    float dmg = Mathf.RoundToInt(_fallingDist * 3.5f);
+
+                    HitData hitData = new HitData() { Damage = dmg };
+                    _player.Health.Damage(ref hitData);
+                }
+                _fallingDist = 0.0f;
+            }
+            /*/
+        }
+        else
+        {
+            if (!IsFalling)
+            {
+                IsFalling = true;
+                _fallStartPos = transform.position.y;
+            }
+            else
+            {
+                _fallingDist = _fallStartPos - transform.position.y;
+            }
         }
     }
 

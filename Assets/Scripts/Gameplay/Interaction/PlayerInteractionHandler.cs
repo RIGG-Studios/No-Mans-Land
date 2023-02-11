@@ -60,7 +60,6 @@ public class PlayerInteractionHandler : NetworkBehaviour
             ShootRaycast(input);
         }
 
-        Debug.Log(_currentInteractable);
         bool interactPressed = input.Buttons.IsSet(PlayerButtons.Interact);
 
         if (_currentInteractable != null && input.Buttons.IsSet(_currentInteractable.ExitKey) && _isInteracting)

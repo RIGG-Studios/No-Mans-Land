@@ -18,14 +18,18 @@ public class ScreenDamageMenu : UIComponent
     {
         base.Enable();
         _fadeInBlur = true;
+
+        Color c = blurImage.color;
+        c.a = 0.0f;
+        blurImage.color = c;
     }
     
     
     public override void Disable()
     {
         base.Disable();
-        
-        gameObject.SetActive(false);
+
+        blurImage.enabled = false;
     }
 
     private void Update()
@@ -82,5 +86,6 @@ public class ScreenDamageMenu : UIComponent
         
         _showingBlur = false;
         _fadeOutBlur = true;
+        blurImage.enabled = false;
     }
 }

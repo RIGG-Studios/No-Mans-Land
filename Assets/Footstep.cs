@@ -106,6 +106,6 @@ public class Footstep : MonoBehaviour
             }
         }
 
-        return default;
+        return footsteps[0];
     }
 }

@@ -25,6 +25,7 @@ public class InputProvider : InputBase
 
     private bool _interactPressed;
     private bool _escapePressed;
+    private bool _enterPressed;
 
     private bool _inventoryToggle;
 
@@ -47,6 +48,7 @@ public class InputProvider : InputBase
         InputActions.Player.Escape.performed += ctx => _escapePressed = true;
         InputActions.Player.Interact.performed += ctx => _interactPressed = true;
         InputActions.Player.ToggleInventory.performed += ctx => _inventoryToggle = true;
+        InputActions.Player.Enter.performed += ctx => _enterPressed = true;
     }
 
     private void Update()
@@ -62,8 +64,6 @@ public class InputProvider : InputBase
 
         _isReloading = InputActions.Player.Reload.IsPressed();
         _isAiming = InputActions.Player.Aim.IsPressed();
-
-
     }
 
     public override void OnEnable()
@@ -136,6 +136,7 @@ public class InputProvider : InputBase
         tickInput.Buttons.Set(PlayerButtons.ToggleInventory, _inventoryToggle);
         tickInput.Buttons.Set(PlayerButtons.Escape, _escapePressed);
         tickInput.Buttons.Set(PlayerButtons.Interact, _interactPressed);
+        tickInput.Buttons.Set(PlayerButtons.Enter, _enterPressed);
 
         
         
@@ -151,6 +152,7 @@ public class InputProvider : InputBase
         _inventoryToggle = false;
         _escapePressed = false;
         _interactPressed = false;
+        _enterPressed = false;
     }
 
     public void ResetSprint()
