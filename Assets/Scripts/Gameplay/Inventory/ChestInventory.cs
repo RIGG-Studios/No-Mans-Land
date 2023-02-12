@@ -79,12 +79,15 @@ public class ChestInventory : Inventory, IInteractable
             IsOpen = false;
             Object.AssignInputAuthority(default);
         }
-        
-        if (player.Object.HasInputAuthority)
+
+        if (player != null)
         {
-            chestUI.SetActive(false);
+            if (player.Object.HasInputAuthority)
+            {
+                chestUI.SetActive(false);
+            }
         }
-        
+
         interactionData = new ButtonInteractionData()
         {
             EnableMovement = false,

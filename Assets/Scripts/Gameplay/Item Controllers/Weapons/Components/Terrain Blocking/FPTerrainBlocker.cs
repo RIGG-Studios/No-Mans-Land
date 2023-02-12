@@ -28,6 +28,11 @@ public class FPTerrainBlocker : MonoBehaviour
 
     private void Update()
     {
+        if (_camTransform == null)
+        {
+            return;
+        }
+        
         RaycastHit hit;
         if (Physics.Raycast(_camTransform.position, _camTransform.forward, out hit, itemLength))
         {

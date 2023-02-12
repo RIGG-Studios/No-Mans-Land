@@ -223,8 +223,18 @@ public class PlayerInventory : LocalInventory, IInputProccesor
         EquippedItem.Hide();
         float hideTime = EquippedItem.GetHideTime();
         yield return new WaitForSeconds(hideTime);
-        
         EquippedItem.gameObject.SetActive(false);
+        
+        if (Object.HasInputAuthority)
+        {
+            Slot[] selectedSlots = SlotHandler.FindSelectedSlots();
+
+            for (int i = 0; i < selectedSlots.Length; i++)
+            {
+                selectedSlots[i].DeselectSlot();
+            }
+        }
+        
         RPC_UpdateEquippedItemID(0);
     }
 

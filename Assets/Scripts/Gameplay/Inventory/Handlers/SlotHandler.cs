@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -126,6 +127,21 @@ public class SlotHandler
         
         Item item = SceneHandler.Instance.ItemDatabase.FindItem(oldSlot.InventoryItem.ItemID);
 
+        
+        if (oldSlot.InventoryItem.ItemID == newSlot.InventoryItem.ItemID && oldSlot.inventory != newSlot.inventory)
+        {
+            return;
+        }
+
+        if (oldSlot.InventoryItem.ItemID == newSlot.InventoryItem.ItemID)
+        {
+            //find inventory item
+            //update the stack
+            //if more then max stack, add another item with the remainder on server
+            oldSlot.inventory.FindItem(item.itemID, out ItemListData inventoryItem);
+            return;
+        }
+        
         if (oldSlot.inventory != newSlot.inventory)
         {
             oldSlot.inventory.FindItem(item.itemID, out ItemListData inventoryItem);

@@ -45,9 +45,14 @@ public class PlayerNetworkMovement : ContextBehaviour
 
     public PlayerStates RequestedState { get; set; }
     
+    [Networked]
     public float Vertical { get; private set; }
-    public float Horizontal { get; private set; }
     
+    [Networked]
+    public float Horizontal { get; private set; }
+
+    [Networked] 
+    public NetworkBehaviour Cannon { get; set; }
     
     private WaterSearchParameters _searchParameters;
     private WaterSearchResult _searchResult;
@@ -163,11 +168,8 @@ public class PlayerNetworkMovement : ContextBehaviour
             _movementHandler.Jump();
         }
 
-        if (Object.HasInputAuthority)
-        {
-            Vertical = input.MovementInput.y;
-            Horizontal = input.MovementInput.x;
-        }
+        Vertical = input.MovementInput.y;
+        Horizontal = input.MovementInput.x;
         
         if (IsGrounded)
         {
@@ -241,14 +243,15 @@ public class PlayerNetworkMovement : ContextBehaviour
 
         if (interactable.ID == "ShipWheel")
         {
-            RequestedState = PlayerStates.ShipController;
-            NetworkPlayer.Local.Inventory.HideCurrentItem();
+            CurrentState = PlayerStates.ShipController;
+            _player.Inventory.HideCurrentItem();
         }
 
         if (interactable.ID == "Cannon")
         {
-            RequestedState = PlayerStates.CannonController;
-            NetworkPlayer.Local.Inventory.HideCurrentItem();
+            CurrentState = PlayerStates.CannonController;
+            _player.Inventory.HideCurrentItem();
+            Cannon = interactable as Cannon;
         }
     }
 

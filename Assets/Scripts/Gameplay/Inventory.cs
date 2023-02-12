@@ -119,7 +119,7 @@ public class Inventory : ContextBehaviour, IInventory
         Items.Add(inventoryItem);
     }
 
-    public virtual void RemoveItem(int itemID, int slotID = -1)
+    public virtual void RemoveItem(int itemID, int slotID = -1, int amountToAdd = 1)
     {
         if (Object.HasStateAuthority)
         {
@@ -155,12 +155,12 @@ public class Inventory : ContextBehaviour, IInventory
     
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_RemoveItem(int itemID, int slotID)
+    private void RPC_RemoveItem(int itemID, int slotID, int amountToRemove = 1)
     {
-        RemoveItemExecute(itemID, slotID);
+        RemoveItemExecute(itemID, slotID, amountToRemove);
     }
 
-    private void RemoveItemExecute(int itemID, int slotID)
+    private void RemoveItemExecute(int itemID, int slotID, int amountToRemove = 1)
     {
         ItemListData itemData = default;
 
@@ -173,6 +173,7 @@ public class Inventory : ContextBehaviour, IInventory
             FindItem(itemID, out itemData);
         }
 
+        
         if (itemData.ItemID == 0)
         {
             return;
@@ -183,10 +184,15 @@ public class Inventory : ContextBehaviour, IInventory
 
         Items.Remove(itemData);
     }
-    
+
     public void UpdateItems(int oldSlotID, int newSlotID)
     {
         RPC_RequestUpdateInventory(oldSlotID, newSlotID);
+    }
+
+    public void UpdateItemStack(int oldSlotID, int newSlotID)
+    {
+        throw new System.NotImplementedException();
     }
 
     public void ThrowItem(Slot slot) { }

@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  fireRate: 50000000
+  fireRate: 1250
   raycastLength: 100
   damage: 20
   attackableLayers:

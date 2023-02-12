@@ -44,6 +44,10 @@ public class SceneCamera : SceneComponent
 
     public void Enable(CameraTypes type)
     {
+        depolyCamera.transform.position = _startPos;
+        depolyCamera.transform.rotation = _startRot;
+        _target = null;
+        
         switch (type)
         {
             case CameraTypes.Deploy:

@@ -12,13 +12,8 @@ public class Cannon : NetworkBehaviour, IInteractable
 
 
     [SerializeField] private CannonController cannonController;
-
-    [Space]
     
-    [SerializeField] private Easing enterEasing;
-
-    [SerializeField] private float enterDuration = 1f;
-
+    
     public void LookAtInteract() { }
     public void StopLookAtInteract() { }
     
@@ -33,8 +28,6 @@ public class Cannon : NetworkBehaviour, IInteractable
         
         if (networkPlayer.Object.HasInputAuthority)
         {
-            //       networkPlayer.Camera.ToggleCamera(false);
-            //       cannonController.ToggleCamera(true);
             float duration = ((cannonController.GetCannonCamera().transform.position -
                                networkPlayer.Camera.Camera.transform.position).magnitude / 5f );
 
@@ -88,6 +81,12 @@ public class Cannon : NetworkBehaviour, IInteractable
             IsValid = true,
             Return = true
         };
+    }
+
+    public void DisableCamera(NetworkPlayer player)
+    {
+        player.Camera.ToggleCamera(true);
+        cannonController.ToggleCamera(false);
     }
 
     public IEnumerator DelaySwapCamera(float time, NetworkPlayer player, bool playerCamOn, bool cannonCamOn)

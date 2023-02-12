@@ -32,6 +32,11 @@ public class Backpack : ChestInventory
 
     public override void FixedUpdateNetwork()
     {
+        if (!Object.HasStateAuthority)
+        {
+            return;
+        }
+        
         if (lifeTimer.ExpiredOrNotRunning(Runner))
         {
             Runner.Despawn(Object);

@@ -33,12 +33,13 @@ public interface IInventory
     bool IsFull { get; }
 
     void AddItem(int itemID, int stack = 1, int slotID = -1);
-    void RemoveItem(int itemID, int slotID = -1);
+    void RemoveItem(int itemID, int slotID = -1, int amountToRemove = 1);
     
     void OnSlotHovered(Slot slot);
     void OnSlotUnHovered(Slot slot);
     void OnSlotReset(Slot slot);
     void UpdateItems(int oldSlotID, int newSlotID);
+    void UpdateItemStack(int oldSlotID, int newSlotID);
     void ThrowItem(Slot slot);
     
     bool FindItem(int itemID, out ItemListData itemData);

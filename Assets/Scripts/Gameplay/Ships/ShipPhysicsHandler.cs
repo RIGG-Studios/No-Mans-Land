@@ -24,6 +24,8 @@ public class ShipPhysicsHandler : NetworkBehaviour
     [Networked]
     private float horizontalInput { get; set; }
 
+    private float _wheelInput;
+
     private void Awake()
     {
         _ship = GetComponent<Ship>();
@@ -50,24 +52,15 @@ public class ShipPhysicsHandler : NetworkBehaviour
         
         forwardInput = Mathf.Clamp(input.MovementInput.y, 0.0f, maxMovementSpeed);
         horizontalInput = input.MovementInput.x;
-        
-    //    wheel.localEulerAngles = Vector3.Lerp(wheel.localEulerAngles,
-      //      Vector3.back * Mathf.Clamp(input.MovementInput.x * 100, -90, 90f), Runner.DeltaTime * .5f);
     }
-
-    private void Update()
+    
+    public override void Render()
     {
         if (Object.HasInputAuthority)
         {
-            Vector3 angle = Vector3.back * Mathf.Clamp((-Input.GetAxis("Horizontal") * 180), -180, 180);
-
-            if (angle.z <= -178f)
-            {
-                angle.z = 0.0f;
-            }
-            
-     //       wheel.localEulerAngles = Vector3.Lerp(wheel.localEulerAngles,
-          //      angle, Time.deltaTime * 2.0f);
+            _wheelInput += horizontalInput;
+            _wheelInput = Mathf.Clamp(_wheelInput, -180, 180f);
+            wheel.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, _wheelInput);
         }
     }
 

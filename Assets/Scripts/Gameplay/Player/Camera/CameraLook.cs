@@ -6,12 +6,16 @@ public class CameraLook : MonoBehaviour
     public bool CanLook { get; set; }
     
     [SerializeField] private Transform camTransform;
-    [SerializeField] private Transform playerTransform;
+    [SerializeField] private NetworkPlayer player;
     [SerializeField] private Vector3 cameraBaseOffset;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float lookSmooth;
-    [SerializeField] private float maxLookAngleY;
-    [SerializeField] private float maxLookAngleX;
+    [SerializeField] private float maxLookAngleY; 
+    
+    
+    
+    private float _maxLookAngleX;
+    private float _minLookAngleX;
 
     
     private Vector2 _lookRotation;
@@ -22,6 +26,7 @@ public class CameraLook : MonoBehaviour
     
     private float _fov;
     private float _defaultFOV;
+    private bool _lockHorizontalMovement;
 
     public Camera Camera { get; private set; }
     public CameraInterpolator Interpolator { get; private set; }
@@ -37,7 +42,7 @@ public class CameraLook : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.isKinematic = true;
-        _lookRotation.x = playerTransform.eulerAngles.y;
+        _lookRotation.x = player.transform.eulerAngles.y;
         _lookRotation.y = camTransform.eulerAngles.y;
 
         _nativeRotation.eulerAngles = new Vector3(0f, _lookRotation.y, 0f);
@@ -74,14 +79,18 @@ public class CameraLook : MonoBehaviour
         _lookRotation.y += nextVertical;
         
         _lookRotation.y = Mathf.Clamp(_lookRotation.y, -maxLookAngleY, maxLookAngleY);
-        
-        
+
+        if (_lockHorizontalMovement)
+        {
+            _lookRotation.x = Mathf.Clamp(_lookRotation.x, _minLookAngleX, _maxLookAngleX);
+        }
+
         Quaternion camTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.y + (0), Vector3.left);
         Quaternion bodyTargetRotation = _nativeRotation * Quaternion.AngleAxis(_lookRotation.x + (0), Vector3.up);
         CameraRotation =  Quaternion.Slerp(camTransform.localRotation, camTargetRotation, lookSmooth);
 
         camTransform.localRotation = CameraRotation;
-        PlayerRotation = Quaternion.Slerp(playerTransform.localRotation, bodyTargetRotation, lookSmooth);
+        PlayerRotation = Quaternion.Slerp(player.transform.localRotation, bodyTargetRotation, lookSmooth);
         Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, _fov, Time.deltaTime * 5f);
     }
     
@@ -90,6 +99,13 @@ public class CameraLook : MonoBehaviour
     {
         _lookY = ver;
         _lookX = hor;
+    }
+
+    public void UpdateHorizontalLock(float minLook, float maxLook, bool lockRot)
+    {
+        _lockHorizontalMovement = lockRot;
+        _minLookAngleX = minLook;
+        _maxLookAngleX = maxLook;
     }
 
     public void SetFOV(float fov, bool defaultFov = false)

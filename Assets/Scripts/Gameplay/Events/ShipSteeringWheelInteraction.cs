@@ -35,6 +35,7 @@ public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
 
         Ship.RequestOwnership(networkPlayer.Object.InputAuthority);
         
+        
         interactData = new ButtonInteractionData()
         {
             DisableCursor = true,
@@ -50,6 +51,11 @@ public class ShipSteeringWheelInteraction : NetworkBehaviour, IInteractable
     {
         Ship.ResetOwnership();
 
+        if (player.Object.HasInputAuthority)
+        {
+            player.Camera.UpdateHorizontalLock(0.0f, 0.0f, false);
+        }
+        
         interactionData = new ButtonInteractionData()
         {
             EnableMovement = true

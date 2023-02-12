@@ -108,7 +108,6 @@ public static class NetworkDamageHandler
     {
         bool success = hitData.Victim.ProcessHit(ref hitData);
         
-        Debug.Log(hitData.IsFatal);
         return hitData;
     }
 

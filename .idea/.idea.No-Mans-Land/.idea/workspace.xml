@@ -8,6 +8,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/CharacterAnimator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Footstep.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/OceanAmbienceAUdio.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PlayerAudio.cs" root0="FORCE_HIGHLIGHTING" />
@@ -22,6 +23,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Ocean/OceanTimeSync.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Scene/Gameplay.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Base/UIComponent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Gameplay/Player/PlayerNameTag.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Gameplay/SpawnSelectionMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Menu/MainMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Menu/SessionListUIHandler.cs" root0="FORCE_HIGHLIGHTING" />
@@ -119,6 +121,7 @@
       <workItem from="1675979185377" duration="595000" />
       <workItem from="1676002984407" duration="8576000" />
       <workItem from="1676057131016" duration="8194000" />
+      <workItem from="1676173201395" duration="7495000" />
     </task>
     <servers />
   </component>

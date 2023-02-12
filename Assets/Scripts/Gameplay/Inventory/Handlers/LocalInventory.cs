@@ -198,7 +198,7 @@ public class LocalInventory : ContextBehaviour, IInventory
         Items.Add(inventoryItem);
     }
 
-    public virtual void RemoveItem(int itemID, int slotID = -1)
+    public virtual void RemoveItem(int itemID, int slotID = -1, int amountToAdd = 1)
     {
         if (Object.HasStateAuthority)
         {
@@ -271,6 +271,18 @@ public class LocalInventory : ContextBehaviour, IInventory
         RPC_RequestUpdateInventory(oldSlotID, newSlotID);
     }
 
+    public void UpdateItemStack(int oldSlotID, int newSlotID)
+    {
+        if (Object.HasStateAuthority)
+        {
+            ExecuteUpdateItemStack(oldSlotID, newSlotID);
+        }
+        else
+        {
+            RPC_UpdateItemStack(oldSlotID, newSlotID);
+        }
+    }
+
     public void ThrowItem(Slot slot)
     {
         if (!slot.HasItem)
@@ -279,9 +291,24 @@ public class LocalInventory : ContextBehaviour, IInventory
         }
 
      //   RPC_ThrowItem(slot.InventoryItem.ItemID, slot.InventoryItem.Stack);
-
     }
 
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_UpdateItemStack(int oldSlotID, int newSlotID)
+    {
+        ExecuteUpdateItemStack(oldSlotID, newSlotID);
+    }
+
+    private void ExecuteUpdateItemStack(int oldSlotID, int newSlotID)
+    {
+        Slot oldSlot = SlotHandler.FindSlotByID(oldSlotID);
+        Slot nextSlot = SlotHandler.FindSlotByID(newSlotID);
+        
+        RemoveItem(oldSlot.InventoryItem.ItemID, oldSlot.ID);
+        AddItem(oldSlot.InventoryItem.ItemID, nextSlot.ID);
+    }
+
+    
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_ThrowItem(int itemID, int stack = 1)
     {

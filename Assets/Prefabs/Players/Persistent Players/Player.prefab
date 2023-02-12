@@ -47,8 +47,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _ActivePlayer: {fileID: 0}
-  playerPrefab: {fileID: 3179884598373680720, guid: 62adfde91941e1e458293a472f8445b2,
+  _Stats:
+    Kills: 0
+    Deaths: 0
+    Score: 0
+    TeamID: 0
+  _PlayerName:
+    _length: 0
+    _data:
+      Data: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  _State: 0
+  playerPrefab: {fileID: 8349050044763410723, guid: 62adfde91941e1e458293a472f8445b2,
     type: 3}
+  displayPerformance: 0
 --- !u!114 &1506870605359417630
 MonoBehaviour:
   m_ObjectHideFlags: 0

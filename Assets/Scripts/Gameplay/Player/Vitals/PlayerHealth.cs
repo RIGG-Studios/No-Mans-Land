@@ -65,6 +65,11 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
 
     public override void FixedUpdateNetwork()
     {
+        if (Object.IsProxy)
+        {
+            return;
+        }
+        
         if (Object.HasInputAuthority)
         {
             healthText.text = string.Format("<color={0}>+</color> {1}", "red", Health);
@@ -126,6 +131,15 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
             }
 
             NetworkPlayer.Local.Camera.Fall();
+        }
+
+        if (!Object.IsProxy)
+        {
+            if (Owner.Movement.Cannon != null)
+            {
+                Cannon cannon = Owner.Movement.Cannon as Cannon;
+                if (cannon != null) cannon.StopButtonInteract(Owner, out ButtonInteractionData interactionData);
+            }
         }
     }
 

@@ -29,6 +29,16 @@ public class Ship : NetworkBehaviour
         Cannons = GetComponentsInChildren<CannonController>();
     }
 
+    public override void FixedUpdateNetwork()
+    {
+        if (Object.HasInputAuthority)
+        {
+            float min = transform.eulerAngles.y - 90f;
+            float max = transform.eulerAngles.y + 90f;
+            NetworkPlayer.Local.Camera.UpdateHorizontalLock(min, max, true);
+        }
+    }
+
     public void Init(byte id)
     {
         TeamID = id;

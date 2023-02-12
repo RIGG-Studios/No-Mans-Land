@@ -24,11 +24,9 @@ public class ExampleAnimator : MonoBehaviour
         bool isSprinting = characterEquippableItem.Player.Movement.IsSprinting &&
                            !characterEquippableItem.Player.Movement.IsSwimming;
 
-        Debug.Log(isSprinting);
          bool isWalking = characterEquippableItem.Player.Movement.IsMoving &&
                           !characterEquippableItem.Player.Movement.IsSwimming && !isSprinting;
          
-         Debug.Log(isWalking);
          _animator.SetBool(IsWalking, isWalking);
          _animator.SetBool(IsSprinting, isSprinting);
     }
