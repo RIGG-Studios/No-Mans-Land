@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
 {
     [Networked(OnChanged = nameof(OnDeadChanged))]
-    public NetworkBool IsDead { get; private set; }
+    public bool IsDead { get; private set; }
 
     [Networked]
     public float Oxygen { get; private set; }

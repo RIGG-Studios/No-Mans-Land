@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class ShipVitalPoint : MonoBehaviour, INetworkDamagable
 {
-    [SerializeField] private NetworkHealthHandler shipHealth;
+    [SerializeField] private ShipHealth shipHealth;
     
     public NetworkPlayer Owner { get; }
+    public bool IsDead => shipHealth.IsDead;
     public INetworkDamagable.DamageTypes Type => INetworkDamagable.DamageTypes.Ship;
 
     

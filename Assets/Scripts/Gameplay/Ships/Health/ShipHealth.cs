@@ -10,7 +10,7 @@ public class ShipHealth : NetworkHealthHandler
     [Networked]
     public NetworkBool IsDead { get; private set; }
     
-    private const byte StartingHealth = 150;
+    private const byte StartingHealth = 100;
 
     private Ship _ship;
 

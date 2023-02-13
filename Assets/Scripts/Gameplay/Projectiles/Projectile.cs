@@ -49,6 +49,13 @@ public class Projectile : ContextBehaviour
         
         if (collision.gameObject.TryGetComponent(out INetworkDamagable damage))
         {
+            if (damage.IsDead)
+            {
+                Destroy = true;
+                return;
+            }
+            
+            
             if (Object.HasInputAuthority && Runner.IsForward)
             {
                 DamageNotifier.Instance.OnDamageEntity(startPosition, transform.position, damageAmount);

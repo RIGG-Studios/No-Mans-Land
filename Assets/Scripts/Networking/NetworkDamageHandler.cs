@@ -43,6 +43,7 @@ public interface INetworkDamagable
     
     DamageTypes Type { get; }
     NetworkPlayer Owner { get; }
+    bool IsDead { get; }
     
     bool ProcessHit(ref HitData hit);
 }
