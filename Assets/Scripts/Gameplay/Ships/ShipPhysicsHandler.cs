@@ -56,12 +56,9 @@ public class ShipPhysicsHandler : NetworkBehaviour
     
     public override void Render()
     {
-        if (Object.HasInputAuthority)
-        {
-            _wheelInput += horizontalInput;
-            _wheelInput = Mathf.Clamp(_wheelInput, -180, 180f);
-            wheel.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, _wheelInput);
-        }
+        _wheelInput += horizontalInput;
+     //   _wheelInput = Mathf.Clamp(_wheelInput, -180, 180f);
+        wheel.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, _wheelInput);
     }
 
     public void AddForce(Vector3 velocity)

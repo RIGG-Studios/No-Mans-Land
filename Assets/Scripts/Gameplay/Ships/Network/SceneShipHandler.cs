@@ -78,7 +78,6 @@ public class SceneShipHandler : ContextBehaviour
     
     private NetworkObject SpawnNetworkShip(PlayerRef inputAuthority, int teamID)
     {
-        Debug.Log(teamID);
         ISpawnPoint[] spawnPoints = NetworkSpawnHandler.Instance.GetTeamShipSpawns(teamID);
 
         ISpawnPoint spawnPoint = spawnPoints[0];

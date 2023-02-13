@@ -48,6 +48,7 @@ MonoBehaviour:
   depthBeforeSubmerged: 4
   displacementAmount: 1
   rigidBody: {fileID: 1284692025321889843}
+  networkRigidbody: {fileID: 1903358878025560945}
 --- !u!1 &131596773666425448
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,6 +778,7 @@ MonoBehaviour:
   depthBeforeSubmerged: 4
   displacementAmount: 1
   rigidBody: {fileID: 1284692025321889843}
+  networkRigidbody: {fileID: 1903358878025560945}
 --- !u!1 &2247341843811511793
 GameObject:
   m_ObjectHideFlags: 0
@@ -3538,6 +3540,7 @@ MonoBehaviour:
   depthBeforeSubmerged: 4
   displacementAmount: 1
   rigidBody: {fileID: 1284692025321889843}
+  networkRigidbody: {fileID: 1903358878025560945}
 --- !u!1 &8717951952663708690
 GameObject:
   m_ObjectHideFlags: 0
@@ -3669,6 +3672,7 @@ MonoBehaviour:
   depthBeforeSubmerged: 4
   displacementAmount: 1
   rigidBody: {fileID: 1284692025321889843}
+  networkRigidbody: {fileID: 1903358878025560945}
 --- !u!1 &9038134470684713912
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,8 @@ public class InputProvider : InputBase
 
     private bool _isAiming;
     private bool _isReloading;
-
+    private bool _lmbHeldDown;
+    
     private bool _slot1Pressed;
     private bool _slot2Pressed;
     private bool _slot3Pressed;
@@ -64,6 +65,7 @@ public class InputProvider : InputBase
 
         _isReloading = InputActions.Player.Reload.IsPressed();
         _isAiming = InputActions.Player.Aim.IsPressed();
+        _lmbHeldDown = InputActions.Player.Fire.IsPressed();
     }
 
     public override void OnEnable()
@@ -77,6 +79,7 @@ public class InputProvider : InputBase
         base.OnDisable();
         NetworkCallBackEvents.onInput -= OnInput;
     }
+    
     
     private void OnFirePressed()
     {
@@ -122,6 +125,7 @@ public class InputProvider : InputBase
         tickInput.IsAiming = _isAiming;
         tickInput.IsReloading = _isReloading;
         tickInput.CurrentState = _player.Movement.RequestedState;
+        tickInput.IsFiring = _lmbHeldDown;
 
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
         tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);

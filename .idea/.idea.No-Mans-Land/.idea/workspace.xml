@@ -14,6 +14,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/PlayerAudio.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PlayerChatExample.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DisconnectionHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Item Controllers/GrapplingHookItemController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Player/Camera/CameraInterpolator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/Upgrading/Station/UpgradeStation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LobbyTypes.cs" root0="FORCE_HIGHLIGHTING" />
@@ -122,6 +123,8 @@
       <workItem from="1676002984407" duration="8576000" />
       <workItem from="1676057131016" duration="8194000" />
       <workItem from="1676173201395" duration="7495000" />
+      <workItem from="1676237977609" duration="7720000" />
+      <workItem from="1676322661775" duration="2124000" />
     </task>
     <servers />
   </component>

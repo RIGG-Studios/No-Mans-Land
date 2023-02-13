@@ -36,6 +36,7 @@ public struct NetworkInputData : INetworkInput
     
     public NetworkBool IsAiming;
     public NetworkBool IsReloading;
+    public NetworkBool IsFiring;
 
     public float RawLookX;
     public float RawLookY;

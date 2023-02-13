@@ -11,6 +11,7 @@ public class Floater : NetworkBehaviour
     [SerializeField] private float depthBeforeSubmerged;
     [SerializeField] private float displacementAmount;
     [SerializeField] private Rigidbody rigidBody;
+    [SerializeField] private NetworkRigidbody networkRigidbody;
 
     [Networked]
    private float WaveHeight { get; set; }
@@ -25,29 +26,30 @@ public class Floater : NetworkBehaviour
    {
        _waterSurface = FindFirstObjectByType<WaterSurface>();
    }
+   
 
 
    public override void FixedUpdateNetwork()
-    {
-        _searchParameters.startPositionWS = _searchResult.candidateLocationWS;
-        _searchParameters.targetPositionWS = transform.position;
-        _searchParameters.error = 0.01f;
-        _searchParameters.maxIterations = 8;
+   {
+       _searchParameters.startPositionWS = _searchResult.candidateLocationWS;
+       _searchParameters.targetPositionWS = transform.position;
+       _searchParameters.error = 0.01f;
+       _searchParameters.maxIterations = 8;
 
-        if (_waterSurface.ProjectPointOnWaterSurface(_searchParameters, out _searchResult))
-        {
-            WaveHeight = _searchResult.projectedPositionWS.y;
-        }
+       if (_waterSurface.ProjectPointOnWaterSurface(_searchParameters, out _searchResult))
+       {
+           WaveHeight = _searchResult.projectedPositionWS.y;
+       }
         
-        if (!(transform.position.y < WaveHeight))
-        {
-            return;
-        }
+       if (!(transform.position.y < WaveHeight))
+       {
+           return;
+       }
         
-        float displacementMultiplier = Mathf.Clamp01((WaveHeight - transform.position.y) / depthBeforeSubmerged) *
-                                       displacementAmount;
+       float displacementMultiplier = Mathf.Clamp01((WaveHeight - transform.position.y) / depthBeforeSubmerged) *
+                                      displacementAmount;
 
-        rigidBody.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0),
-            transform.position, ForceMode.Acceleration);
-    }
+       rigidBody.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0),
+           transform.position, ForceMode.Acceleration);
+   }
 }

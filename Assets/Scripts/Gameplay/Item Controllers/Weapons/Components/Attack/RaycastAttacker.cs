@@ -93,7 +93,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         fireCooldown = TickTimer.CreateFromSeconds(Runner, _fireTicks / 2);
         _attack = !fireCooldown.ExpiredOrNotRunning(Runner);
         
-        if (Object.HasInputAuthority)
+        if (Object.HasInputAuthority && Runner.IsForward)
         {
             FireEffectsLocal();
         }

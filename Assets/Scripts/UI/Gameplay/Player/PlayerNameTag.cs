@@ -17,6 +17,8 @@ public class PlayerNameTag : SimulationBehaviour
     {
         if (Object.HasInputAuthority)
         {
+            friendlyPlayerIcon.enabled = false;
+            playerNameText.enabled = false;
             return;
         }
 

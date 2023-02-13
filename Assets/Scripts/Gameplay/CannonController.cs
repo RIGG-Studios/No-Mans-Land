@@ -45,16 +45,23 @@ public class CannonController : ContextBehaviour
     [SerializeField] private float aimFOV = 60f;
 
     private AudioSource _audioSource;
+    private Ship _ship;
 
 
     protected override void Awake()
     {
         base.Awake();
         _audioSource = GetComponent<AudioSource>();
+        _ship = transform.root.GetComponent<Ship>();
     }
 
     public override void FixedUpdateNetwork()
     {
+        if (Object.IsProxy)
+        {
+            return;
+        }
+        
         if (!GetInput(out NetworkInputData input))
         {
             return;
@@ -126,7 +133,12 @@ public class CannonController : ContextBehaviour
             cameraShake.ShakeCamera("Fire");
         }
     }
-    
+
+    public override void Render()
+    {
+        transform.localRotation = Quaternion.Euler(0.0f, pitch, 0.0f);
+        barrel.localRotation = Quaternion.Euler(0.0f, 0.0f, yaw);
+    }
     
     private void UpdateRotation(NetworkInputData input)
     {
@@ -135,9 +147,6 @@ public class CannonController : ContextBehaviour
 
         pitch = Mathf.Clamp(pitch, originalRotation-xRotationMax, originalRotation+xRotationMax);
         yaw = Mathf.Clamp(yaw, -yRotationMax, yRotationMax);
-
-        transform.localRotation = Quaternion.Euler(0.0f, pitch, 0.0f);
-        barrel.localRotation = Quaternion.Euler(0.0f, 0.0f, yaw);
     }
 
     public void ToggleCamera(bool state) => cannonCamera.gameObject.SetActive(state);

@@ -49,8 +49,7 @@ public class Projectile : ContextBehaviour
         
         if (collision.gameObject.TryGetComponent(out INetworkDamagable damage))
         {
-            Debug.Log(Object.HasInputAuthority);
-            if (Object.HasInputAuthority)
+            if (Object.HasInputAuthority && Runner.IsForward)
             {
                 DamageNotifier.Instance.OnDamageEntity(startPosition, transform.position, damageAmount);
             }
@@ -65,7 +64,7 @@ public class Projectile : ContextBehaviour
             {
                 Context.Gameplay.TryFindPlayer(Object.InputAuthority, out Player player);
 
-                if (player != null)
+                if (player != null && Runner.IsForward)
                 {
                     player.ActivePlayer.UI.ShowKillNotifcation("SHIP SUNK!");
                 }

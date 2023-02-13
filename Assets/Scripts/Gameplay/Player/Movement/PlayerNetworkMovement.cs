@@ -79,12 +79,7 @@ public class PlayerNetworkMovement : ContextBehaviour
             return;
         }
 
-        if (Object.HasStateAuthority)
-        {
-            CurrentState = input.CurrentState;
-        }
-
-        switch (input.CurrentState)
+        switch (CurrentState)
         {
             case PlayerStates.PlayerController:
                 CharacterMovement(input);
@@ -102,6 +97,7 @@ public class PlayerNetworkMovement : ContextBehaviour
 
     private void CharacterMovement(NetworkInputData input)
     {
+        Debug.Log("ahhh");
         CanMove = !_player.Inventory.IsOpen && !_player.Health.IsDead && !_player.Pause.IsOpen;
         
         if (!CanMove)
@@ -259,12 +255,12 @@ public class PlayerNetworkMovement : ContextBehaviour
     {
         if (interactable.ID == "ShipWheel")
         {
-            RequestedState = PlayerStates.PlayerController;
+            CurrentState = PlayerStates.PlayerController;
         }
         
         if (interactable.ID == "Cannon")
         {
-            RequestedState = PlayerStates.PlayerController;
+            CurrentState = PlayerStates.PlayerController;
         }
     }
 }

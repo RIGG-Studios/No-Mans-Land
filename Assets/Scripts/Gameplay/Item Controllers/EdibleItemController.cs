@@ -16,21 +16,20 @@ public class EdibleItemController : BaseWeapon
         bool hasItem = Player.Inventory.FindItem(item.itemID, out ItemListData itemData);
         bool firePressed = context.Input.Buttons.IsSet(PlayerButtons.Fire);
 
-        Debug.Log(Player.Health.Health);
         if (!firePressed || IsEating || !hasItem || Player.Health.Health >= 100)
         {
             return;
         }
         
         
-        if (Object.HasInputAuthority)
+        if (Object.HasInputAuthority && Runner.IsForward)
         {
             Animator.SetTrigger(eatAnimationData.name);
         }
 
-        Player.Inventory.UpdateItemStack(itemData, 1);
         if (Object.HasStateAuthority)
         {
+            Player.Inventory.UpdateItemStack(itemData, 1);
             Player.StartCoroutine(IE_DelayHeal());
         }
     }

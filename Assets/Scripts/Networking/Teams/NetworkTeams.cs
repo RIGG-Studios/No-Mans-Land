@@ -13,7 +13,7 @@ public struct NetworkTeam : INetworkStruct
 
 
     public NetworkBool CanRespawn;
-    public NetworkBool IsFull => PlayerCount >= 4;
+    public NetworkBool IsFull => PlayerCount >= 1;
 
     public NetworkTeam(byte teamID, int playerCount)
     {
@@ -120,6 +120,12 @@ public class NetworkTeams : ContextBehaviour
         player.SetStat(StatTypes.TeamID, teamID);
     }
 
+
+    public void RemoveFromTeam(Player player)
+    {
+        UpdateTeamPlayerCount(player.Stats.TeamID, -1);
+    }
+
     private byte GetBestTeam()
     {
         for (int i = 0; i < Teams.Count; i++)
@@ -137,10 +143,23 @@ public class NetworkTeams : ContextBehaviour
         return 0;
     }
 
-    private void UpdateTeamPlayerCount(int teamIndex)
+    private void UpdateTeamPlayerCount(int teamIndex, int count = 1)
     {
         NetworkTeam team = Teams[teamIndex];
-        team.PlayerCount++;
+        team.PlayerCount += count;
         Teams.Set(teamIndex, team);
+    }
+
+    private NetworkTeam GetTeam(int index)
+    {
+        for (int i = 0; i < Teams.Count; i++)
+        {
+            if (index == Teams[i].TeamID)
+            {
+                return Teams[i];
+            }
+        }
+
+        return default;
     }
 }

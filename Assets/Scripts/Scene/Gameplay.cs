@@ -51,7 +51,7 @@ public class Gameplay : ContextBehaviour
     }
 
 
-    public void Leave(NetworkBehaviour player)
+    public void Leave(Player player)
     {
         if (!HasStateAuthority)
         {
@@ -63,6 +63,7 @@ public class Gameplay : ContextBehaviour
             return;
         }
 
+        Context.Teams.RemoveFromTeam(player);
         Players.Remove(player.Object.InputAuthority);
     }
 

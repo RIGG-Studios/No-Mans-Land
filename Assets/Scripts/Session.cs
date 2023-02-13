@@ -88,8 +88,15 @@ using Fusion;
         {
             SessionState = SessionStates.WaitingForPlayers;
         }
-        
-        CheckForGameStart();
+
+        if (SessionState == SessionStates.Gameplay)
+        {
+            Context.Gameplay.Join(playerObj);
+        }
+        else
+        {
+            CheckForGameStart();
+        }
     }
 
     private void CheckForGameStart()
