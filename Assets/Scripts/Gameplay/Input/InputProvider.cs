@@ -107,6 +107,13 @@ public class InputProvider : InputBase
         {
             return;
         }
+
+        Debug.Log(Context);
+        Debug.Log(Context.Session);
+        if (Context.Session.SessionState == Session.SessionStates.EndingGameplay)
+        {
+            return;
+        }
         
         
         

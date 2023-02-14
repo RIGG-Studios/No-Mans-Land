@@ -4,7 +4,7 @@
     <keycodeSelectionIndex>124</keycodeSelectionIndex>
     <paintToSelection>true</paintToSelection>
     <fillMode>false</fillMode>
-    <brushSize>14.5</brushSize>
+    <brushSize>8</brushSize>
     <textureFileName>3dbrush</textureFileName>
     <show2DFlag>true</show2DFlag>
     <overrideScale>false</overrideScale>

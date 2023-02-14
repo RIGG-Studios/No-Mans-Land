@@ -9,6 +9,7 @@ public class ServerCreator : MonoBehaviour
     public static string LobbyName;
 
     [SerializeField] private TMP_InputField sessionNameInput;
+    [SerializeField] private TMP_Dropdown dropdown;
     [SerializeField] private DisconnectionHandler disconnectionHandler;
     
     public void CreateSession()
@@ -20,7 +21,9 @@ public class ServerCreator : MonoBehaviour
             disconnectionHandler.ShutdownCustomMessage("Invalid Server Name", "Please enter a valid server name");
             return;
         }
+
+        int playerCount = int.Parse(dropdown.options[dropdown.value].text);
         
-        GameLauncher.Instance.CreateRunner(GameMode.Host, sessionName, "MainScene");
+        GameLauncher.Instance.CreateRunner(GameMode.Host, sessionName, playerCount, "MainScene");
     }
 }

@@ -11,7 +11,7 @@ public class WeaponComponent : InputBase
     public virtual bool IsBusy => false;
 
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
 

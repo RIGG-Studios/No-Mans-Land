@@ -44,6 +44,8 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 
     private IInputProccesor[] _inputProcessors;
 
+    private Objective _currentObjective;
+
     
     public override void Spawned()
     {
@@ -53,6 +55,7 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
             Context.Input.RequestCursorLock();
             Context.Camera.Disable(SceneCamera.CameraTypes.Deploy);
             Context.Camera.Disable(SceneCamera.CameraTypes.Scene);
+            Context.UI.EnableMenu("Gameplay");
         }
 
         _inputProcessors = GetComponents<IInputProccesor>();
@@ -68,13 +71,16 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
 
     public void OnDeath()
     {
-        if (!Object.HasInputAuthority)
+        if (_currentObjective != null)
         {
-            return;
+            _currentObjective.OnPlayerLeft(Owner.Stats.TeamID);
+            _currentObjective = null;
         }
-        
-        Camera.CanLook = false;
-        Inventory.CanUse = false;
+
+        if (Object.HasInputAuthority)
+        {
+            Context.UI.DisableMenu("ObjectiveCapture");
+        }
     }
 
     private void SetupPlayer()
@@ -97,6 +103,47 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
             onLocalPlayerInit?.Invoke();
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.TryGetComponent(out Objective objective))
+        {
+            return;
+        }
+
+        if (Object.HasInputAuthority)
+        {
+            Context.UI.GetService<ObjectiveCapturingUI>().SetObjective(objective);
+            Context.UI.EnableMenu("ObjectiveCapture", false);
+        }
+            
+        if (Object.HasStateAuthority)
+        {
+            objective.OnPlayerEntered(Owner.Stats.TeamID);
+            _currentObjective = objective;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.TryGetComponent(out Objective objective))
+        {
+            return;
+        }
+        
+        if (Object.HasInputAuthority)
+        {
+            Context.UI.GetService<ObjectiveCapturingUI>().SetObjective(null);
+            Context.UI.DisableMenu("ObjectiveCapture");
+        }
+
+        if (Object.HasStateAuthority)
+        {
+            objective.OnPlayerLeft(Owner.Stats.TeamID);
+            _currentObjective = null;
+        }
+    }
+    
 
     public override void FixedUpdateNetwork()
     {

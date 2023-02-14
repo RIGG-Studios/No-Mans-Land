@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
+
+[System.Serializable]
 public struct NetworkTeam : INetworkStruct
 {
     public byte TeamID;
     public int PlayerCount;
-    
+    public int TeamScore;
     public int ShipIndex;
+    public int ObjectivesOwned;
 
 
     public NetworkBool CanRespawn;
@@ -21,6 +24,8 @@ public struct NetworkTeam : INetworkStruct
         PlayerCount = playerCount;
         ShipIndex = 0;
         CanRespawn = true;
+        TeamScore = 0;
+        ObjectivesOwned = 0;
     }
 }
 
@@ -32,31 +37,31 @@ public class NetworkTeams : ContextBehaviour
     [SerializeField] private int teamAmount = 4;
     [SerializeField] private bool autoFillTeams = true;
 
-    [Networked, Capacity(16)] 
-    public NetworkLinkedList<NetworkTeam> Teams { get; } = new();
-    
+    [Networked, Capacity(16)] public NetworkLinkedList<NetworkTeam> Teams { get; } = new();
+
     public void OnEnable()
     {
         Context.Teams = this;
     }
-    
+
     public override void Spawned()
     {
         if (!HasStateAuthority)
         {
             return;
         }
-        
+
         for (int i = 0; i < teamAmount; i++)
         {
             int id = i + 1;
-            
+
             Teams.Add(new NetworkTeam((byte)id, 0));
         }
 
         for (int i = 0; i < Teams.Count; i++)
         {
-            GetComponent<SceneShipHandler>().RequestShip(Teams[i].TeamID, Object.StateAuthority, out NetworkObject ship);
+            GetComponent<SceneShipHandler>()
+                .RequestShip(Teams[i].TeamID, Object.StateAuthority, out NetworkObject ship);
 
             if (ship != null)
             {
@@ -81,14 +86,14 @@ public class NetworkTeams : ContextBehaviour
         {
             return;
         }
-        
+
         AddToTeam(player, teamIndex);
     }
 
     public void AddToTeam(Player player, int teamIndex = -1)
     {
         byte teamID = 0;
-        
+
         if (autoFillTeams)
         {
             teamID = GetBestTeam();
@@ -101,11 +106,11 @@ public class NetworkTeams : ContextBehaviour
 
         player.SetStat(StatTypes.TeamID, teamID);
     }
-    
+
     public void AddToTeam(Player player, out ISpawnPoint spawnPoint, int teamIndex = -1)
     {
         byte teamID = 0;
-        
+
         if (autoFillTeams)
         {
             teamID = GetBestTeam();
@@ -140,6 +145,7 @@ public class NetworkTeams : ContextBehaviour
             Teams.Set(i, team);
             return Teams[i].TeamID;
         }
+
         return 0;
     }
 
@@ -161,5 +167,32 @@ public class NetworkTeams : ContextBehaviour
         }
 
         return default;
+    }
+
+
+    public void UpdateScore(float scoreAmt, int teamID)
+    {
+        NetworkTeam team = GetTeam(teamID);
+
+        if (team.TeamScore < 0)
+        {
+            return;
+        }
+        
+        team.TeamScore = (int)scoreAmt;
+        Teams.Set(teamID - 1, team);
+    }
+
+    public void UpdateObjectives(int amt, int teamID)
+    {
+        NetworkTeam team = GetTeam(teamID);
+
+        if (team.ObjectivesOwned <= 0 && amt <= 0)
+        {
+            return;
+        }
+        
+        team.ObjectivesOwned += amt;
+        Teams.Set(teamID - 1, team);
     }
 }

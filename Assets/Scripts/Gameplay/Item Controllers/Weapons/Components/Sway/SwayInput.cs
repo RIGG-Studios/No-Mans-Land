@@ -8,7 +8,7 @@ public class SwayInput : InputBase
     private BaseSway _baseSway;
 
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
 

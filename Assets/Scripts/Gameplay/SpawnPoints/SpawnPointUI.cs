@@ -27,13 +27,13 @@ public class SpawnPointUI : MonoBehaviour
         transform.position = SpawnPoint.Transform.position + new Vector3(0.0f, 100f, 0.0f);
     }
 
-    public void OnClick()
+    public virtual void OnClick()
     {
         _spawnHandler.OnSpawnPointSelected(SpawnPoint);
         _animator.SetTrigger("Select");
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         _animator.SetTrigger("Hide");
     }

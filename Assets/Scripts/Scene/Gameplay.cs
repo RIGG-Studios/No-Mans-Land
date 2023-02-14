@@ -13,6 +13,7 @@ public class Gameplay : ContextBehaviour
 
     
     [SerializeField] private Backpack backpackPrefab;
+    [SerializeField] private float scoreIncreaseMultiplier = 2f;
 
     private SpawnPoint[] _spawnPoints;
     private int _lastSpawnPoint = -1;
@@ -26,6 +27,9 @@ public class Gameplay : ContextBehaviour
     }
     
     private List<SpawnRequest> _spawnRequests = new();
+
+    private float _blueTeamScore;
+    private float _redTeamScore;
     
     public void Join(Player player)
     {
@@ -79,6 +83,42 @@ public class Gameplay : ContextBehaviour
             return;
         }
         
+        UpdateSpawnRequests();
+
+        _redTeamScore += Runner.DeltaTime * (Context.Teams.Teams[0].ObjectivesOwned * scoreIncreaseMultiplier);
+        _blueTeamScore += Runner.DeltaTime * (Context.Teams.Teams[1].ObjectivesOwned * scoreIncreaseMultiplier);
+        
+        Context.Teams.UpdateScore(_redTeamScore, 1);
+        Context.Teams.UpdateScore(_blueTeamScore, 2);
+
+        if (_redTeamScore > Context.Config.maxScorePoints)
+        {
+            //red team won
+            Context.Session.SessionState = Session.SessionStates.EndingGameplay;
+            OnGameOver(1);
+        }
+        else if (_blueTeamScore > Context.Config.maxScorePoints)
+        {
+            //blue team won
+            Context.Session.SessionState = Session.SessionStates.EndingGameplay;
+            OnGameOver(2);
+        }
+    }
+
+    public void OnGameOver(int teamIDWinner)
+    {
+        RPC_EndGame(teamIDWinner);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_EndGame(int winnerID)
+    {
+        Context.UI.EnableMenu("EndGameUI");
+        Context.UI.GetService<EndGameUI>().OnGameOver(winnerID);
+    }
+
+    private void UpdateSpawnRequests()
+    {
         int currentTick = Runner.Tick;
 
         for (int i = _spawnRequests.Count - 1; i >= 0; i--)
@@ -168,6 +208,35 @@ public class Gameplay : ContextBehaviour
             Rotation = rot,
             Tick = Runner.Tick + delayTicks,
         });
+    }
+
+    public void OnObjectiveStatusChanged(int lostTeamID, int wonTeamID, string objectiveName)
+    {
+        if (!Object.HasStateAuthority)
+        {
+            return;
+        }
+        
+        RPC_OnObjectiveStatusChanged(lostTeamID, wonTeamID, objectiveName);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_OnObjectiveStatusChanged(int lostTeamID, int wonTeamID, NetworkString<_2> objectiveName)
+    {
+        if (NetworkPlayer.Local == null)
+        {
+            return;
+        }
+
+        if (NetworkPlayer.Local.Owner.Stats.TeamID == lostTeamID)
+        {
+            Context.UI.GetService<GameplayUI>().OnObjectiveLost(objectiveName.ToString());
+        }
+        
+        else if (NetworkPlayer.Local.Owner.Stats.TeamID == wonTeamID)
+        {
+            Context.UI.GetService<GameplayUI>().OnObjectiveWon(objectiveName.ToString());
+        }
     }
 
     public void Disconnect(NetworkBehaviour player, NetworkRunner runner)

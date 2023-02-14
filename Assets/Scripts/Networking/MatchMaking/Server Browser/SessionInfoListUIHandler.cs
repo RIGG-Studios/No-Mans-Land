@@ -40,7 +40,7 @@ public class SessionInfoListUIHandler : MonoBehaviour
 
        if (launcher != null)
        {
-           launcher.CreateRunner(GameMode.Client, sessionInfo.Name, "MainScene");
+           launcher.CreateRunner(GameMode.Client, sessionInfo.Name, 0, "MainScene");
        }
     }
 }

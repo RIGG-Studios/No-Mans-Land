@@ -119,11 +119,11 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
         }
         
         model.gameObject.SetActive(false);
+        onDeath?.Invoke();
 
         if (Object.HasInputAuthority)
         {
             deathPanel.SetActive(true);
-            onDeath?.Invoke();
 
             for (int i = 0; i < disableOnDeath.Length; i++)
             {

@@ -33,7 +33,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
     private AudioSource _audioSource;
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         _audioSource = GetComponent<AudioSource>();

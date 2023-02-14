@@ -8,8 +8,9 @@ public class InputBase : ContextBehaviour
     
     protected InputActions InputActions;
 
-    public virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InputActions = new InputActions();
     }
 

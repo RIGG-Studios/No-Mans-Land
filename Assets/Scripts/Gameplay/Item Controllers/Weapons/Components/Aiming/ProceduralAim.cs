@@ -52,7 +52,7 @@ public class ProceduralAim : WeaponComponent, IAimer
     }
     
     
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
 

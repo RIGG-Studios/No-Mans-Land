@@ -9,7 +9,7 @@ public class PlayerInventoryInput : InputBase
 
 
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         _playerInventory = GetComponent<PlayerInventory>();

@@ -81,7 +81,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
         
     }
 
-    public bool CreateRunner(GameMode gameMode, string sessionName, string sceneName = "")
+    public bool CreateRunner(GameMode gameMode, string sessionName, int playerCount, string sceneName = "")
     {
         if (_runner == null)
         {
@@ -91,7 +91,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
         var sceneIndex = SceneUtility.GetBuildIndexByScenePath($"scenes/{sceneName}");
 
         var clientTask =
-            InitializeRunner(_runner, gameMode, NetAddress.Any(), sceneIndex, null, sessionName);
+            InitializeRunner(_runner, gameMode, NetAddress.Any(), sceneIndex,null, sessionName, playerCount);
 
         if (clientTask != null)
         {
@@ -104,7 +104,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     
     
     protected virtual Task InitializeRunner(NetworkRunner runner, GameMode gameMode, NetAddress netAddress,
-        SceneRef scene, Action<NetworkRunner> initialized, string sessionName)
+        SceneRef scene, Action<NetworkRunner> initialized, string sessionName, int playerCount)
     {
         var sceneProvider = runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
 
@@ -123,7 +123,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
         {
             GameMode = gameMode,
             Address =  netAddress,
-            PlayerCount = gameConfig.maxPlayersPerGame,
+            PlayerCount = playerCount,
             Scene = scene,
             SessionName = sessionName,
             Initialized = initialized,

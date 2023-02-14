@@ -3,7 +3,7 @@ public class PlayerInteractionInputHandler : InputBase
 {
     private PlayerInteractionHandler _playerInteraction;
     
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
 
