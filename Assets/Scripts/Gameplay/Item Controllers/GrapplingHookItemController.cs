@@ -73,8 +73,7 @@ public class GrapplingHookItemController : BaseWeapon
 
         _springJoint.autoConfigureConnectedAnchor = false;
         _springJoint.connectedAnchor = _grapplePoint;
-
-
+        
         float dist = (Player.transform.position - _grapplePoint).magnitude;
         _springJoint.maxDistance = dist * .7f;
         _springJoint.minDistance = dist * 0.3f;
