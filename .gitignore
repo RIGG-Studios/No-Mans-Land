@@ -66,3 +66,11 @@ UserSettings/Layouts/default-2021.dwlt
 UserSettings/Layouts/default-2021.dwlt
 UserSettings/EditorUserSettings.asset
 *.dwlt
+
+# Stuff I added
+Assets/Photon/Fusion.meta
+Assets/Photon/FusionAddressables.meta
+Assets/Photon/FusionCodeGen.meta
+Assets/Photon/PhotonLibs.meta
+
+
