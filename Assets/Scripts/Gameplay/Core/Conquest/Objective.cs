@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using TMPro;
 using UnityEngine;
@@ -114,9 +115,14 @@ public class Objective : ContextBehaviour
                 {
                     //red team captured objective
                     Context.Gameplay.OnObjectiveStatusChanged(2,1, objectiveName);
+
+                    if (_blueCaptured)
+                    {
+                        Context.Teams.UpdateObjectives(-1, 2);
+                    }
+                    
                     Context.Teams.UpdateObjectives(1, 1);
-                    Context.Teams.UpdateObjectives(-1, 2);
-                    _redCaptureTime = 0.9f;
+
                     _redCaptured = true;
                     _blueCaptured = false;
                 }
@@ -124,6 +130,7 @@ public class Objective : ContextBehaviour
                 {
                     _blueCaptureTime = 0.0f;
                     _redCaptureTime += Runner.DeltaTime * captureTime;
+                    _redCaptureTime = Mathf.Clamp01(_redCaptureTime);
                 }
                 
                 ObjectiveTeamProgress redProgress = this.redProgress;
@@ -144,12 +151,16 @@ public class Objective : ContextBehaviour
                     return;
                 }
                 
-                if (_blueCaptureTime > 1f && !_blueCaptured)
+                if (_blueCaptureTime >= 1f && !_blueCaptured)
                 {
                     Context.Gameplay.OnObjectiveStatusChanged(1,2, objectiveName);
-                    Context.Teams.UpdateObjectives(-1, 1);
+
+                    if (_redCaptured)
+                    {
+                        Context.Teams.UpdateObjectives(-1, 1);
+                    }
+                    
                     Context.Teams.UpdateObjectives(1, 2);
-                    _blueCaptureTime = 0.9f;
                     _redCaptured = false;
                     _blueCaptured = true;
                 }
@@ -157,6 +168,7 @@ public class Objective : ContextBehaviour
                 {
                     _redCaptureTime = 0.0f;
                     _blueCaptureTime += Runner.DeltaTime * captureTime;
+                    _blueCaptureTime = Mathf.Clamp01(_blueCaptureTime);
                 }
                 
                 ObjectiveTeamProgress blueProgress = this.blueProgress;

@@ -25,6 +25,7 @@ public class ImpactHandler : NetworkBehaviour
 
     public void RequestImpact(string tag, Vector3 position, Vector3 normal)
     {
+        Debug.Log(tag);
         if (!Runner.IsServer)
         {
             return;

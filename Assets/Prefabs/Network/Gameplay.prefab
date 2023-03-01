@@ -3214,6 +3214,7 @@ MonoBehaviour:
     _items: []
   backpackPrefab: {fileID: 8059029883664273408, guid: c8954d64d03ceb347b3d36b7b23af815,
     type: 3}
+  scoreIncreaseMultiplier: 2
 --- !u!114 &2926668079268535786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3229,6 +3230,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   teamAmount: 2
   autoFillTeams: 1
+  _Teams: []
 --- !u!114 &1164755079560625501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3290,6 +3292,9 @@ MonoBehaviour:
   impacts:
   - tag: PlayerVitalPoint
     impactPrefab: {fileID: 2458262815497199864, guid: cf7fe8e2da485f74ead913ebe92c07b8,
+      type: 3}
+  - tag: Sand
+    impactPrefab: {fileID: 6950442010406444346, guid: 9a596c5cfb91d784b83de0b786bd9b29,
       type: 3}
 --- !u!114 &8268295228072901537
 MonoBehaviour:

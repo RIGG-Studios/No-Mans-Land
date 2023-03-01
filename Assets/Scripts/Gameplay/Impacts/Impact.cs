@@ -6,7 +6,8 @@ using UnityEngine.VFX;
 
 public class Impact : NetworkBehaviour
 {
-    [SerializeField] private VisualEffect vfx;
+    [SerializeField] private ParticleSystem vfx;
+    
     
     [Networked] 
     private TickTimer life { get; set; }

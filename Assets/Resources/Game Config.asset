@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea0848a35401484eb9fddbc70747cae, type: 3}
   m_Name: Game Config
   m_EditorClassIdentifier: 
-  maxScorePoints: 30
-  maxPlayersPerGame: 1
+  maxScorePoints: 1000
+  maxPlayersPerGame: 10
   shipRespawnDelay: 30
   backpackLife: 120
-  startingGameTimer: 1
+  startingGameTimer: 10
   redTeamColor: {r: 1, g: 0.25943398, b: 0.25943398, a: 1}
   blueTeamColor: {r: 0.4009434, g: 0.66718805, b: 1, a: 1}

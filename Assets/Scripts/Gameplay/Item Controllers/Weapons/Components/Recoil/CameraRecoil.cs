@@ -27,7 +27,7 @@ public class CameraRecoil : WeaponComponent, IRecoil
 
     public override void FixedUpdateNetwork(WeaponContext context, ItemDesires desires)
     {
-        if (Object.HasInputAuthority && desires.HasFired)
+        if (Object.HasInputAuthority && desires.HasFired && Runner.IsForward)
         {
             DoRecoil();
         }

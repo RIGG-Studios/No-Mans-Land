@@ -10,8 +10,6 @@ public class GameManager : SimulationBehaviour, IPlayerJoined
     [SerializeField] private Gameplay gameplayPrefab;
 
     
-    private NetworkTeams _networkTeams;
-
     private bool _componentsSetup;
 
     public void PlayerJoined(PlayerRef player)

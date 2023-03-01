@@ -48,7 +48,6 @@ public class SceneUI : SceneComponent
 
     public void EnableMenu(string id, bool hideCurrentMenu = true)
     {
-        Debug.Log(id);
         if (_openedMenu && hideCurrentMenu)
         {
             _openedMenu.Disable();

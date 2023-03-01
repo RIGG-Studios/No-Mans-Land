@@ -41,11 +41,12 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3369477026835379741}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: a9f29286b87da464489f6f070e2cfdf0, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 1
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 1
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
@@ -130,7 +131,7 @@ GameObject:
   - component: {fileID: 1329124594488810345}
   - component: {fileID: 8248384931681523449}
   - component: {fileID: 2458262815497199864}
-  - component: {fileID: 466458864487561237}
+  - component: {fileID: 1468646502348149170}
   m_Layer: 0
   m_Name: PlayerImpact
   m_TagString: Untagged
@@ -191,9 +192,9 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 8248384931681523449}
-  - {fileID: 466458864487561237}
+  - {fileID: 1468646502348149170}
   SimulationBehaviours: []
---- !u!114 &466458864487561237
+--- !u!114 &1468646502348149170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,22 +203,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3441089169132778518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Script: {fileID: 2015907558, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 3
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 0}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  UseLegacySharedModeInterpolation: 0
-  TargetInterpolationDelay: 0.03
+  _interpolationDataSource: 0

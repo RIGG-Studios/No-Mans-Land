@@ -97,7 +97,6 @@ public class PlayerNetworkMovement : ContextBehaviour
 
     private void CharacterMovement(NetworkInputData input)
     {
-        Debug.Log("ahhh");
         CanMove = !_player.Inventory.IsOpen && !_player.Health.IsDead && !_player.Pause.IsOpen;
         
         if (!CanMove)
