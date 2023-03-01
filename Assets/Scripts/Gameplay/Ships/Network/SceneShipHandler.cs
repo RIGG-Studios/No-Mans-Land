@@ -7,7 +7,7 @@ public class SceneShipHandler : ContextBehaviour
     [SerializeField] private GameObject shipPrefab;
 
     [Networked, Capacity(16)] 
-    public NetworkDictionary<int, NetworkObject> Ships { get; } = new();
+    [HideInInspector] public NetworkDictionary<int, NetworkObject> Ships { get; } = new();
     
     private List<SpawnRequest> _spawnRequests = new();
 

@@ -37,7 +37,7 @@ public class NetworkTeams : ContextBehaviour
     [SerializeField] private int teamAmount = 4;
     [SerializeField] private bool autoFillTeams = true;
 
-    [Networked, Capacity(16)] public NetworkLinkedList<NetworkTeam> Teams { get; } = new();
+    [Networked, Capacity(16)] [HideInInspector] public NetworkLinkedList<NetworkTeam> Teams { get; } = new();
 
     public void OnEnable()
     {
