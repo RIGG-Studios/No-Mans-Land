@@ -50,7 +50,7 @@ public interface INetworkDamagable
 
 public static class NetworkDamageHandler 
 {
-    public static HitData ProcessHit(PlayerRef attackerRef, Vector3 direction, LagCompensatedHit hit, float damage, HitAction hitAction)
+    public static (HitData, bool) ProcessHit(PlayerRef attackerRef, Vector3 direction, LagCompensatedHit hit, float damage, HitAction hitAction)
     {
         INetworkDamagable networkDamagable = GetDamageTarget(hit.Hitbox, hit.Collider);
 
@@ -85,7 +85,7 @@ public static class NetworkDamageHandler
         return ProcessHit(ref hitData);
     }
     
-    public static HitData ProcessHit(PlayerRef attackerRef, Vector3 direction, Vector3 position, float damage, HitAction hitAction, INetworkDamagable networkDamagable)
+    public static (HitData, bool) ProcessHit(PlayerRef attackerRef, Vector3 direction, Vector3 position, float damage, HitAction hitAction, INetworkDamagable networkDamagable)
     {
         if (networkDamagable == null)
         {
@@ -105,11 +105,11 @@ public static class NetworkDamageHandler
         return ProcessHit(ref hitData);
     }
 
-    private static HitData ProcessHit(ref HitData hitData)
+    private static (HitData, bool) ProcessHit(ref HitData hitData)
     {
         bool success = hitData.Victim.ProcessHit(ref hitData);
         
-        return hitData;
+        return (hitData, success);
     }
 
     private static INetworkDamagable GetDamageTarget(Hitbox hitbox, Collider collider)

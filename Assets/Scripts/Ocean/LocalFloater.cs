@@ -46,7 +46,7 @@ public class LocalFloater : MonoBehaviour
         float displacementMultiplier = Mathf.Clamp01((WaveHeight - transform.position.y) / depthBeforeSubmerged) *
                                        displacementAmount;
 
-        rigidBody.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0),
+        rigidBody.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementAmount, 0),
             transform.position, ForceMode.Acceleration);
     }
 }

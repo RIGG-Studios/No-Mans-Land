@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreFeed : MonoBehaviour 
+public class ScoreFeed : UIComponent 
 {
 
     #region Internal
@@ -101,7 +101,7 @@ public class ScoreFeed : MonoBehaviour
     private List<Score> scores = new List<Score>();
     private List<Score> delete = new List<Score>();
     
-    public void OnPlayerKilled(string _player, string _playerKilled, string _weapon)
+    public void OnPlayerKilled(string _playerKilled, string _weapon)
     {
         queue.Add(new QuedScore(_weapon, _playerKilled, 100));
     }
@@ -111,24 +111,7 @@ public class ScoreFeed : MonoBehaviour
         UpdateScore();
 
         InformationLogic();
-
-		if (Input.GetKeyDown (KeyCode.T))
-        {
-            Info("DOUBLE KILL", 50);
-            Info("HEADSHOT BONUS", 100);
-            queue.Add(new QuedScore("AK-47", "DEV-TEST", 100));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            Info("SHIP SUNK", 50);
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Info("SHIP DAMAGE", 25);
-        }
-	}
+    }
 
     private void InformationLogic()
     {

@@ -149,7 +149,7 @@ public class BasicReload : WeaponComponent, IReloader
             yield break;
         }
 
-        if (Object.HasInputAuthority)
+        if (Object.HasInputAuthority && Runner.IsForward)
         {
             reloadText.SetActive(false);
             Animator.SetTrigger(ReloadHash);

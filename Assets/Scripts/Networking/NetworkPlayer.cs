@@ -24,7 +24,7 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     [SerializeField] private PlayerHealth health;
     [SerializeField] private Character character;
     [SerializeField] private PlayerUI ui;
-    [SerializeField] private Crosshair hitMarker;
+    [SerializeField] private HitMarker hitMarker;
     [SerializeField] private PlayerPauseManager pause;
 
     public PlayerInteractionHandler Interaction => interaction;
@@ -36,7 +36,7 @@ public class NetworkPlayer : ContextBehaviour, IPlayerLeft
     public PlayerPauseManager Pause => pause;
     public Character Character => character;
 
-    public Crosshair HitMarker => hitMarker;
+    public HitMarker HitMarker => hitMarker;
 
     [HideInInspector]
     public Player Owner;

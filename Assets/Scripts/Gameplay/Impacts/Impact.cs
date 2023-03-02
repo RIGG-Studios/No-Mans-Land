@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 public class Impact : NetworkBehaviour
 {
     [SerializeField] private ParticleSystem vfx;
+    [SerializeField] private VisualEffect vfxGraph;
     
     
     [Networked] 
@@ -14,6 +15,12 @@ public class Impact : NetworkBehaviour
 
     public override void Spawned()
     {
+        if (vfxGraph != null)
+        {
+            vfxGraph.Play();
+            return;
+        }
+        
         vfx.Play();
     }
     

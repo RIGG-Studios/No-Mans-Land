@@ -61,13 +61,15 @@ public class Projectile : ContextBehaviour
                 DamageNotifier.Instance.OnDamageEntity(startPosition, transform.position, damageAmount);
             }
                 
-            HitData hitData =
+            (HitData, bool) hitAttempt =
                 NetworkDamageHandler.ProcessHit(Object.InputAuthority, Vector3.zero, transform.position, damageAmount,
                     HitAction.Damage, damage);
-            
-            damage.ProcessHit(ref hitData);
 
-            if (hitData.IsFatal && Object.HasInputAuthority && damage.Type == INetworkDamagable.DamageTypes.Ship)
+
+            bool success = hitAttempt.Item2;
+            HitData hitData = hitAttempt.Item1;
+
+            if (success && hitData.IsFatal && Object.HasInputAuthority && damage.Type == INetworkDamagable.DamageTypes.Ship)
             {
                 Context.Gameplay.TryFindPlayer(Object.InputAuthority, out Player player);
 

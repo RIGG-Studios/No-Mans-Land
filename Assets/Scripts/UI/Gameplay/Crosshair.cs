@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Crosshair : SimulationBehaviour
 {
+
     [SerializeField] private GameObject crossHair;
     [SerializeField] private RectTransform[] rectTransform;
 

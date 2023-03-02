@@ -101,7 +101,6 @@ public class RaycastAttacker : WeaponComponent, IAttacker
         Runner.LagCompensation.Raycast(context.FirePosition, context.FireDirection, raycastLength,
             Object.InputAuthority, out var hitInfo, attackableLayers, HitOptions.IncludePhysX);
         
-        Debug.Log(hitInfo.GameObject);
         if (hitInfo.GameObject != null)
         {
             ImpactHandler.Instance.RequestImpact(hitInfo.GameObject.tag, hitInfo.Point, hitInfo.Normal);
@@ -113,24 +112,32 @@ public class RaycastAttacker : WeaponComponent, IAttacker
             return;
         }
 
-        if (hitInfo.Hitbox != null)
+        Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
+
+        (HitData, bool) hitAttempt =
+            NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
+
+        bool success = hitAttempt.Item2;
+        HitData hitData = hitAttempt.Item1;
+
+        if (Object.HasInputAuthority && Runner.IsForward)
         {
-            if (hitInfo.Hitbox.Root.GetComponent<INetworkDamagable>() != null && Object.HasInputAuthority)
-            {
-                Weapon.Player.HitMarker.ShowCrosshair();
-            }
-        }
-
-        if (Object.HasStateAuthority)
-        {
-            Vector3 dir = (hitInfo.Point - Weapon.Player.Camera.transform.position).normalized;
-
-            HitData hitData =
-                NetworkDamageHandler.ProcessHit(Object.InputAuthority, dir, hitInfo, damage, HitAction.Damage);
-
             if (hitData.IsFatal)
             {
+                Weapon.Player.UI.EnableMenu("ScoreFeed");
+                Weapon.Player.UI.GetService<ScoreFeed>().OnPlayerKilled(hitData.Victim.Owner.Owner.PlayerName.ToString(), "Musket");
+            }
+            else
+            {
                 
+            }
+
+            if (hitInfo.Hitbox != null)
+            {
+                if (hitInfo.Hitbox.Root.GetComponent<INetworkDamagable>() != null)
+                {
+                    Weapon.Player.HitMarker.ShowHitMarker(hitData.IsFatal);
+                }
             }
         }
         

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,8 @@ public class PlayerUI : MonoBehaviour
         killNotifcationAnimator.SetTrigger("Show");
     }
 
+    
+    
     public void EnableMenu(string id)
     {
         if (_openedMenu)
