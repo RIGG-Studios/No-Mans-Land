@@ -677,7 +677,10 @@ MonoBehaviour:
     type: 3}
   barrel: {fileID: 6006338538623207548}
   fireAudioClips:
-  - {fileID: 8300000, guid: a174ae307dc29b04e8341a2b763e8784, type: 3}
+  - {fileID: 8300000, guid: a6c50f60d0a2eab43a4beed37cc769c4, type: 3}
+  - {fileID: 8300000, guid: cb29a6cdf86203e4ab08f39405266d86, type: 3}
+  - {fileID: 8300000, guid: 9fd754e48375c0a4cb8b412003572d4a, type: 3}
+  - {fileID: 8300000, guid: fe2c2d12f8251d442bd21950dab82a83, type: 3}
 --- !u!114 &5178440982009832456
 MonoBehaviour:
   m_ObjectHideFlags: 0

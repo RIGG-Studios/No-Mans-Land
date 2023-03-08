@@ -29,6 +29,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Gameplay/SpawnSelectionMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Menu/MainMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Menu/SessionListUIHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/WaterResources/MainScene/OceanTileManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -129,6 +130,8 @@
       <workItem from="1676533526274" duration="812000" />
       <workItem from="1677623216831" duration="9316000" />
       <workItem from="1677725173848" duration="4651000" />
+      <workItem from="1678170918365" duration="1653000" />
+      <workItem from="1678233298532" duration="24000" />
     </task>
     <servers />
   </component>
