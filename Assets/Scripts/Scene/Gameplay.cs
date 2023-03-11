@@ -256,4 +256,34 @@ public class Gameplay : ContextBehaviour
     {
         return Runner.Spawn(playerPrefab, pos, rot, inputAuthority);
     }
+
+    public NetworkPlayer[] GetAllNetworkPlayers()
+    {
+        List<NetworkPlayer> players = new();
+
+        foreach (KeyValuePair<PlayerRef, Player> p in Players)
+        {
+            if (p.Value.ActivePlayer != null)
+            {
+                players.Add(p.Value.ActivePlayer);
+            }
+        }
+
+        return players.ToArray();
+    }
+    
+    public NetworkPlayer[] GetAllNetworkPlayers(int teamID)
+    {
+        List<NetworkPlayer> players = new();
+
+        foreach (KeyValuePair<PlayerRef, Player> p in Players)
+        {
+            if (p.Value.ActivePlayer != null && teamID == p.Value.Stats.TeamID)
+            {
+                players.Add(p.Value.ActivePlayer);
+            }
+        }
+
+        return players.ToArray();
+    }
 }

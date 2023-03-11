@@ -1,7 +1,8 @@
  using System.Numerics;
 using Fusion;
+ using UnityEngine;
 
-public struct ItemControllerState
+ public struct ItemControllerState
 {
     public bool IsAiming;
     public bool IsReloading;
@@ -22,6 +23,8 @@ public struct ItemDesires
 
 public abstract class ItemController : ContextBehaviour
 {
+    [SerializeField] private Renderer[] renderers;
+    
     public bool IsReady { get; set; }
     public NetworkPlayer Player { get; set; }
 
@@ -36,6 +39,23 @@ public abstract class ItemController : ContextBehaviour
         ID = id;
     }
 
+    public override void Spawned()
+    {
+        if (renderers.Length <= 0)
+        {
+            renderers = GetComponentsInChildren<Renderer>();
+        }
+        
+        Debug.Log(renderers.Length);
+
+        if (Object.IsProxy)
+        {
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                renderers[i].enabled = false;
+            }
+        }
+    }
     
     
     public virtual ItemControllerState GetState()

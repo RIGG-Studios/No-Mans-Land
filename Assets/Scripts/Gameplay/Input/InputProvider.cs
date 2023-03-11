@@ -28,6 +28,8 @@ public class InputProvider : InputBase
     private bool _escapePressed;
     private bool _enterPressed;
 
+    private bool _isSpacePressed;
+
     private bool _inventoryToggle;
 
     
@@ -66,6 +68,7 @@ public class InputProvider : InputBase
         _isReloading = InputActions.Player.Reload.IsPressed();
         _isAiming = InputActions.Player.Aim.IsPressed();
         _lmbHeldDown = InputActions.Player.Fire.IsPressed();
+        _isSpacePressed = InputActions.Player.Jump.IsPressed();
     }
 
     public override void OnEnable()
@@ -131,6 +134,7 @@ public class InputProvider : InputBase
         tickInput.IsReloading = _isReloading;
         tickInput.CurrentState = _player.Movement.RequestedState;
         tickInput.IsFiring = _lmbHeldDown;
+        tickInput.IsSpacePressed = _isSpacePressed;
 
         tickInput.Buttons.Set(PlayerButtons.Fire, _isFirePressed);
         tickInput.Buttons.Set(PlayerButtons.Sprint, _isSprintPressed);

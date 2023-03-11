@@ -9,6 +9,7 @@ public class ProceduralAim : WeaponComponent, IAimer
     [SerializeField] private Transform aimTransform;
     [SerializeField] private float aimSpeed;
     [SerializeField] private float aimFOV;
+    [SerializeField] private float aimSensitivity;
     [SerializeField] private Vector3 aimPos;
 
 
@@ -39,9 +40,18 @@ public class ProceduralAim : WeaponComponent, IAimer
     {
         IsAiming = desires.Aim;
 
-        if (Object.HasInputAuthority)
+        if (Object.HasInputAuthority && Runner.IsForward)
         {
-            Weapon.Player.Camera.SetFOV(aimFOV, !IsAiming);
+            if (IsAiming)
+            {
+                Weapon.Player.Camera.SetFOV(aimFOV);
+                Weapon.Player.Camera.UpdateSensitivity(aimSensitivity);
+            }
+            else
+            {
+                Weapon.Player.Camera.SetFOV(75f);
+                Weapon.Player.Camera.UpdateSensitivity(Weapon.Player.Camera.DefaultMouseSensitivity);
+            }
         }
         
         Vector3 pos = !IsAiming ? _defaultAimPos : aimPos;

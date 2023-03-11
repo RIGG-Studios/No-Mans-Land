@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,10 @@ public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private Animator killNotifcationAnimator;
     [SerializeField] private Text killNotificationUsernameText;
+    [SerializeField] private Text healthText;
+    [SerializeField] private Image healthSlider;
+    [SerializeField] private Text currentAmmoText;
+    [SerializeField] private Text reserveAmmoText;
 
     private UIComponent[] _uiComponents;
     private UIComponent _openedMenu;
@@ -39,7 +44,17 @@ public class PlayerUI : MonoBehaviour
         killNotifcationAnimator.SetTrigger("Show");
     }
 
-    
+    public void UpdateAmmo(int currentAmmo, int reserveAmmo)
+    {
+        currentAmmoText.text = currentAmmo.ToString();
+        reserveAmmoText.text = reserveAmmo.ToString();
+    }
+
+    public void UpdateHealth(float health)
+    {
+        healthSlider.fillAmount = health;
+        healthText.text = health.ToString();
+    }
     
     public void EnableMenu(string id)
     {

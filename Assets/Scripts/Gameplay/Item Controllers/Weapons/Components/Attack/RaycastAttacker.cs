@@ -13,7 +13,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     [SerializeField] private float raycastLength;
     [SerializeField] private float damage;
     [SerializeField] private LayerMask attackableLayers;
-    [SerializeField] private VisualEffect muzzleFlash;
+    [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private BulletTracer bulletTracerPrefab;
     [SerializeField] private Transform barrel;
     [SerializeField] private AudioClip[] fireAudioClips;
@@ -72,7 +72,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
 
     public override void ProcessInput(WeaponContext context, ref ItemDesires desires)
     {
-        if (Weapon.IsBusy() || !fireCooldown.ExpiredOrNotRunning(Runner) || !desires.HasAmmo)
+        if (Weapon.IsBusy() || !fireCooldown.ExpiredOrNotRunning(Runner) || !desires.HasAmmo || Weapon.Player.Movement.IsSprinting)
         {
             return;
         }
@@ -127,10 +127,7 @@ public class RaycastAttacker : WeaponComponent, IAttacker
                 Weapon.Player.UI.EnableMenu("ScoreFeed");
                 Weapon.Player.UI.GetService<ScoreFeed>().OnPlayerKilled(hitData.Victim.Owner.Owner.PlayerName.ToString(), "Musket");
             }
-            else
-            {
-                
-            }
+
 
             if (hitInfo.Hitbox != null)
             {
@@ -160,10 +157,13 @@ public class RaycastAttacker : WeaponComponent, IAttacker
     private void FireEffectsLocal()
     {
         PlaySFX();
-        muzzleFlash.Play();
         Animator.SetTrigger(_fire);
 
         BulletTracer tracer = Instantiate(bulletTracerPrefab, barrel.transform.position, barrel.transform.rotation);
         tracer.Init(barrel.transform.forward);
+
+        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, barrel.position, barrel.rotation);
+        muzzleFlash.GetComponent<VisualEffect>().Play();
+        Destroy(muzzleFlash, 1.0f);
     }
 }

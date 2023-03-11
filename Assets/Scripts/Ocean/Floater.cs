@@ -10,9 +10,9 @@ public class Floater : NetworkBehaviour
 {
     [SerializeField] private float depthBeforeSubmerged;
     [SerializeField] private float displacementAmount;
-    [SerializeField] private Rigidbody rigidBody;
+     public Rigidbody rigidBody;
     [SerializeField] private NetworkRigidbody networkRigidbody;
-
+    
     [Networked]
    private float WaveHeight { get; set; }
 
@@ -30,6 +30,11 @@ public class Floater : NetworkBehaviour
 
 
    public override void FixedUpdateNetwork()
+   {
+       UpdateBuoyancy();
+   }
+
+   protected virtual void UpdateBuoyancy()
    {
        _searchParameters.startPositionWS = _searchResult.candidateLocationWS;
        _searchParameters.targetPositionWS = transform.position;
@@ -49,7 +54,7 @@ public class Floater : NetworkBehaviour
        float displacementMultiplier = Mathf.Clamp01((WaveHeight - transform.position.y) / depthBeforeSubmerged) *
                                       displacementAmount;
 
-       rigidBody.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0),
+       rigidBody.AddForceAtPosition(Vector3.up * Physics.gravity.y * displacementMultiplier,
            transform.position, ForceMode.Acceleration);
    }
 }

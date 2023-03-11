@@ -11,6 +11,9 @@ public class DyanmicSpawnPoint : NetworkBehaviour, ISpawnPoint
     [Networked]
     public int NetworkTeamID { get; set; }
     
+    [Networked]
+    public bool UnderAttack { get; set; }
+    
     public int TeamID
     {
         get => NetworkTeamID;
@@ -29,6 +32,11 @@ public class DyanmicSpawnPoint : NetworkBehaviour, ISpawnPoint
     public void Init()
     {
     //    FindObjectOfType<NetworkSpawnHandler>().RefreshSpawnPoints();
+    }
+
+    public void OnAttacked()
+    {
+        
     }
 
     public void OverrideTeam(int teamID)

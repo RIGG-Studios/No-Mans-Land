@@ -1,29 +1,49 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
-public class VitalPoint : MonoBehaviour
+public enum Vitals
 {
-    [SerializeField] private bool findOnRoot = true;
+    Head,
+    Arm,
+    Chest,
+    Leg
+}
 
-    private NetworkHealthHandler _healthHandler;
+public class VitalPoint : Floater
+{
+    [SerializeField] private Vitals vital;
+    [SerializeField] private bool useBuoyancy;
 
 
-    private void Awake()
+    public override void FixedUpdateNetwork()
     {
-        if (findOnRoot)
+        if (useBuoyancy && rigidBody.useGravity)
         {
-            _healthHandler = transform.root.GetComponent<NetworkHealthHandler>();
+            base.FixedUpdateNetwork();
         }
-        else
+    }
+    
+
+    public float CalculateDamage(float baseDmg)
+    {
+        switch (vital)
         {
-            _healthHandler = GetComponent<NetworkHealthHandler>();
+            case Vitals.Arm:
+                return baseDmg;
+            
+            case Vitals.Chest:
+                return baseDmg * 1.5f;
+            
+            case Vitals.Head:
+                return baseDmg * 2.0f;
+            
+            case Vitals.Leg:
+                return baseDmg;
         }
 
-        if (_healthHandler == null)
-        {
-            Debug.Log("Couldn't find a network health handler");
-        }
+        return baseDmg;
     }
 }

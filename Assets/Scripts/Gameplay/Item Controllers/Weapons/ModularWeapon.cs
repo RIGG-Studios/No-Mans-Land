@@ -100,6 +100,7 @@ public class ModularWeapon : BaseWeapon
 
     public override void Spawned()
     {
+        base.Spawned();
         _weaponComponents = GetComponents<WeaponComponent>();
 
         foreach (WeaponComponent component in _weaponComponents)

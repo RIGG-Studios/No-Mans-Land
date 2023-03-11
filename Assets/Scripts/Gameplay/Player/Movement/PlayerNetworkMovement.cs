@@ -56,13 +56,14 @@ public class PlayerNetworkMovement : ContextBehaviour
     
     private WaterSearchParameters _searchParameters;
     private WaterSearchResult _searchResult;
-    
+
     private WaterSurface _waterSurface;
 
     private float _fallStartPos;
     private float _fallingDist;
 
-    
+
+    public float maxHeightAboveWater;
     protected override void Awake()
     {
         base.Awake();
@@ -112,21 +113,7 @@ public class PlayerNetworkMovement : ContextBehaviour
         
         ButtonsPrevious = input.Buttons;
 
-        if (InLadderTrigger)
-        {
-            _movementHandler.MoveLadder(input, Runner.DeltaTime);
-        }
-        else if (IsSwimming)
-        {
-            _movementHandler.MoveSwim(input, Runner.DeltaTime);
-        }
-        else
-        {
-            _movementHandler.Move(input, Runner.DeltaTime);
-        }
-
-        _movementHandler.UpdateCameraRotation(input);
-        
+                
         _searchParameters.startPositionWS = _searchResult.candidateLocationWS;
         _searchParameters.targetPositionWS = transform.position;
         _searchParameters.error = 0.01f;
@@ -135,11 +122,29 @@ public class PlayerNetworkMovement : ContextBehaviour
         _waterSurface.ProjectPointOnWaterSurface(_searchParameters, out _searchResult);
 
         IsMoving = input.MovementInput != Vector2.zero;
-        IsSwimming = (_player.Camera.transform.position.y < _searchResult.projectedPositionWS.y + 0.5f);
         InWater = (_player.transform.position.y - 1.0f < _searchResult.projectedPositionWS.y);
         CameraSubmerged = (_player.Camera.transform.position.y < _searchResult.projectedPositionWS.y);
         IsGrounded = CheckForGround();
+
+        float waterHeightDiff = transform.position.y - _searchResult.projectedPositionWS.y;
+
+        IsSwimming = waterHeightDiff < maxHeightAboveWater;
         
+        if (InLadderTrigger)
+        {
+            _movementHandler.MoveLadder(input, Runner.DeltaTime);
+        }
+        else if (IsSwimming)
+        {
+            _movementHandler.MoveSwim(input, IsSprinting, Runner.DeltaTime, _searchResult);
+        }
+        else
+        {
+            _movementHandler.Move(input, Runner.DeltaTime);
+        }
+
+        _movementHandler.UpdateCameraRotation(input);
+
         if (pressed.IsSet(PlayerButtons.Sprint) && !input.IsAiming && !input.IsReloading)
         {
             IsSprinting = true;
@@ -196,6 +201,13 @@ public class PlayerNetworkMovement : ContextBehaviour
                 _fallingDist = _fallStartPos - transform.position.y;
             }
         }
+    }
+
+    private int _lastWaveCount;
+
+    private void LateUpdate()
+    {
+        
     }
 
     private void ShipMovement(NetworkInputData input)

@@ -27,6 +27,7 @@ public class CameraLook : MonoBehaviour
     private float _fov;
     private float _defaultFOV;
     private bool _lockHorizontalMovement;
+    private float _sensitivity;
 
     public Camera Camera { get; private set; }
     public CameraInterpolator Interpolator { get; private set; }
@@ -35,11 +36,15 @@ public class CameraLook : MonoBehaviour
     
     public float RawLookX { get; private set; }
     public float RawLookY { get; private set; }
+    
+    public float DefaultMouseSensitivity { get; private set; }
 
     private Rigidbody _rigidbody;
 
     private void Awake()
     {
+        DefaultMouseSensitivity = mouseSensitivity;
+        _sensitivity = DefaultMouseSensitivity;
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.isKinematic = true;
         _lookRotation.x = player.transform.eulerAngles.y;
@@ -68,8 +73,8 @@ public class CameraLook : MonoBehaviour
 
     private void UpdateCameraLook()
     {
-        float nextHorizontal = _lookX * Time.deltaTime * mouseSensitivity;
-        float nextVertical = _lookY * Time.deltaTime * mouseSensitivity;
+        float nextHorizontal = _lookX * Time.deltaTime * _sensitivity;
+        float nextVertical = _lookY * Time.deltaTime * _sensitivity;
 
         RawLookX = nextHorizontal;
         RawLookY = nextVertical;
@@ -117,6 +122,11 @@ public class CameraLook : MonoBehaviour
         }
 
         _fov = fov;
+    }
+
+    public void UpdateSensitivity(float sensitivity)
+    {
+        _sensitivity = sensitivity;
     }
 
     public void UpdateRecoil(float x, float y)

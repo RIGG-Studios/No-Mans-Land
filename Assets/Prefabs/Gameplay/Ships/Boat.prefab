@@ -96,6 +96,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   spawnType: 0
   _NetworkTeamID: 0
+  _UnderAttack: 0
 --- !u!1 &255108701634655143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1252,7 @@ GameObject:
   - component: {fileID: 8584073878116748037}
   - component: {fileID: 2332197427796278130}
   - component: {fileID: 3087906529535807523}
+  - component: {fileID: 4919887908932555369}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Boat
@@ -1394,7 +1396,10 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _HasPilot: 0
   _TeamID: 0
+  _PlayerCount: 0
+  _Captain: {fileID: 0}
   rudderTransform: {fileID: 2112588003853790680}
+  steeringWheel: {fileID: 5768465681714236177}
   physicsHandler: {fileID: 8584073878116748037}
   health: {fileID: 2332197427796278130}
 --- !u!114 &8584073878116748037
@@ -1445,6 +1450,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipHealth: {fileID: 2332197427796278130}
+--- !u!65 &4919887908932555369
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3604247825852076780}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 13.21, y: 12.18, z: 36.5}
+  m_Center: {x: 0, y: 0, z: 10.79}
 --- !u!1 &3822631220567748716
 GameObject:
   m_ObjectHideFlags: 0

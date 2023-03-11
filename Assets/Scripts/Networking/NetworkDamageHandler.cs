@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
@@ -25,6 +23,7 @@ public struct HitData
     public Vector3 Direction;
     public Vector3 Normal;
     public bool IsFatal;
+    public bool IsHeadshot;
 
     public INetworkDamagable Victim;
 

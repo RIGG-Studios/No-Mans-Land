@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
-public class ShipPhysicsHandler : NetworkBehaviour
+public class ShipPhysicsHandler : ContextBehaviour
 {
     [SerializeField] private float movementSpeed;
     [SerializeField] private float maxMovementSpeed;
@@ -23,8 +23,10 @@ public class ShipPhysicsHandler : NetworkBehaviour
 
     [Networked]
     private float horizontalInput { get; set; }
-
+    
     private float _wheelInput;
+
+    private NetworkPlayer _targetPlayer;
 
     private void Awake()
     {
@@ -40,15 +42,31 @@ public class ShipPhysicsHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        _rigidbody.AddForce(transform.forward * forwardInput * movementSpeed, ForceMode.Force);
-
-        _rigidbody.AddForceAtPosition(horizontalInput * -_ship.RudderTransform.right * rotationSpeed,
-            _ship.RudderTransform.position, ForceMode.Force);
-        
         if (!GetInput(out NetworkInputData input) || !CanMove)
         {
             return;
         }
+        
+        
+        if (_ship.PlayerCount == 0 && _rigidbody.velocity != Vector3.zero)
+        {
+            if (_targetPlayer == null)
+            {
+                _targetPlayer = Utility.FindClosestPlayer(Context.Gameplay.GetAllNetworkPlayers(_ship.TeamID),
+                    transform);
+            }
+
+            Vector3 dir = (_targetPlayer.transform.position - transform.position).normalized;
+            
+            _rigidbody.AddForce(dir* movementSpeed, ForceMode.Force);
+            return;
+        }
+        
+        _rigidbody.AddForce(transform.forward * forwardInput * movementSpeed, ForceMode.Force);
+
+        _rigidbody.AddForceAtPosition(horizontalInput * -_ship.RudderTransform.right * rotationSpeed,
+            _ship.RudderTransform.position, ForceMode.Force);
+
         
         forwardInput = Mathf.Clamp(input.MovementInput.y, 0.0f, maxMovementSpeed);
         horizontalInput = input.MovementInput.x;

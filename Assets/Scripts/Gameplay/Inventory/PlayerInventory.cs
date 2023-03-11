@@ -302,32 +302,32 @@ public class PlayerInventory : LocalInventory, IInputProccesor
 
         if (pressed.IsSet(PlayerButtons.ToggleInventory))
         {
-            ToggleInventory();
+      //      ToggleInventory();
         }
 
         if (pressed.IsSet(PlayerButtons.Slot1))
         {
-            SelectSlot(15);
+            SelectSlot(0);
         }
         
         if (pressed.IsSet(PlayerButtons.Slot2))
         {
-            SelectSlot(16);
+            SelectSlot(1);
         }
         
         if (pressed.IsSet(PlayerButtons.Slot3))
         {
-            SelectSlot(17);
+            SelectSlot(2);
         }
         
         if (pressed.IsSet(PlayerButtons.Slot4))
         {
-            SelectSlot(18);
+            SelectSlot(3);
         }
         
         if (pressed.IsSet(PlayerButtons.Slot5))
         {
-            SelectSlot(19);
+            SelectSlot(4);
         }
 
         if (EquippedItem != null)

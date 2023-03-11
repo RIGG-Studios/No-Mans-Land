@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Fusion;
 using TMPro;
 using UnityEngine;
@@ -15,6 +16,13 @@ public class PlayerNameTag : SimulationBehaviour
 
     private void Update()
     {
+        if (player.Health.IsDead)
+        {
+            friendlyPlayerIcon.gameObject.SetActive(false);
+            playerNameText.gameObject.SetActive(false);
+            return;
+        }
+        
         if (Object.HasInputAuthority)
         {
             friendlyPlayerIcon.enabled = false;

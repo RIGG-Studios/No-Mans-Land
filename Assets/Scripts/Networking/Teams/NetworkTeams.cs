@@ -16,7 +16,7 @@ public struct NetworkTeam : INetworkStruct
 
 
     public NetworkBool CanRespawn;
-    public NetworkBool IsFull => PlayerCount >= 1;
+    public NetworkBool IsFull => PlayerCount >= 2;
 
     public NetworkTeam(byte teamID, int playerCount)
     {

@@ -113,12 +113,7 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
     
     private void OnDeath()
     {
-        if (Object.HasStateAuthority)
-        {
-            Context.Gameplay.OnPlayerDeath(this);
-        }
-        
-        model.gameObject.SetActive(false);
+        Owner.Character.EnableRagdoll();
         onDeath?.Invoke();
 
         if (Object.HasInputAuthority)
@@ -154,6 +149,8 @@ public class PlayerHealth : NetworkHealthHandler, INetworkDamagable
             if (Object.HasStateAuthority)
             {
                 Health = 0;
+                Context.Gameplay.OnPlayerDeath(this);
+                Owner.Character.DropCurrentItem();
                 IsDead = true;
             }
         }

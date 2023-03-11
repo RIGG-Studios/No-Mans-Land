@@ -7,6 +7,7 @@ using UnityEngine;
 public class Character : ContextBehaviour
 {
     [SerializeField] private Transform weaponsContainer;
+    [SerializeField] private Transform modelRoot;
     
     private List<CharacterEquippableItem> _tpItems = new();
 
@@ -15,6 +16,8 @@ public class Character : ContextBehaviour
     private int _currentTpID;
 
     public CharacterEquippableItem CurrentItem => _currentItem;
+
+    private Rigidbody[] _rigidbodies;
     
     private void Start()
     {
@@ -27,6 +30,16 @@ public class Character : ContextBehaviour
         }
     }
 
+    public override void Spawned()
+    {
+        _rigidbodies = modelRoot.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in _rigidbodies)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+        }
+    }
+    
     private void SetupItemModel(Item item)
     {
         CharacterEquippableItem itemController =
@@ -64,6 +77,33 @@ public class Character : ContextBehaviour
 
         _currentTpID =  newItemID;
     }
+
+    public void EnableRagdoll()
+    {
+        foreach (Rigidbody rb in _rigidbodies)
+        {
+            rb.useGravity = true;
+            rb.isKinematic = false;
+        }
+
+        _currentItem.gameObject.SetActive(false);
+    }
+
+    public void DropCurrentItem()
+    {
+        if (_currentItem == null)
+        {
+            return;
+        }
+        
+        
+        Item item = Context.ItemDatabase.FindItem(_currentItem.ItemID);
+        ItemPickup pickup = Runner.Spawn(item.pickupPrefab, weaponsContainer.position, weaponsContainer.rotation)
+            .GetComponent<ItemPickup>();
+        
+        pickup.Init(_currentItem.ItemID, 1);
+    }
+    
 
     private CharacterEquippableItem FindEquippableItem(int id)
     {
