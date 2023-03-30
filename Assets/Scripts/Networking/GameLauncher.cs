@@ -26,7 +26,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private SessionListUIHandler sessionListHandler;
     [SerializeField] private DisconnectionHandler disconnectionHandler;
     [SerializeField] private LoadingScreen loadingScreen;
-    [SerializeField] private MenuControl menuControl;
+    [SerializeField] private MenuController menuControl;
     
     private NetworkRunner _runner;
     

@@ -2,33 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerConfig : MonoBehaviour {
-    string username = "";
+public class PlayerConfig 
+{
+    public string username = "";
 
     //Graphics settings
 
     //Audio settings
-    float volumePercent = 100f;
+    public float volumePercent = 100f;
 
     //Gameplay settings
-    float mouseSens = 3f;
-
-    void Start(){
-        LoadSettings();
-    }
+    public float mouseSens = 3f;
 
     public void SetName(string newName)
     {
-        if(newName == ""){
-            Debug.Log("Invalid username.");
-        } else {
-            username = newName;
-            Debug.Log("Name set to " + username + ".");
-            PlayerPrefs.SetString("Player Name", username);
-        }
-    }
-    public string GetName(){
-        return username;
+        if(newName == "")
+            return;
+
+        username = newName;
+        PlayerPrefs.SetString("Player Name", username);
     }
 
     public void SetVolume(float newValue)
@@ -36,17 +28,10 @@ public class PlayerConfig : MonoBehaviour {
         volumePercent = newValue;
         AudioListener.volume = (volumePercent / 100);
     }
-    public float GetVolume()
-    {
-        return volumePercent;
-    }
 
     public void SetSensitivity(float newValue)
     {
         mouseSens = newValue;
-    }
-    public float GetSensitivity(){
-        return mouseSens;
     }
 
     //Loads current settings from Unity's PlayerPrefs
@@ -54,6 +39,7 @@ public class PlayerConfig : MonoBehaviour {
     {
         SetVolume(PlayerPrefs.GetFloat("Volume Percentage", 100f));
         SetSensitivity(PlayerPrefs.GetFloat("Mouse Sensitivity", 3f));
+        SetName(PlayerPrefs.GetString("Player Name", "Player Name"));
     }
 
     //Saves current settings to Unity's PlayerPrefs

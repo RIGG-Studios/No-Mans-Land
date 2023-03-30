@@ -10,8 +10,6 @@ public class EnterUsername : MonoBehaviour
     [SerializeField] private DisconnectionHandler disconnectionHandler;
     [SerializeField] private GameObject mainMenu;
 
-
-
     public void ConfirmUsername()
     {
         string userName = usernameInput.text;
