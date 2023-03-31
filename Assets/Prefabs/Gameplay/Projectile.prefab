@@ -239,6 +239,8 @@ MonoBehaviour:
   _interpolationDataSource: 2
   damageAmount: 20
   projectileRender: {fileID: 277455472209822248}
+  waterImpact: {fileID: 7865020752446049467, guid: e8c576989d4e53140839a96c8bf6f278,
+    type: 3}
   hitImpact: {fileID: 3419615265715968947}
 --- !u!1 &662283686490564891
 GameObject:
