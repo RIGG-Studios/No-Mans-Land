@@ -32,12 +32,12 @@ MonoBehaviour:
     supportLightLayers: 1
     renderingLayerMaskBuffer: 0
     supportWater: 1
-    waterSimulationResolution: 128
+    waterSimulationResolution: 256
     supportWaterExclusion: 1
     supportWaterDeformation: 1
-    deformationAtlasSize: 512
+    deformationAtlasSize: 2048
     supportWaterFoam: 1
-    foamAtlasSize: 512
+    foamAtlasSize: 2048
     waterCPUSimulation: 1
     supportComputeThickness: 0
     computeThicknessResolution: 1
